@@ -1,5 +1,6 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { AppRegistry, Image, StyleSheet, Text, View } from 'react-native';
+
 
 export default class App extends React.Component {
   render() {
@@ -14,6 +15,8 @@ export default class App extends React.Component {
   }
 }
 
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -22,3 +25,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+
