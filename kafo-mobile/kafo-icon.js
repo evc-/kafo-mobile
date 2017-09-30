@@ -7,7 +7,7 @@ export default class KafoIcon extends Component {
     return (
       <View>
         <Image
-            style={{width: 100, height: 100}}
+            style={{width: 100, height: 100, marginTop: 20}}
           source={require('./img/kafo-icon.png')}
         />
         

@@ -18,12 +18,14 @@ const styles = StyleSheet.create({
     textStyle: {
         fontSize: 20,
         fontWeight: 'bold',
-        textAlign: 'center'
+        alignItems: 'center',
+        textAlign: 'center',
+        
   },
     containerStyle: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
+        
         backgroundColor:'#CAAB9A'
     },
 });
