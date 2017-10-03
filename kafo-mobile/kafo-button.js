@@ -22,16 +22,44 @@ export default class MControl extends React.Component {
         <TouchableOpacity>
             <Text 
                 onPress={this.myClick} 
-                style={{width: 450, height: 100,backgroundColor: '#303C45', fontSize: 70,flex: 0,  textAlign: 'center', color: '#F4EEE3', fontWeight: 'bold'}}>25
+                style={styles.touchableStyle1}>
+                    25 Brentwood
             </Text>
         </TouchableOpacity> 
         <TouchableOpacity>
             <Text 
                 onPress={this.myClick} 
-                style={{width: 450, height: 100,backgroundColor: '#6FA7A8', fontSize: 70,flex: 0,  textAlign: 'center', color: '#F4EEE3', fontWeight: 'bold'}}>7
+                style={styles.touchableStyle2}>
+                    07 Dunbar
             </Text>
         </TouchableOpacity>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+     touchableStyle1: {
+        width: 450,
+        height: 100,
+        backgroundColor: '#303C45',
+        fontSize: 50,
+        flex: 0,
+        textAlign: 'center',
+        color: '#F4EEE3',
+        fontWeight: 'bold',
+    },
+    
+    touchableStyle2: {
+        width: 450,
+        height: 100,
+        backgroundColor: '#6FA7A8',
+        fontSize: 50,
+        flex: 0,
+        textAlign: 'center',
+        color: '#F4EEE3',
+        fontWeight: 'bold',
+    }
+});
+        
+
