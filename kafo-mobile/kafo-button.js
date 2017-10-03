@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
         fontSize: 50,
         flex: 0,
         textAlign: 'center',
+        lineHeight: 100,
         color: '#F4EEE3',
         fontWeight: 'bold',
     },
@@ -57,6 +58,7 @@ const styles = StyleSheet.create({
         fontSize: 50,
         flex: 0,
         textAlign: 'center',
+        lineHeight: 100,
         color: '#F4EEE3',
         fontWeight: 'bold',
     }

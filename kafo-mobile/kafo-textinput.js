@@ -10,7 +10,7 @@ export default class KafoTextInput extends Component {
   render() {
     return (
       <TextInput
-        style={{height: 40, width: 300,  borderColor: 'gray'}}
+        style={{height: 140, width: 300,  borderColor: 'gray'}}
         onChangeText={(text) => this.setState({text})}
         value={this.state.text}
       />

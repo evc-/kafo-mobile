@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 
-export default class KafoHeader extends Component {
+export default class KafoSelectBus extends Component {
   render() {
     return (        
-        <View style={{flexDirection: 'row', height: 100, padding: 0}}>
+        <View style={{flexDirection: 'row', height: 50, padding: 0}}>
             <View style={styles.containerStyle}> 
-                <Text style={styles.textStyle}>Which bus are you taking?</Text>
+                <Text style={styles.textStyle}> Select Bus</Text>
             </View>
       </View>
     );
