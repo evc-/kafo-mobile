@@ -10,8 +10,8 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <KafoIcon />
-        <KafoHeader />
+        <KafoIcon  />
+        <KafoHeader headerText="TEST" />
         <KafoTextInput />
         <KafoButton />
         

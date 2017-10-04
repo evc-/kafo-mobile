@@ -7,7 +7,7 @@ export default class KafoHeader extends Component {
     return (        
         <View style={{flexDirection: 'row', height: 100, padding: 0}}>
             <View style={styles.containerStyle}> 
-                <Text style={styles.textStyle}>Which bus are you taking?</Text>
+                <Text style={styles.textStyle}>{this.props.headerText}</Text>
             </View>
       </View>
     );
@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     containerStyle: {
         flex: 1,
         justifyContent: 'center',
-        
         backgroundColor:'#CAAB9A'
     },
 });
