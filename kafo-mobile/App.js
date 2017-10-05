@@ -5,6 +5,8 @@ import KafoHeader from './kafo-header';
 import KafoTextInput from './kafo-textinput';
 import KafoButton from './kafo-button';
 import KafoSelectBus from './kafo-selectbus';
+import KafoMap from './kafo-map';
+import KafoResults from './kafo-results';
 
 
 export default class App extends React.Component {
@@ -14,8 +16,10 @@ export default class App extends React.Component {
         <KafoIcon  />
         <KafoHeader headerText="TEST" />
         <KafoTextInput />
-       < KafoSelectBus />
+        <KafoSelectBus />
         <KafoButton />
+        <KafoMap />
+        <KafoResults />
         
       </View>
     );
