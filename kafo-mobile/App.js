@@ -4,6 +4,7 @@ import KafoIcon from './kafo-icon';
 import KafoHeader from './kafo-header';
 import KafoTextInput from './kafo-textinput';
 import KafoButton from './kafo-button';
+import KafoSelectBus from './kafo-selectbus';
 
 
 export default class App extends React.Component {
@@ -13,6 +14,7 @@ export default class App extends React.Component {
         <KafoIcon  />
         <KafoHeader headerText="TEST" />
         <KafoTextInput />
+       < KafoSelectBus />
         <KafoButton />
         
       </View>

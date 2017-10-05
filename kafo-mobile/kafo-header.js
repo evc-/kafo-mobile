@@ -25,12 +25,8 @@ const styles = StyleSheet.create({
     containerStyle: {
         flex: 1,
         justifyContent: 'center',
-<<<<<<< HEAD
-        backgroundColor:'#CAAB9A'
-=======
-        
-        backgroundColor:'#F4EFE3'
->>>>>>> 7ef85bc286368f5a964b5d5f858d6aa113ae46a9
+        backgroundColor:'#CAAB9A',
+        backgroundColor:'#F4EFE3',
     },
 });
 
