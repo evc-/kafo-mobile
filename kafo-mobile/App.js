@@ -21,6 +21,7 @@ export default class App extends React.Component {
         <KafoMap />
         <KafoResults />
         
+        
       </View>
     );
   }
