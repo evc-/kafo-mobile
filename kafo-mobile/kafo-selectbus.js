@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 
-export default class KafoHeader extends Component {
+export default class KafoSelectBus extends Component {
   render() {
     return (        
-        <View style={{flexDirection: 'row', height: 100, padding: 0}}>
+        <View style={{flexDirection: 'row', height: 50, padding: 0}}>
             <View style={styles.containerStyle}> 
-                <Text style={styles.textStyle}>{this.props.headerText}</Text>
+                <Text style={styles.textStyle}> Select Bus</Text>
             </View>
       </View>
     );
@@ -25,8 +25,7 @@ const styles = StyleSheet.create({
     containerStyle: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor:'#CAAB9A',
-        backgroundColor:'#F4EFE3',
+        backgroundColor:'#F4EFE3'
     },
 });
 
