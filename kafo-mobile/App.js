@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Image, StyleSheet, Text, View } from 'react-native';
+import { AppRegistry, Image, StyleSheet, Keyboard, Text, View, ScrollView } from 'react-native';
 import KafoIcon from './kafo-icon';
 import KafoHeader from './kafo-header';
 import KafoTextInput from './kafo-textinput';
@@ -52,6 +52,7 @@ export default class App extends React.Component {
  
     changeAppPage(pagenum){
         this.setState({appState: pagenum});
+        Keyboard.dismiss();
     }
  
     
@@ -71,9 +72,16 @@ export default class App extends React.Component {
                     <KafoIcon  />
                     <KafoHeader headerText="Which stop are you at?" />
                     <KafoTextInput changePage={(pagenum) => this.changeAppPage(pagenum)} />
-                    {((this.state.appState == 1) ?  [<KafoSelectBus key={"Error Reverse"} /> , busResponses] :[])}
+                    {(this.state.appState == 1) ? <KafoSelectBus /> :[]}
+                    {(this.state.appState == 1) ? 
+                        <ScrollView>
+                        {busResponses}
+                        </ScrollView>
+                        :[]
+                    }
                 </View>
             );
+
           
       } else {
            return (
