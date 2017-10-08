@@ -3,37 +3,32 @@ import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 import { TouchableOpacity } from 'react-native'
 
 export default class KafoButton extends React.Component {
-  
-    myClick(){
-        Alert.alert(
-            "The title",
-            "Starting live bus tracker", 
-            [
-                {text: "OK", onPress:()=>{}},
-                {text: "NEXT", onPress:()=>{}},
-            ]
-        )
-        
-    }
     
-    render() {
+    constructor(props) {
+    super(props);      
+  }
+    
+  render() {
+      
+     
+      if (this.props.buttonColor){
+           var style = styles.touchableStyle1;
+      } else {
+          var style = styles.touchableStyle2;
+      }
+      
     return (
+        
       <View>
         <TouchableOpacity>
-            <Text 
-                onPress={this.myClick} 
-                style={styles.touchableStyle1}>
-                    25 Brentwood
+            <Text style={style}>
+                {this.props.routeName}
+                {this.props.routeNumber}
+                
             </Text>
         </TouchableOpacity> 
-        <TouchableOpacity>
-            <Text 
-                onPress={this.myClick} 
-                style={styles.touchableStyle2}>
-                    07 Dunbar
-            </Text>
-        </TouchableOpacity>
       </View>
+        
     );
   }
 }
