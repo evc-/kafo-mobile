@@ -16,6 +16,9 @@ export default class App extends React.Component {
         <KafoTextInput />
 
         <KafoSelectBus />
+
+       < KafoSelectBus />
+
         <KafoButton />
         
         
