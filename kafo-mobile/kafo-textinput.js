@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, TextInput } from 'react-native';
+import { AppRegistry, TextInput, StyleSheet} from 'react-native';
 
 export default class KafoTextInput extends Component {
     
@@ -23,7 +23,7 @@ export default class KafoTextInput extends Component {
   render() {
     return (
       <TextInput
-        style={{height: 140, width: 300,  borderColor: 'gray'}}
+        style={inputStyles.textInputStyle}
         onChangeText={(text) => this.updateText(text)}
         value={this.state.text}
         maxLength={5}
@@ -33,3 +33,21 @@ export default class KafoTextInput extends Component {
     );
   }
 }
+
+const inputStyles = StyleSheet.create({
+    
+    textInputStyle:{ 
+        height: 120,
+        width: 200,  
+        borderColor: 'gray',
+        fontSize: 30,
+        textAlign: 'center',
+    },
+    
+  container: {
+    flex: 1,
+    fontSize: 30,
+    alignItems: 'center',
+  },
+    
+});
