@@ -69,7 +69,7 @@ export default class App extends React.Component {
       
         var busResponses = translinkResponse.map(function callback(currentValue, index, array) {
             return(
-                <KafoButton2 key={index+"buttons"} routeName={currentValue.RouteName} routeNumber={currentValue.RouteNo} minsTillDepart={currentValue.Schedules.ExpectedCountdown} buttonColor ={(index % 2 == 1)} />
+                <KafoButton2 key={index+"buttons"} routeName={currentValue.RouteName} routeNumber={currentValue.RouteNo} minsTillDepart={currentValue.Schedules.ExpectedCountdown} buttonColor ={(index % 2 == 1)} changePage={(pagenum) => this.changeAppPage(pagenum)} />
             );
         })
             
@@ -89,15 +89,20 @@ export default class App extends React.Component {
 //same for the next lines. if appstate is one, show the bus responses variable.  
 }
                     {(this.state.appState == 1) ? <KafoSelectBus /> :[]}
+                    
                     {(this.state.appState == 1) ? 
                         <ScrollView>
                         {busResponses}
                         </ScrollView>
                         :[]
                     }
-                    <KafoMap changePage={(pagenum) => this.changeAppPage(pagenum)} />
-                    {(this.state.appState == 2) ? <KafoMap /> :[]}
-                
+
+                    {(this.state.appState == 2) ? 
+                        <KafoMap />
+                        
+                    :[]}
+
+
                 </View>
             );
 

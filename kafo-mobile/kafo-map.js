@@ -10,20 +10,6 @@ export default class KafoMap extends Component {
         
   }
     
-    
-    
-  render() {
-    return (        
-        <View>
-            <Text>
-                Map
-            </Text>
-
-  constructor(props){
-      super(props);
-      
-  }
-    
     render() {
     const { region } = this.props;
     console.log(region);
