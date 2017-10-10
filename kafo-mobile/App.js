@@ -71,7 +71,7 @@ export default class App extends React.Component {
             return(
                 <KafoButton2 key={index+"buttons"} routeName={currentValue.RouteName} routeNumber={currentValue.RouteNo} minsTillDepart={currentValue.Schedules.ExpectedCountdown} buttonColor ={(index % 2 == 1)} changePage={(pagenum) => this.changeAppPage(pagenum)} />
             );
-        })
+        }, this);
             
 //this always runs 
       if (true){
