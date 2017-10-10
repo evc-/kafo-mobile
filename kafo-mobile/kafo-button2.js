@@ -10,7 +10,7 @@ export default class KafoButton extends React.Component {
     
     myClick(){   
             this.props.changePage(2);
-            this.myClick = this.myClick.bind(this);
+            
         }
     
     
