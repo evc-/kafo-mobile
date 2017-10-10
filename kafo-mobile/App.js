@@ -64,7 +64,9 @@ export default class App extends React.Component {
 
 //usually, information flows from the app.js down to the components through use of "props". 
 //when we want to bring information back up from a component to the app, we use a callback function. 
+//we want to call back up button2 to use but with certain properties defined here (eg. current route name, etc)
 //we're making a variable called busResponses and 'mapping' (looping through) the info from translinkResponse above and creating buttons with the right properties for each one 
+      
         var busResponses = translinkResponse.map(function callback(currentValue, index, array) {
             return(
                 <KafoButton2 key={index+"buttons"} routeName={currentValue.RouteName} routeNumber={currentValue.RouteNo} minsTillDepart={currentValue.Schedules.ExpectedCountdown} buttonColor ={(index % 2 == 1)} />

@@ -10,8 +10,8 @@ export default class KafoTextInput extends Component {
     this.updateText = this.updateText.bind(this);
   }
     
-    //a function to update the text with with whatever is entered 
-    //then we check the length of the entry and if its 5 characters then we set the "state" of the components text to be "test"
+//a function to update the text with with whatever is entered 
+//then we check the length of the entry and if its 5 characters then we set the "state" of the component to be 1"
     updateText(text){
         
         this.setState({text});
