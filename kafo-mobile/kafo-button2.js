@@ -8,6 +8,14 @@ export default class KafoButton extends React.Component {
     super(props);      
   }
     
+    myClick(){   
+            this.props.changePage(2);
+        }
+    
+    
+    
+    
+    
   render() {
       
      
@@ -21,9 +29,12 @@ export default class KafoButton extends React.Component {
         
       <View>
         <TouchableOpacity>
-            <Text style={style}>
-                {this.props.routeName}
-                {this.props.routeNumber}
+            <Text 
+                style={style}
+                onPress={this.myClick}
+            >
+                    {this.props.routeName}
+                    {this.props.routeNumber}
                 
             </Text>
         </TouchableOpacity> 

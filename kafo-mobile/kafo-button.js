@@ -22,7 +22,7 @@ export default class KafoButton extends React.Component {
         <TouchableOpacity>
             <Text 
                 onPress={this.myClick} 
-                style={styles.touchableStyle1}>
+                style={styles.touchableStyle1} >
                     25 Brentwood
             </Text>
         </TouchableOpacity> 

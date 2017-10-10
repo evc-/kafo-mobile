@@ -79,6 +79,9 @@ export default class App extends React.Component {
                         </ScrollView>
                         :[]
                     }
+                    <KafoMap changePage={(pagenum) => this.changeAppPage(pagenum)} />
+                    {(this.state.appState == 2) ? <KafoMap /> :[]}
+                
                 </View>
             );
 
@@ -89,6 +92,23 @@ export default class App extends React.Component {
                </View>
             );
       }
+
+    /*if(true){
+        return(
+            <View style={styles.container} >
+                <KafoMap changePage={(pagenum) => this.changeAppPage(pagenum)} />
+                {(this.state.appState == 2) ? <KafoMap /> :[]}
+            </View>
+        );
+    } else {
+        return(
+            <View>
+            </View>
+        );
+                
+    }*/
+
+
   }
 }
 
