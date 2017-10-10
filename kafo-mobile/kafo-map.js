@@ -14,16 +14,12 @@ export default class KafoMap extends Component {
 
     return (
       <View style ={styles2.container}>
-        <MapView
-          style={styles2.map}
-        {
-        //the latt and the longg is when the user clicks the bus route and then it grabs the latitude and longitude from that original page, latt and longg are just the names I gave it
-        }
+        <MapView style={styles2.map}
         region={{
             latitude: this.props.latt,
             longitude: this.props.longg,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
+            latitudeDelta: 0.075,
+            longitudeDelta: 0.045,
           }}
         >
         </MapView>
@@ -40,8 +36,9 @@ const styles2 = StyleSheet.create({
     alignItems: 'center',
   },
   map: {
-      width: 250,
-      height: 250,
+      width: 300,
+      height: 300,
+      position:'absolute',
   },
 });
 
