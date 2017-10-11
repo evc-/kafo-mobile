@@ -7,7 +7,8 @@ export default class KafoButton extends React.Component {
     constructor(props) {
     super(props);      
   }
-    
+    //set selectRouteProp to be the selectedBusIndex 
+    //selectRouteProp is the selectRoute function with the parameter of the index 
     buttonPressFunctions(){   
             this.props.changePage(2);
             this.props.selectRouteProp(this.props.selectedBusIndex);

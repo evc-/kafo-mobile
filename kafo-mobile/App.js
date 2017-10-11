@@ -63,8 +63,8 @@ export default class App extends React.Component {
         Keyboard.dismiss();
     }
     
-//to select and store a specific route 
-//dont need to create new object, just need to get object properties of the one they click on
+//this function takes an index parameter and saves the corresponding bus route to STATE as "selectedBus" 
+//use STATE for changing how app looks 
     selectRoute(i){
         this.setState({selectedBus: translinkResponse[i]});
     }
@@ -75,6 +75,8 @@ export default class App extends React.Component {
 //when we want to bring information back up from a component to the app, we use a callback function. 
 //we want to call back up button2 to use but with certain properties defined here (eg. current route name, etc)
 //we're making a variable called busResponses and 'mapping' (looping through) the info from translinkResponse above and creating buttons with the right properties for each one 
+//add a selectedbusIndex prop so we have the index of which button they clicked on 
+//add a selectRouteProp so we can call have the selectRoute function from the button component 
       
         var busResponses = translinkResponse.map(function callback(currentValue, index, array) {
             return(
