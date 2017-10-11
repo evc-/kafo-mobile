@@ -40,15 +40,20 @@ import KafoButton2 from './kafo-button2';
         {Pattern: "WB1B5", Destination: "UBC", ExpectedLeaveTime: "2:16pm", ExpectedCountdown: 9, ScheduleStatus: " ",  AddedStop:false, AddedTrip:false, CancelledStop:false, CancelledTrip:false, LastUpdate:"01:11:07 pm"}
         ]
     }];
+
+
     
 
 export default class App extends React.Component {
+    
+
     
 //setting the "appState" to be zero as a baseline. the "appState" changes when we want other elements, like buttons or maps to appear. 
      constructor(props) {
         super(props);
         this.state = {appState: 0}; 
      }
+    
     
 //defining a function to change the state of the app. 
 //we set "this" (app.js) to be pagenum, which is defined as zero up above. 
@@ -57,8 +62,12 @@ export default class App extends React.Component {
         this.setState({appState: pagenum});
         Keyboard.dismiss();
     }
- 
     
+//this function takes an index parameter and saves the corresponding bus route to STATE as "selectedBus" 
+//use STATE for changing how app looks 
+    selectRoute(i){
+        this.setState({selectedBus: translinkResponse[i]});
+    }
     
   render() {
 
@@ -66,10 +75,21 @@ export default class App extends React.Component {
 //when we want to bring information back up from a component to the app, we use a callback function. 
 //we want to call back up button2 to use but with certain properties defined here (eg. current route name, etc)
 //we're making a variable called busResponses and 'mapping' (looping through) the info from translinkResponse above and creating buttons with the right properties for each one 
+//add a selectedbusIndex prop so we have the index of which button they clicked on 
+//add a selectRouteProp so we can call have the selectRoute function from the button component 
       
         var busResponses = translinkResponse.map(function callback(currentValue, index, array) {
             return(
-                <KafoButton2 key={index+"buttons"} routeName={currentValue.RouteName} routeNumber={currentValue.RouteNo} minsTillDepart={currentValue.Schedules.ExpectedCountdown} buttonColor ={(index % 2 == 1)} changePage={(pagenum) => this.changeAppPage(pagenum)} />
+                <KafoButton2 
+                key={index+"buttons"} 
+                routeName={currentValue.RouteName} 
+                routeNumber={currentValue.RouteNo} 
+                minsTillDepart={currentValue.Schedules.ExpectedCountdown} 
+                buttonColor ={(index % 2 == 1)} 
+                changePage={(pagenum) => this.changeAppPage(pagenum)}
+                selectedBusIndex= {index}
+                selectRouteProp={(i) => this.selectRoute(i)}
+                />
             );
         }, this);
             
@@ -98,7 +118,10 @@ export default class App extends React.Component {
                     }
 
                     {(this.state.appState == 2) ? 
+                        <ScrollView>
+                        <KafoHeader headerText={this.state.selectedBus.RouteName} />
                         <KafoMap />
+                        </ScrollView>
                         
                     :[]}
 
