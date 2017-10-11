@@ -8,15 +8,11 @@ export default class KafoButton extends React.Component {
     super(props);      
   }
     
-    myClick(){   
+    buttonPressFunctions(){   
             this.props.changePage(2);
-            
+            this.props.selectRouteProp(this.props.selectedBusIndex);
         }
-    
-    
-    
-    
-    
+
   render() {
       
      
@@ -32,7 +28,7 @@ export default class KafoButton extends React.Component {
         <TouchableOpacity>
             <Text 
                 style={style}
-                onPress={() => this.myClick()}
+                onPress={() => this.buttonPressFunctions()}
             >
                     {this.props.routeName}
                     {this.props.routeNumber}
