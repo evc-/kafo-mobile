@@ -5,7 +5,7 @@ import KafoHeader from './kafo-header';
 import KafoTextInput from './kafo-textinput';
 import KafoSelectBus from './kafo-selectbus';
 //import KafoMap from './kafo-map';
-import KafoMap from './map/KafoMap';
+import KafoMap from './map/kafomap';
 import KafoResults from './kafo-results';
 import KafoButton2 from './kafo-button2';
 

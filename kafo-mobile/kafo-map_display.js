@@ -24,6 +24,7 @@ export default class KafoMapDisplay extends Component {
             longitudeDelta: 0.045,
           }}
         >
+
         <MapView.Marker
         coordinate={{
         latitude: this.props.latt,
