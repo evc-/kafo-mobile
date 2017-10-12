@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import MapView from 'react-native-maps';
 
-export default class KafoMap extends Component {
+export default class KafoMapDisplay extends Component {
 
     constructor(props) {
         super(props);  
@@ -24,6 +24,14 @@ export default class KafoMap extends Component {
             longitudeDelta: 0.045,
           }}
         >
+        <MapView.Marker
+        coordinate={{
+        latitude: this.props.latt,
+        longitude: this.props.longg,
+        }}
+        />
+    
+        
         </MapView>
 
       </View>

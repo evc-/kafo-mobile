@@ -9,10 +9,7 @@ export default class KafoResults extends Component {
         {
             
         }
-            <MapJS 
-        latt={this.state.lat}
-        longg = {this.state.lng}
-        />
+
       </View>
       
     );
