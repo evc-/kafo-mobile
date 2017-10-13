@@ -4,36 +4,19 @@ import { View, Text, StyleSheet } from 'react-native';
 export default class KafoResults extends React.Component {
     
      constructor(props) {
-    super(props);      
-  }
-    //set selectRouteProp to be the selectedBusIndex 
-    //selectRouteProp is the selectRoute function with the parameter of the index 
-    buttonPressFunctions(){   
-            this.props.changePage(2);
-            this.props.selectRouteProp(this.props.selectedBusIndex);
-        }
+        super(props);  
+        this.state = {appState: 3};
+        
+     } 
 
   render() {
       
-      if (this.props.buttonColor){
-           var style = styles.touchableStyle1;
-      } else {
-          var style = styles.touchableStyle2;
-      }
+    
       
     return (
         
       <View>
-        <TouchableOpacity>
-            <Text 
-                style={style}
-                onPress={() => this.buttonPressFunctions()}
-            >
-                    {this.props.routeName}
-                    {this.props.routeNumber}
-                
-            </Text>
-        </TouchableOpacity> 
+    
       </View>
         
     );

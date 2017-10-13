@@ -16,7 +16,6 @@ export default class KafoButton extends React.Component {
 
   render() {
       
-     
       if (this.props.buttonColor){
            var style = styles.touchableStyle1;
       } else {

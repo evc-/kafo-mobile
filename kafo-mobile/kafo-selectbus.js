@@ -12,7 +12,7 @@ export default class KafoSelectBus extends Component {
       </View>
     );
   }
-}
+} 
 
 const styles = StyleSheet.create({
     textStyle: {
