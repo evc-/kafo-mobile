@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { AppRegistry, Image, StyleSheet, Keyboard, Text, View, ScrollView } from 'react-native';
 import KafoIcon from './kafo-icon';

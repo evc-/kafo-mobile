@@ -8,7 +8,7 @@ export default class KafoMapDisplay extends Component {
         super(props);  
         this.state = {appState: 2};
         
-  }
+  } 
     
     render() {
     const { region } = this.props;
@@ -44,13 +44,16 @@ const styles2 = StyleSheet.create({
   container: {
     height: 400,
     width: 400,
-    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
+    flex: 1,
   },
   map: {
-      width: 300,
-      height: 300,
-      position:'absolute',
+      width: 400,
+      height: 700,
+      flex: 1
+
   },
 });
 
