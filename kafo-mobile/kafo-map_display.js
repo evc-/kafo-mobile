@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 export default class KafoMapDisplay extends Component {
 
@@ -16,7 +16,9 @@ export default class KafoMapDisplay extends Component {
 
     return (
       <View style ={styles2.container}>
-        <MapView style={styles2.map}
+        <MapView 
+        provider = { PROVIDER_GOOGLE }
+        style={styles2.map}
         region={{
             latitude: this.props.latt,
             longitude: this.props.longg,
