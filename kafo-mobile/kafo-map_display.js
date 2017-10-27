@@ -7,8 +7,14 @@ export default class KafoMapDisplay extends Component {
     constructor(props) {
         super(props);  
         this.state = {appState: 2};
+        this.buttonPressFunctions = this.buttonPressFunctions.bind(this);
         
   } 
+    
+    buttonPressFunctions(){   
+            //this.props.mapPage(3);
+           // this.props.selectRouteProp(this.props.selectedBusIndex);
+        }
     
     render() {
     const { region } = this.props;
@@ -16,7 +22,7 @@ export default class KafoMapDisplay extends Component {
 
     return (
       <View style ={styles2.container}>
-        <MapView 
+        <MapView onPress={this.buttonPressFunctions}
         provider = { PROVIDER_GOOGLE }
         style={styles2.map}
         region={{

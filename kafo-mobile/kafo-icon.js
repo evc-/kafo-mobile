@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, View } from 'react-native';
+import { Image, View, StyleSheet } from 'react-native';
 
 
 export default class KafoIcon extends Component {
@@ -7,7 +7,7 @@ export default class KafoIcon extends Component {
     return (
       <View>
         <Image
-            style={{width: 100, height: 100, marginTop: 20}}
+            style={styles.iconStyle}
           source={require('./img/kafo-icon.png')}
         />
         
@@ -15,3 +15,16 @@ export default class KafoIcon extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+    
+    iconStyle:{
+        width: 100, 
+        left: 150,
+        height: 100, 
+        alignItems: 'center',
+        marginTop: 20
+          
+    }
+    
+});
