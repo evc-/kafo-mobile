@@ -63,7 +63,6 @@ class KafoMapCombined extends Component {
                 latitude: this.state.lat,
                 longitude: this.state.lng,
             }}
-                        
         />
             <KafoResults/>
         </View>  
