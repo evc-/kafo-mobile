@@ -16,11 +16,11 @@ class KafoMapCombined extends Component {
         
     }
     
-        componentDidMount(){
-            this.watchId = navigator.geolocation.watchPosition(
+        componentWillMount(){
+            this.watchId = navigator.geolocation.getCurrentPosition(
                 (position) => {
                     this.setState({
-                    lng:position.coords.longitude,
+                    lng: position.coords.longitude,
                     lat:position.coords.latitude,
                     error: null,
                     });
@@ -30,7 +30,7 @@ class KafoMapCombined extends Component {
                     error: error.message
                 }),
             
-                {enableHighAccuracy: true, timeout: 2000, maximumAge: 1000, distanceFilter: 10 },
+                {enableHighAccuracy: false, timeout: 2000, maximumAge: 1000, distanceFilter: 10 },
                     );
             }
     
@@ -40,10 +40,12 @@ class KafoMapCombined extends Component {
                 
 
   render() {
+       
                       
     return (
 
         <View>
+        
          <MapView 
             style={styles2.map}
             provider = { PROVIDER_GOOGLE }
