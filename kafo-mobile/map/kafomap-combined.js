@@ -13,6 +13,7 @@ class KafoMapCombined extends Component {
             error: null,
             appState: 2,
         };
+        
     }
     
         componentDidMount(){
@@ -34,7 +35,7 @@ class KafoMapCombined extends Component {
             }
     
       componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchId);
+        navigator.geolocation.clearWatch(this.watchId);
   }
                 
 
@@ -44,6 +45,7 @@ class KafoMapCombined extends Component {
 
         <View>
          <MapView 
+            style={styles2.map}
             provider = { PROVIDER_GOOGLE }
             region={{
                 latitude: this.state.lat,
@@ -51,7 +53,8 @@ class KafoMapCombined extends Component {
                 latitudeDelta: 0.075,
                 longitudeDelta: 0.045
             }}
-        />
+        >
+        </MapView>
 
         <MapView.Marker
             coordinate={{
@@ -60,13 +63,29 @@ class KafoMapCombined extends Component {
             }}
                         
         />
-
-        
-
             <KafoResults/>
         </View>  
     );
 }
 }
+
+
+const styles2 = StyleSheet.create({
+  container: {
+    height: 400,
+    width: 400,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
+    
+    map: {
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height,
+      flex: 1
+  }
+
+});
 
 export default KafoMapCombined;

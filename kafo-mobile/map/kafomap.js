@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { 
-Dimensions,
+import {
   AppRegistry,
   StyleSheet,
   Text,
@@ -17,8 +16,7 @@ export default class KafoMap extends Component {
         
         this.state={
             lng:0,
-            lat:0,
-            isMapReady: false,
+            lat:0
         }
         
         this.myfunc=this.myfunc.bind(this);
@@ -39,12 +37,7 @@ export default class KafoMap extends Component {
             },
              {enableHighAccuracy: false, timeout: 1000, maximumAge: 0}
       )
-        
          
-    }
-
-    onMapLayout = () => {
-        this.setState({ isMapReady: true });
     }
     
     myfunc(){
@@ -52,20 +45,16 @@ export default class KafoMap extends Component {
     }
     
     
+    
   render() {
-      
-//    const width = Dimensions.get('window').width;
-//    const height = Dimensions.get('window').height;
       
     return (
       <View style={styles.container}>
        
         <KafoMapDisplay
-        style={styles.mapPage}
         mapPage = {this.props.changePage}
         latt={this.state.lat}
         longg = {this.state.lng}
-
         />
         <KafoResults/>
       </View>
@@ -82,18 +71,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-    
-    mapPage: {
-    flex: 1
-  },
-    
-
+  
   instructions: {
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
   },
 });
-
-
-
