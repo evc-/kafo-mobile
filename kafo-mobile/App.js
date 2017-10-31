@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { AppRegistry, Image, StyleSheet, Keyboard, Text, View, ScrollView } from 'react-native';
+import { AppRegistry, Image, StyleSheet, Keyboard, Text, View, ScrollView, Button } from 'react-native';
 import KafoIcon from './kafo-icon';
 import KafoHeader from './kafo-header';
 import KafoTextInput from './kafo-textinput';
@@ -56,6 +56,7 @@ export default class App extends React.Component {
         super(props);
         this.state = {appState: 0};
         this.changeAppPage = this.changeAppPage.bind(this);
+        this.translink = this.translink.bind(this);
      }
     
     
@@ -67,6 +68,21 @@ export default class App extends React.Component {
         Keyboard.dismiss();
     }
     
+//fetch translink API
+    
+translink() {
+    fetch('https://kafo-call.herokuapp.com/translink/51546', {method:'GET', headers:{
+          "Content-Type": "application/json"
+          }})
+    .then(response => response.json())
+    .then((responseJson) => {
+        console.log(responseJson);
+        //this.setState({myJson:responseJson});
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
 //this function takes an index parameter and saves the corresponding bus route to STATE as "selectedBus" 
 //use STATE for changing how app looks 
     selectRoute(i){
@@ -107,6 +123,8 @@ export default class App extends React.Component {
                     <KafoIcon  />
                     <KafoHeader headerText="Which stop are you at?" />
                     <KafoTextInput changePage={(pagenum) => this.changeAppPage(pagenum)} />
+                    <Button title="Test!" onPress={this.translink}
+          />
                 </View>
             );
           }
