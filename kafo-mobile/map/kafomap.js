@@ -7,6 +7,7 @@ import {
     Button
 } from 'react-native';
 import KafoMapDisplay from '../kafo-map_display.js';
+import KafoResults from '../kafo-results';
 
 
 export default class KafoMap extends Component {
@@ -50,10 +51,12 @@ export default class KafoMap extends Component {
     return (
       <View style={styles.container}>
        
-        <KafoMapDisplay 
+        <KafoMapDisplay
+        mapPage = {this.props.changePage}
         latt={this.state.lat}
         longg = {this.state.lng}
         />
+        <KafoResults/>
       </View>
     );
   }

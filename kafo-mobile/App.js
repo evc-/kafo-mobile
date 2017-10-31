@@ -7,8 +7,8 @@ import KafoTextInput from './kafo-textinput';
 import KafoSelectBus from './kafo-selectbus';
 //import KafoMap from './kafo-map';
 import KafoMap from './map/kafomap';
-import KafoResults from './kafo-results';
 import KafoButton2 from './kafo-button2';
+import ArrivalPage from './kafo-arrival';
 
 //this is placeholder data that is similar to what will get returned from nicolas data 
   var translinkResponse = [{
@@ -53,7 +53,8 @@ export default class App extends React.Component {
 //setting the "appState" to be zero as a baseline. the "appState" changes when we want other elements, like buttons or maps to appear. 
      constructor(props) {
         super(props);
-        this.state = {appState: 0}; 
+        this.state = {appState: 0};
+        this.changeAppPage = this.changeAppPage.bind(this);
      }
     
     
@@ -97,35 +98,49 @@ export default class App extends React.Component {
             
 //this always runs 
       if (true){
-            return (
-                <View style={styles.container}>
+        var head = null;
+          
+          if(this.state.appState <= 1){
+              head = (
+                <View>
                     <KafoIcon  />
                     <KafoHeader headerText="Which stop are you at?" />
-{
-//textinput gets a property of "changePage" of a function to set its pagenum. we give it the pagenum property in the textinput component, it gets read here, and then the function runs to assign it to itself.  
-}
                     <KafoTextInput changePage={(pagenum) => this.changeAppPage(pagenum)} />
+                </View>
+            );
+          }
+
+        var comp = null;
+        switch (this.state.appState){
+            case 1:
+                comp = (
+                    <View>
+                    
+                    <KafoSelectBus />
+                        <ScrollView>
+                        {busResponses}
+                        </ScrollView>
+                    </View>
+                )
+                break;
+          case 2:
+            comp = (
+                <KafoMap changePage={this.changeAppPage}/>
+            )
+          
+          break;
+
+        }
+            return (
+                <View style={styles.container}>
 
 {
 //this is shorthand for an if statement in react. if true, if app state is one (aka if we've changed it to 1 from the text input component) then the select bus header appears. else nothing happens. 
 //same for the next lines. if appstate is one, show the bus responses variable.  
 }
-                    {(this.state.appState == 1) ? <KafoSelectBus /> :[]}
-                    
-                    {(this.state.appState == 1) ? 
-                        <ScrollView>
-                        {busResponses}
-                        </ScrollView>
-                        :[]
-                    }
-
-                    {(this.state.appState == 2) ? 
-                        <ScrollView>
-                        <KafoHeader headerText={this.state.selectedBus.RouteName} />
-                        <KafoMap />
-                        </ScrollView>
-                        
-                    :[]}
+                
+                {head}
+                {comp}
 
 
                 </View>

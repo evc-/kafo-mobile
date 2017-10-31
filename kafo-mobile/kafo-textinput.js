@@ -38,7 +38,7 @@ const inputStyles = StyleSheet.create({
     
     textInputStyle:{ 
         height: 120,
-        width: 200,  
+        width: 400,  
         borderColor: 'gray',
         fontSize: 30,
         textAlign: 'center',
