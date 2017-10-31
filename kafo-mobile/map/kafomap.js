@@ -50,8 +50,8 @@ export default class KafoMap extends Component {
       
     return (
       <View style={styles.container}>
-       
         <KafoMapDisplay
+        style= {styles.mapDisplay}
         mapPage = {this.props.changePage}
         latt={this.state.lat}
         longg = {this.state.lng}
@@ -63,7 +63,6 @@ export default class KafoMap extends Component {
 }
 
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -71,6 +70,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
+    
+    mapDisplay:{
+        flex: 1,
+        width: 100,
+        height:100
+    }
   
   instructions: {
     textAlign: 'center',
