@@ -16,8 +16,9 @@ export default class KafoMap extends Component {
         super(props);
         
         this.state={
-            lng:49.2827,
-            lat:123.1207
+            lng:0,
+            lat:0,
+            isMapReady: false,
         }
         
         this.myfunc=this.myfunc.bind(this);
@@ -41,6 +42,10 @@ export default class KafoMap extends Component {
         
          
     }
+
+    onMapLayout = () => {
+        this.setState({ isMapReady: true });
+    }
     
     myfunc(){
         
@@ -49,14 +54,18 @@ export default class KafoMap extends Component {
     
   render() {
       
+//    const width = Dimensions.get('window').width;
+//    const height = Dimensions.get('window').height;
+      
     return (
       <View style={styles.container}>
        
         <KafoMapDisplay
+        style={styles.mapPage}
         mapPage = {this.props.changePage}
         latt={this.state.lat}
         longg = {this.state.lng}
-        
+
         />
         <KafoResults/>
       </View>
@@ -75,9 +84,7 @@ const styles = StyleSheet.create({
   },
     
     mapPage: {
-    flex: 1,
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height
+    flex: 1
   },
     
 

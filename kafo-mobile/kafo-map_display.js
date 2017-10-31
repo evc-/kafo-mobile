@@ -22,25 +22,26 @@ export default class KafoMapDisplay extends Component {
 
     return (
       <View style ={styles2.container}>
-        <MapView onPress={this.buttonPressFunctions}
-        provider = { PROVIDER_GOOGLE }
-        style={styles2.map}
-        region={{
-            latitude: this.props.latt,
-            longitude: this.props.longg,
-            latitudeDelta: 0.075,
-            longitudeDelta: 0.045,
-          }}
+        
+        <MapView 
+            onPress={this.buttonPressFunctions}
+            provider = { PROVIDER_GOOGLE }
+            style={styles2.map}
+            region={{
+                latitude: this.props.latt,
+                longitude: this.props.longg,
+                latitudeDelta: 0.075,
+                longitudeDelta: 0.045,
+              }}
         >
 
         <MapView.Marker
-        coordinate={{
-        latitude: this.props.latt,
-        longitude: this.props.longg,
-        }}
+            coordinate={{
+            latitude: this.props.latt,
+            longitude: this.props.longg,
+            }}
         />
     
-        
         </MapView>
 
       </View>
@@ -57,8 +58,7 @@ const styles2 = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
- 
-    
+
 });
 
 
