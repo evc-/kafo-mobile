@@ -6,7 +6,7 @@ import KafoHeader from './kafo-header';
 import KafoTextInput from './kafo-textinput';
 import KafoSelectBus from './kafo-selectbus';
 //import KafoMap from './kafo-map';
-import KafoMap from './map/kafomap';
+//import KafoMap from './map/kafomap';
 import KafoMapCombined from './map/kafomap-combined';
 import KafoButton2 from './kafo-button2';
 import ArrivalPage from './kafo-arrival';

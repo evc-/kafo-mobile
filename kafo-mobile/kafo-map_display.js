@@ -24,7 +24,6 @@ export default class KafoMapDisplay extends Component {
         
     return (
       <View style ={styles2.container}>
-<<<<<<< HEAD
         
         <MapView 
             onPress={this.buttonPressFunctions}
@@ -36,7 +35,6 @@ export default class KafoMapDisplay extends Component {
                 latitudeDelta: 0.075,
                 longitudeDelta: 0.045,
               }}
-=======
         <MapView 
         onPress={this.buttonPressFunctions}
         provider = { PROVIDER_GOOGLE }
@@ -47,7 +45,6 @@ export default class KafoMapDisplay extends Component {
             latitudeDelta: 0.075,
             longitudeDelta: 0.045,
           }}
->>>>>>> 0615aca0364a3dedf173f71c8a2b58dc99de9fb0
         >
 
         <MapView.Marker
