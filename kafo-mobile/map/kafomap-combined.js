@@ -70,21 +70,13 @@ class KafoMapCombined extends Component {
 }
 }
 
-
 const styles2 = StyleSheet.create({
-  container: {
+  map: {
     height: 400,
     width: 400,
-    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-  },
-    
-    map: {
-      width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height,
-      flex: 1
   }
 
 });
