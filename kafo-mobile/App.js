@@ -6,43 +6,43 @@ import KafoHeader from './kafo-header';
 import KafoTextInput from './kafo-textinput';
 import KafoSelectBus from './kafo-selectbus';
 //import KafoMap from './kafo-map';
-//import KafoMap from './map/kafomap';
+import KafoMap from './map/kafomap';
 import KafoMapCombined from './map/kafomap-combined';
 import KafoButton2 from './kafo-button2';
 import ArrivalPage from './kafo-arrival';
 
 //this is placeholder data that is similar to what will get returned from nicolas data 
-  var translinkResponse = [{
-        RouteNo: "025", 
-        RouteName: "BRENTWOOD STN/UBC",
-        Direction: "WEST", 
-        RouteMap: {
-            href:"http://nb.translink.ca/geodata/025.kmz"
-        }, 
-        Schedules: [
-            {Pattern: "WB1B5", Destination: "UBC", ExpectedLeaveTime: "2:16pm", ExpectedCountdown: 9, ScheduleStatus: " ",  AddedStop:false, AddedTrip:false, CancelledStop:false, CancelledTrip:false, LastUpdate:"01:11:07 pm"}
-        ]
-    }, {
-        RouteNo: "015", 
-        RouteName: "Cambie",
-        Direction: "North", 
-        RouteMap: {
-            href:"http://nb.translink.ca/geodata/025.kmz"
-        }, 
-        Schedules: [
-            {Pattern: "WB1B5", Destination: "UBC", ExpectedLeaveTime: "2:16pm", ExpectedCountdown: 9, ScheduleStatus: " ",  AddedStop:false, AddedTrip:false, CancelledStop:false, CancelledTrip:false, LastUpdate:"01:11:07 pm"}
-        ]
-    }, {
-        RouteNo: "99", 
-        RouteName: "UBC",
-        Direction: "WEST", 
-        RouteMap: {
-        href:"http://nb.translink.ca/geodata/025.kmz"
-        }, 
-        Schedules: [
-        {Pattern: "WB1B5", Destination: "UBC", ExpectedLeaveTime: "2:16pm", ExpectedCountdown: 9, ScheduleStatus: " ",  AddedStop:false, AddedTrip:false, CancelledStop:false, CancelledTrip:false, LastUpdate:"01:11:07 pm"}
-        ]
-    }];
+//  var translinkResponse = [{
+//        RouteNo: "025", 
+//        RouteName: "BRENTWOOD STN/UBC",
+//        Direction: "WEST", 
+//        RouteMap: {
+//            href:"http://nb.translink.ca/geodata/025.kmz"
+//        }, 
+//        Schedules: [
+//            {Pattern: "WB1B5", Destination: "UBC", ExpectedLeaveTime: "2:16pm", ExpectedCountdown: 9, ScheduleStatus: " ",  AddedStop:false, AddedTrip:false, CancelledStop:false, CancelledTrip:false, LastUpdate:"01:11:07 pm"}
+//        ]
+//    }, {
+//        RouteNo: "015", 
+//        RouteName: "Cambie",
+//        Direction: "North", 
+//        RouteMap: {
+//            href:"http://nb.translink.ca/geodata/025.kmz"
+//        }, 
+//        Schedules: [
+//            {Pattern: "WB1B5", Destination: "UBC", ExpectedLeaveTime: "2:16pm", ExpectedCountdown: 9, ScheduleStatus: " ",  AddedStop:false, AddedTrip:false, CancelledStop:false, CancelledTrip:false, LastUpdate:"01:11:07 pm"}
+//        ]
+//    }, {
+//        RouteNo: "99", 
+//        RouteName: "UBC",
+//        Direction: "WEST", 
+//        RouteMap: {
+//        href:"http://nb.translink.ca/geodata/025.kmz"
+//        }, 
+//        Schedules: [
+//        {Pattern: "WB1B5", Destination: "UBC", ExpectedLeaveTime: "2:16pm", ExpectedCountdown: 9, ScheduleStatus: " ",  AddedStop:false, AddedTrip:false, CancelledStop:false, CancelledTrip:false, LastUpdate:"01:11:07 pm"}
+//        ]
+//    }];
 
 
     
@@ -54,7 +54,11 @@ export default class App extends React.Component {
 //setting the "appState" to be zero as a baseline. the "appState" changes when we want other elements, like buttons or maps to appear. 
      constructor(props) {
         super(props);
-        this.state = {appState: 0};
+        this.state = {
+            appState: 0,
+            translinkData: ""
+        };
+         
         this.changeAppPage = this.changeAppPage.bind(this);
         this.translink = this.translink.bind(this);
      }
@@ -69,15 +73,19 @@ export default class App extends React.Component {
     }
     
 //fetch translink API
+//translink function now takes stop number(stopNum) as a parameter. replaced dummy stop # with the parameter. 
+//passed translink function as prop to text input component below. 
+
     
-translink() {
-    fetch('https://kafo-call.herokuapp.com/translink/51546', {method:'GET', headers:{
+translink(stopNum) {
+    fetch('https://kafo-call.herokuapp.com/translink/' + stopNum , {method:'GET', headers:{
           "Content-Type": "application/json"
           }})
     .then(response => response.json())
     .then((responseJson) => {
         console.log(responseJson);
-        //this.setState({myJson:responseJson});
+        this.setState({translinkData:responseJson});     //set the state to be the response object from the translink api 
+        
     })
     .catch((error) => {
         console.log(error);
@@ -86,7 +94,9 @@ translink() {
 //this function takes an index parameter and saves the corresponding bus route to STATE as "selectedBus" 
 //use STATE for changing how app looks 
     selectRoute(i){
-        this.setState({selectedBus: translinkResponse[i]});
+        this.setState({
+            selectedBus: this.state.translinkData[i]
+        });
     }
     
   render() {
@@ -98,7 +108,10 @@ translink() {
 //add a selectedbusIndex prop so we have the index of which button they clicked on 
 //add a selectRouteProp so we can call have the selectRoute function from the button component 
       
-        var busResponses = translinkResponse.map(function callback(currentValue, index, array) {
+//if the state exists, map the object (in the state) to create the buttons 
+      
+      if (this.state.translinkData){
+        var busResponses = this.state.translinkData.map(function callback(currentValue, index, array) {
             return(
                 <KafoButton2 
                 key={index+"buttons"} 
@@ -112,6 +125,7 @@ translink() {
                 />
             );
         }, this);
+}
             
 //this always runs 
       if (true){
@@ -122,9 +136,9 @@ translink() {
                 <View>
                     <KafoIcon  />
                     <KafoHeader headerText="Which stop are you at?" />
-                    <KafoTextInput changePage={(pagenum) => this.changeAppPage(pagenum)} />
-                    <Button title="Test!" onPress={this.translink}
-          />
+                    <KafoTextInput translinkAPICall={this.translink} changePage={(pagenum) => this.changeAppPage(pagenum)} />
+                    
+          
                 </View>
             );
           }
