@@ -6,46 +6,10 @@ import KafoHeader from './kafo-header';
 import KafoTextInput from './kafo-textinput';
 import KafoSelectBus from './kafo-selectbus';
 //import KafoMap from './kafo-map';
-import KafoMap from './map/kafomap';
+//import KafoMap from './map/kafomap';
 import KafoMapCombined from './map/kafomap-combined';
 import KafoButton2 from './kafo-button2';
-import ArrivalPage from './kafo-arrival';
-
-//this is placeholder data that is similar to what will get returned from nicolas data 
-//  var translinkResponse = [{
-//        RouteNo: "025", 
-//        RouteName: "BRENTWOOD STN/UBC",
-//        Direction: "WEST", 
-//        RouteMap: {
-//            href:"http://nb.translink.ca/geodata/025.kmz"
-//        }, 
-//        Schedules: [
-//            {Pattern: "WB1B5", Destination: "UBC", ExpectedLeaveTime: "2:16pm", ExpectedCountdown: 9, ScheduleStatus: " ",  AddedStop:false, AddedTrip:false, CancelledStop:false, CancelledTrip:false, LastUpdate:"01:11:07 pm"}
-//        ]
-//    }, {
-//        RouteNo: "015", 
-//        RouteName: "Cambie",
-//        Direction: "North", 
-//        RouteMap: {
-//            href:"http://nb.translink.ca/geodata/025.kmz"
-//        }, 
-//        Schedules: [
-//            {Pattern: "WB1B5", Destination: "UBC", ExpectedLeaveTime: "2:16pm", ExpectedCountdown: 9, ScheduleStatus: " ",  AddedStop:false, AddedTrip:false, CancelledStop:false, CancelledTrip:false, LastUpdate:"01:11:07 pm"}
-//        ]
-//    }, {
-//        RouteNo: "99", 
-//        RouteName: "UBC",
-//        Direction: "WEST", 
-//        RouteMap: {
-//        href:"http://nb.translink.ca/geodata/025.kmz"
-//        }, 
-//        Schedules: [
-//        {Pattern: "WB1B5", Destination: "UBC", ExpectedLeaveTime: "2:16pm", ExpectedCountdown: 9, ScheduleStatus: " ",  AddedStop:false, AddedTrip:false, CancelledStop:false, CancelledTrip:false, LastUpdate:"01:11:07 pm"}
-//        ]
-//    }];
-
-
-    
+import ArrivalPage from './kafo-arrival';    
 
 export default class App extends React.Component {
     

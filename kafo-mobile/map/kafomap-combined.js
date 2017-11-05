@@ -17,7 +17,9 @@ class KafoMapCombined extends Component {
     }
     
         componentWillMount(){
-            this.watchId = navigator.geolocation.getCurrentPosition(
+            //set to true to get actual location 
+            if (false){
+                  this.watchId = navigator.geolocation.getCurrentPosition(
                 (position) => {
                     this.setState({
                     lng: position.coords.longitude,
@@ -32,13 +34,21 @@ class KafoMapCombined extends Component {
             
                 {enableHighAccuracy: false, timeout: 2000, maximumAge: 1000, distanceFilter: 10 },
                     );
+                
+            } else {
+                this.setState({
+                    lng: 49.250951,
+                    lng: -123.116460,
+                    error: null
+                })
             }
+          
+        }
     
       componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchId);
   }
                 
-
   render() {
        
                       
@@ -72,8 +82,6 @@ class KafoMapCombined extends Component {
 
 const styles2 = StyleSheet.create({
   map: {
-    height: 400,
-    width: 400,
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
