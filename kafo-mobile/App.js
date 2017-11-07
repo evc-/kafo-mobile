@@ -86,11 +86,14 @@ translink(stopNum) {
           
           if(this.state.appState <= 1){
               head = (
-                <View>  
-                    <KafoModal>    
-                            {this.props.children}
+                <View style={{alignItems:'center'}}>  
+                   
+                <KafoMapCombined/>
+                   <KafoModal
+                    translinkAPICall={(pagenum) => this.changeAppPage(pagenum)}
+                    >    
+                        {this.props.children}
                     </KafoModal>
-                    <KafoMapCombined/>
                 </View>
             );
           }

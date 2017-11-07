@@ -16,19 +16,25 @@ class KafoModal extends Component {
     
   render() {
     return (
+
             <View style={styles.modalStyle}>
                 <KafoHeader headerText={this.props.headerText} />
-                <KafoIcon/>
                 <KafoTextInput translinkAPICall={this.translink} changePage={(pagenum) => this.changeAppPage(pagenum)} />
             </View>
+
     );
   }
 }
 
 const styles = StyleSheet.create({
+
      modalStyle: {
-        flex: 1,
-        backgroundColor: 'blue'
+        position: 'absolute',
+        bottom: 20,
+        zIndex: 800,
+        width: '90%',
+        backgroundColor:'rgba(255, 255, 255, 1.0)',
+
       }
 });
 

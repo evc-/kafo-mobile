@@ -16,6 +16,7 @@ class KafoMapCombined extends Component {
         
     }
     
+
         componentWillMount(){
             //set to true to get actual location 
             if (false){
@@ -50,8 +51,7 @@ class KafoMapCombined extends Component {
   }
                 
   render() {
-       
-                      
+              
     return (
 
         <View>
@@ -83,7 +83,10 @@ class KafoMapCombined extends Component {
 
 const styles = StyleSheet.create({
   map: {
-      flex: 1
+      height: Dimensions.get('window').height,
+      width: Dimensions.get('window').width,
+      zIndex: -6000
+      
   }
 
 });
