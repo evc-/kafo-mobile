@@ -15,7 +15,6 @@ export default class KafoHeader extends Component {
 const styles = StyleSheet.create({
      
     headerStyle: {
-        flexDirection: 'row',
         width: 400,
         height: 100, 
         justifyContent: 'center',

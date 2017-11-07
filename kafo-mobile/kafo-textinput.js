@@ -35,7 +35,7 @@ export default class KafoTextInput extends Component {
         value={this.state.text}
         maxLength={6}
         placeholder={"Enter Stop ID"}
-    keyboardType={'numeric'}
+        keyboardType={'numeric'}
 
       />
     );
@@ -43,7 +43,6 @@ export default class KafoTextInput extends Component {
 }
 
 const styles = StyleSheet.create({
-     
        textInputStyle:{ 
         height: 120,
         width: 400,  

@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
         width: 100, 
         left: 150,
         height: 100, 
-        alignItems: 'center',
         marginTop: 20
     }
 });

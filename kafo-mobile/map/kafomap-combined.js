@@ -57,7 +57,7 @@ class KafoMapCombined extends Component {
         <View>
         
          <MapView 
-            style={styles2.map}
+            style={styles.map}
             provider = { PROVIDER_GOOGLE }
             region={{
                 latitude: this.state.lat,
@@ -74,17 +74,16 @@ class KafoMapCombined extends Component {
                 longitude: this.state.lng,
             }}
         />
-            <KafoResults/>
+        
         </View>  
+
     );
 }
 }
 
-const styles2 = StyleSheet.create({
+const styles = StyleSheet.create({
   map: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
+      flex: 1
   }
 
 });

@@ -4,13 +4,10 @@ import KafoIcon from './kafo-icon';
 import KafoHeader from './kafo-header';
 import KafoTextInput from './kafo-textinput';
 import KafoSelectBus from './kafo-selectbus';
-//import KafoMap from './kafo-map';
-//import KafoMap from './map/kafomap';
 import KafoMapCombined from './map/kafomap-combined';
 import KafoButton2 from './kafo-button2';
 import ArrivalPage from './kafo-arrival';    
 import KafoModal from './kafo-modal';
-import ModalTest from './modal-test';
 
 export default class App extends React.Component {
 
@@ -86,17 +83,15 @@ translink(stopNum) {
 //this always runs 
       if (true){
         var head = null;
+          
           if(this.state.appState <= 1){
               head = (
-                <View>
-                  
+                <View>  
+                    <KafoModal>    
+                            {this.props.children}
+                    </KafoModal>
                     <KafoMapCombined/>
-                    <KafoIcon/>
-                    <KafoTextInput translinkAPICall={this.translink} changePage={(pagenum) => this.changeAppPage(pagenum)} />
-                    <KafoModal/>
-                  
-
-            </View>
+                </View>
             );
           }
 
@@ -105,7 +100,6 @@ translink(stopNum) {
             case 1:
                 comp = (
                     <View>
-                    
                     <KafoSelectBus />
                         <ScrollView>
                         {busResponses}
@@ -116,7 +110,7 @@ translink(stopNum) {
                 
           case 2:
             comp = (
-                <KafoMapCombined changePage={this.changeAppPage}/>
+                <Text>What</Text>
             )
           break;
 
@@ -131,14 +125,13 @@ translink(stopNum) {
   }
 }
 
-
 const styles = StyleSheet.create({
     
   container: {
-        alignItems: 'center',
-        flex: 1
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-around'
   }
-
 });
 
 
