@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { AppRegistry, Image, StyleSheet, Keyboard, Text, View, ScrollView } from 'react-native';
+import { AppRegistry, Image, StyleSheet, Keyboard, Text, View, ScrollView, Animated } from 'react-native';
 import KafoIcon from './kafo-icon';
 import KafoHeader from './kafo-header';
 import KafoTextInput from './kafo-textinput';
