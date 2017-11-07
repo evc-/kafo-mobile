@@ -30,32 +30,27 @@ export default class KafoTextInput extends Component {
   render() {
     return (
       <TextInput
-        style={inputStyles.textInputStyle}
+        style={styles.textInputStyle}
         onChangeText={(text) => this.updateText(text)}
         value={this.state.text}
         maxLength={6}
         placeholder={"Enter Stop ID"}
-keyboardType={'numeric'}
+    keyboardType={'numeric'}
 
       />
     );
   }
 }
 
-const inputStyles = StyleSheet.create({
-    
-    textInputStyle:{ 
+const styles = StyleSheet.create({
+     
+       textInputStyle:{ 
         height: 120,
         width: 400,  
         borderColor: 'gray',
         fontSize: 30,
         textAlign: 'center',
-    },
-    
-  container: {
-    flex: 1,
-    fontSize: 30,
-    alignItems: 'center',
-  },
-    
+    }
 });
+ 
+ 

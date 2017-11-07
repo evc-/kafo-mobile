@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, AppRegistry, StyleSheet, Text, View, Button } from 'react-native';
+import { Modal, Dimensions, AppRegistry, StyleSheet, Text, View, Button } from 'react-native';
 import KafoHeader from './kafo-header';
 
 class KafoModal extends Component {
@@ -12,23 +12,43 @@ class KafoModal extends Component {
         
     }
     
-        
   render() {
-       
-                      
+            
     return (
-        <KafoHeader headerText="Got enough time for coffee?" />
-       
+        <View style={styles.viewStyle1}>
+
+            <View style={styles.modalStyle}>
+                <KafoHeader headerText={this.props.headerText} />
+                {this.props.children}
+            </View>
+
+        </View>
     );
   }
 }
 
+
 const styles = StyleSheet.create({
-  map: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-  }
+    
+    viewStyle1: {
+        flex: 1,
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center'
+    },
+    
+    
+     modalStyle: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 10,
+        width: '90%', 
+        height: '25%',
+         position: 'absolute',
+         bottom: 0, 
+        backgroundColor: 'blue'
+      }
 
 });
 
