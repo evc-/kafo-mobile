@@ -14,12 +14,20 @@ class KafoModal extends Component {
         };
         
             this.changeModal = this.changeModal.bind(this);
+        this.selectRoute = this.selectRoute.bind(this);
     }
     
       changeModal(mstatenum){
             this.setState({modalState: mstatenum});
             Keyboard.dismiss();
         }
+    //returning undefined currently
+        selectRoute(i){
+        this.setState({
+            selectedBus: this.props.selectRouteProp
+        });
+            console.log(this.state.selectedBus);
+    }
     
   render() {
       var modal = null; 
@@ -33,6 +41,7 @@ class KafoModal extends Component {
                 <Text style={styles.question2Style}> Which bus stop are you going to?</Text>
                 
                 <KafoTextInput 
+                style={{height:300, position: 'absolute', bottom:200}}
                     translinkAPICall={this.props.translinkAPICall} 
                     changeModal={(mstatenum) => this.changeModal(mstatenum)}
                 />
@@ -51,9 +60,9 @@ class KafoModal extends Component {
                         routeNumber={currentValue.RouteNo} 
                         minsTillDepart={currentValue.Schedules.ExpectedCountdown} 
                         buttonColor ={(index % 2 == 1)} 
-        //                changePage={(pagenum) => this.changeAppPage(pagenum)}
                         selectedBusIndex= {index}
                         selectRouteProp={(i) => this.selectRoute(i)}
+                        changeModal={this.changeModal}
                         />
                     );
                 }, this);
@@ -69,6 +78,14 @@ class KafoModal extends Component {
             </View>
 
             
+          )
+      } else if (this.state.modalState===2){
+          modal = (
+                <View style={{height: 300}}>
+                
+                <Text style={styles.question1Style}>Success!</Text>
+      
+      </View>
           )
       }
       
@@ -102,7 +119,7 @@ const styles = StyleSheet.create({
         width: '100%',
         fontSize: 24,
         color: 'white',
-        lineHeight: 80,
+        lineHeight: 40,
         backgroundColor:'#76ABAC'
         
         
@@ -113,7 +130,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         textAlign: 'center',
         left: '15%',
-        top: 95,
+        top: 60,
         fontSize: 16,
         color: 'grey',
         fontStyle: 'italic'
