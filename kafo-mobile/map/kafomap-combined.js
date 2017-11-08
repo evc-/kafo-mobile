@@ -38,7 +38,7 @@ class KafoMapCombined extends Component {
                 
             } else {
                 this.setState({
-                    lng: 49.250951,
+                    lat: 49.250951,
                     lng: -123.116460,
                     error: null
                 })

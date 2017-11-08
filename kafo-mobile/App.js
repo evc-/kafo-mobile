@@ -19,19 +19,18 @@ export default class App extends React.Component {
             translinkData: ""
         };
          
-        this.changeAppPage = this.changeAppPage.bind(this);
+//        this.changeAppPage = this.changeAppPage.bind(this);
         this.translink = this.translink.bind(this);
      }
     
-    
-//defining a function to change the state of the app. 
+
 //we set "this" (app.js) to be pagenum, which is defined as zero up above. 
-//then we hide the keyboard 
-    changeAppPage(pagenum){
-        this.setState({appState: pagenum});
-        Keyboard.dismiss();
-    }
-    
+
+//    changeAppPage(pagenum){
+//        this.setState({appState: pagenum});
+//        Keyboard.dismiss();
+//    }
+ 
 //translink function now takes stop number(stopNum) as a parameter. replaced dummy stop # with the parameter. 
 //passed translink function as prop to text input component below. 
 
@@ -63,65 +62,29 @@ translink(stopNum) {
 //add a selectRouteProp so we can call have the selectRoute function from the button component 
 //if the state exists, map the object (in the state) to create the buttons 
       
-      if (this.state.translinkData){
-        var busResponses = this.state.translinkData.map(function callback(currentValue, index, array) {
-            return(
-                <KafoButton2 
-                key={index+"buttons"} 
-                routeName={currentValue.RouteName} 
-                routeNumber={currentValue.RouteNo} 
-                minsTillDepart={currentValue.Schedules.ExpectedCountdown} 
-                buttonColor ={(index % 2 == 1)} 
-                changePage={(pagenum) => this.changeAppPage(pagenum)}
-                selectedBusIndex= {index}
-                selectRouteProp={(i) => this.selectRoute(i)}
-                />
-            );
-        }, this);
-}
-            
-//this always runs 
-      if (true){
-        var head = null;
-          
-          if(this.state.appState <= 1){
-              head = (
-                <View style={{alignItems:'center'}}>  
-                   
-                <KafoMapCombined/>
-                   <KafoModal
-                    translinkAPICall={(pagenum) => this.changeAppPage(pagenum)}
+      
+
+    if (true){
+        var modal = null;
+              modal = (
+                  <View style={{alignItems:'center'}}>  
+                    <KafoModal
+                        tdata ={this.state.translinkData}
+//                        changePage={(pagenum) => this.changeAppPage(pagenum)}
+                        translinkAPICall ={this.translink}
                     >    
                         {this.props.children}
                     </KafoModal>
                 </View>
+          
             );
-          }
 
-        var comp = null;
-        switch (this.state.appState){
-            case 1:
-                comp = (
-                    <View>
-                    <KafoSelectBus />
-                        <ScrollView>
-                        {busResponses}
-                        </ScrollView>
-                    </View>
-                )
-                break;
-                
-          case 2:
-            comp = (
-                <Text>What</Text>
-            )
-          break;
-
-        }
             return (
                 <View style={styles.container}>
-                    {head}
-                    {comp}
+                       
+                    <KafoMapCombined/>
+                    {modal}
+
                 </View>
             );
       } 
