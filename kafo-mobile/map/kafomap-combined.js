@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, AppRegistry, StyleSheet, Text, View, Button } from 'react-native';
 import KafoResults from '../kafo-results';
+import Geolocation from './Geolocation';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 class KafoMapCombined extends Component {
@@ -8,8 +9,8 @@ class KafoMapCombined extends Component {
         super(props);
         
         this.state={
-            lng: 0,
-            lat: 0,
+            lng: 49,
+            lat: -123,
             error: null,
             appState: 2,
         };
@@ -19,7 +20,7 @@ class KafoMapCombined extends Component {
 
         componentWillMount(){
             //set to true to get actual location 
-            if (false){
+            if (true){
                   this.watchId = navigator.geolocation.getCurrentPosition(
                 (position) => {
                     this.setState({
@@ -66,15 +67,13 @@ class KafoMapCombined extends Component {
                 longitudeDelta: 0.045
             }}
         >
-        </MapView>
-
         <MapView.Marker
             coordinate={{
                 latitude: this.state.lat,
                 longitude: this.state.lng,
             }}
         />
-        
+        </MapView>
         </View>  
 
     );
@@ -87,7 +86,11 @@ const styles = StyleSheet.create({
       width: Dimensions.get('window').width,
       zIndex: -6000
       
-  }
+  },
+    location: {
+        position:'absolute',
+        top: 20
+    }
 
 });
 

@@ -35,16 +35,16 @@ class KafoModal extends Component {
         if(this.state.modalState === 0){
             
             modal =(
-                <View style={{height: 300}}>
+                <View style={{height: 400}}>
                 
                 <Text style={styles.question1Style}> Got enough time for coffee?</Text>
                 <Text style={styles.question2Style}> Which bus stop are you going to?</Text>
-                
+                <View style={styles.lessAnnoying}>
                 <KafoTextInput 
-                style={{height:300, position: 'absolute', bottom:200}}
                     translinkAPICall={this.props.translinkAPICall} 
                     changeModal={(mstatenum) => this.changeModal(mstatenum)}
                 />
+      </View>
       
       </View>
                 )
@@ -107,7 +107,8 @@ const styles = StyleSheet.create({
         bottom: 100,
         zIndex: 800,
         width: '90%',
-        backgroundColor:'rgba(255, 255, 255, 1.0)'
+        backgroundColor:'rgba(255, 255, 255, 1.0)',
+        height: 120
 
       },
     
@@ -115,9 +116,9 @@ const styles = StyleSheet.create({
         position: 'absolute',
         borderRadius: 15,
         textAlign: 'center',
-        height: 80,
+        height: 40,
         width: '100%',
-        fontSize: 24,
+        fontSize: 16,
         color: 'white',
         lineHeight: 40,
         backgroundColor:'#76ABAC'
@@ -130,12 +131,17 @@ const styles = StyleSheet.create({
         position: 'absolute',
         textAlign: 'center',
         left: '15%',
-        top: 60,
-        fontSize: 16,
+        top: 52,
+        fontSize: 12,
         color: 'grey',
         fontStyle: 'italic'
         
-      }
+      },
+    lessAnnoying: {
+        position:'absolute',
+        width: 90,
+        top: 50
+}
     
     
 });
