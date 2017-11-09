@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     
     touchableStyle2: {
         width: 400,
-        height: 80,
+        height: 0,
         backgroundColor: '#6FA7A8',
         fontSize: 14,
         flex: 0,

@@ -63,6 +63,7 @@ class KafoModal extends Component {
                         selectedBusIndex= {index}
                         selectRouteProp={(i) => this.selectRoute(i)}
                         changeModal={this.changeModal}
+                        getCoffeeShops ={this.props.coffeeShopCall}
                         />
                     );
                 }, this);
@@ -83,7 +84,7 @@ class KafoModal extends Component {
           modal = (
                 <View style={{height: 300}}>
                 
-                <Text style={styles.question1Style}>Success!</Text>
+                <Text style={styles.question1Style}></Text>
       
       </View>
           )

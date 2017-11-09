@@ -16,13 +16,28 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             appState: 0,
-            translinkData: ""
+            translinkData: "",
+            coffeeShopData: "",
+            userLat:"",
+            userLong:""
         };
          
 //        this.changeAppPage = this.changeAppPage.bind(this);
         this.translink = this.translink.bind(this);
+         this.coffeeShopFetch = this.coffeeShopFetch.bind(this);
+         this.getUserLat = this.getUserLat.bind(this);
+         this.getUserLong = this.getUserLong.bind(this);
      }
-    
+ getUserLat(data){
+     this.setState({
+         userLat:data
+     });
+ }
+getUserLong(data){
+    this.setState({
+        userLong:data
+    });
+}
 
 //we set "this" (app.js) to be pagenum, which is defined as zero up above. 
 
@@ -56,6 +71,19 @@ translink(stopNum) {
         });
     }
     
+//get  coffee shops within a 500m radius
+    coffeeShopFetch(){
+                     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=500").then((resp)=>{
+                    console.log("resp");
+                    return resp.json();
+                    }).then((json)=>{
+                    this.setState({
+                        coffeeShopData:json
+                    });
+                         console.log(this.state.coffeeShopData);
+            });
+    }
+    
   render() {
 
 //add a selectedbusIndex prop so we have the index of which button they clicked on 
@@ -72,6 +100,8 @@ translink(stopNum) {
                         tdata ={this.state.translinkData}
 //                        changePage={(pagenum) => this.changeAppPage(pagenum)}
                         translinkAPICall ={this.translink}
+                        coffeeShopCall = {this.coffeeShopFetch}
+                        
                     >    
                         {this.props.children}
                     </KafoModal>
@@ -82,7 +112,7 @@ translink(stopNum) {
             return (
                 <View style={styles.container}>
                        
-                    <KafoMapCombined/>
+                    <KafoMapCombined />
                     {modal}
 
                 </View>

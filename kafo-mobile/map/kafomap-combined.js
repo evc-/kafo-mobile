@@ -13,7 +13,15 @@ class KafoMapCombined extends Component {
             error: null,
             appState: 2,
         };
+        this.addLat = this.addLat.bind(this);
+        this.addLong = this.addLong.bind(this);
         
+    }
+    addLat(){
+        this.props.checkLat(this.state.lat);
+    }
+    addLong(){
+        this.props.checkLong(this.state.long);
     }
     
 
@@ -27,11 +35,12 @@ class KafoMapCombined extends Component {
                     lat:position.coords.latitude,
                     error: null,
                     });
+                    //get  coffee shops within a 500m radius
                      fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=500").then((resp)=>{
                     console.log("resp");
                     return resp.json();
                     }).then((json)=>{
-                    console.log("test", json); 
+                    console.log("test", json);
             });
                 },
             (error) => 
