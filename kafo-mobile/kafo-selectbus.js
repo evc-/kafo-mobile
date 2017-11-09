@@ -5,17 +5,16 @@ import { View, Text, StyleSheet } from 'react-native';
 export default class KafoSelectBus extends Component {
   render() {
     return (        
-        <View style={{flexDirection: 'row', top:200, height: 50, padding: 0}}>
             <View style={styles.containerStyle}> 
                 <Text style={styles.textStyle}> Select Bus</Text>
             </View>
-      </View>
     );
   }
 } 
 
 const styles = StyleSheet.create({
     textStyle: {
+        padding: 35,
         fontSize: 20,
         fontWeight: 'bold',
         alignItems: 'center',

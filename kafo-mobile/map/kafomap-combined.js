@@ -100,12 +100,7 @@ const styles = StyleSheet.create({
       width: Dimensions.get('window').width,
       zIndex: -6000
       
-  },
-    location: {
-        position:'absolute',
-        top: 20
-    }
-
+  }
 });
 
 export default KafoMapCombined;

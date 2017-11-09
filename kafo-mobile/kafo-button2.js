@@ -31,7 +31,7 @@ export default class KafoButton extends React.Component {
       <View>
         <TouchableOpacity>
             <Text 
-                style={style}
+               style={style}
                 onPress={() => this.selectRoute()}
             >       {this.props.routeNumber}{" "}
                     {this.props.routeName}
@@ -45,29 +45,31 @@ export default class KafoButton extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    
      touchableStyle1: {
-        width: 400,
-        height: 80,
+        flex: 1,
+        paddingTop: 50,
+        paddingBottom: 50,
+        width: '100%',
         backgroundColor: '#303C45',
         fontSize: 14,
-        flex: 0,
         textAlign: 'center',
-        lineHeight: 100,
         color: '#F4EEE3',
         fontWeight: 'bold',
     },
     
     touchableStyle2: {
-        width: 400,
-        height: 0,
+        flex: 1,
+        paddingTop: 50,
+        paddingBottom: 50,
+        width: '100%',
         backgroundColor: '#6FA7A8',
         fontSize: 14,
-        flex: 0,
         textAlign: 'center',
-        lineHeight: 100,
         color: '#F4EEE3',
-        fontWeight: 'bold',
+        fontWeight: 'bold'
     }
+    
 });
         
 

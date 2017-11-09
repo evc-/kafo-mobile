@@ -91,31 +91,28 @@ translink(stopNum) {
 //add a selectRouteProp so we can call have the selectRoute function from the button component 
 //if the state exists, map the object (in the state) to create the buttons 
       
-      
-
     if (true){
         var modal = null;
               modal = (
-                  <View style={{alignItems:'center'}}>  
-                    <KafoModal
-                        tdata ={this.state.translinkData}
-//                        changePage={(pagenum) => this.changeAppPage(pagenum)}
-                        translinkAPICall ={this.translink}
-                        coffeeShopCall = {this.coffeeShopFetch}
-                        
-                    >    
-                        {this.props.children}
-                    </KafoModal>
+                <View style={{ justifyContent: 'space-around', alignItems:'center',}}>  
+                    <View style={styles.modalStyle}>
+                        <KafoModal
+                            tdata ={this.state.translinkData}
+    //                        changePage={(pagenum) => this.changeAppPage(pagenum)}
+                            translinkAPICall ={this.translink}
+                            coffeeShopCall = {this.coffeeShopFetch}
+                        />    
+                    </View>
                 </View>
           
             );
 
             return (
-                <View style={styles.container}>
-                       
+                <View style={{flex:1}}>
                     <KafoMapCombined />
-                    {modal}
-
+                    <View style={styles.container}>
+                        {modal}
+                    </View>
                 </View>
             );
       } 
@@ -123,11 +120,19 @@ translink(stopNum) {
 }
 
 const styles = StyleSheet.create({
+
+    modalStyle: {
+        position: 'absolute',
+        borderRadius: 15,
+        bottom: 50,
+        width: '90%',
+        backgroundColor:'rgba(255, 255, 255, 1.0)',
+        height: 220
+      },
     
   container: {
         flex: 1,
         flexDirection: 'column',
-        justifyContent: 'space-around'
   }
 });
 
