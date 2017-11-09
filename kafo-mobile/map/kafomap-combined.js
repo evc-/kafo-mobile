@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Dimensions, AppRegistry, StyleSheet, Text, View, Button } from 'react-native';
 import KafoResults from '../kafo-results';
-import Geolocation from './Geolocation';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 class KafoMapCombined extends Component {
@@ -28,7 +27,7 @@ class KafoMapCombined extends Component {
                     lat:position.coords.latitude,
                     error: null,
                     });
-                     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=1000").then((resp)=>{
+                     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=500").then((resp)=>{
                     console.log("resp");
                     return resp.json();
                     }).then((json)=>{
