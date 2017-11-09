@@ -101,28 +101,27 @@ class KafoModal extends Component {
 }
 
 const styles = StyleSheet.create({
-
-     modalStyle: {
+modalStyle: {
         position: 'absolute',
         borderRadius: 15,
-        bottom: 100,
+        bottom: 50,
         zIndex: 800,
         width: '90%',
         backgroundColor:'rgba(255, 255, 255, 1.0)',
-        height: 120
-
+        height: 220
       },
     
     question1Style:{
         position: 'absolute',
-        borderRadius: 15,
+        borderRadius: 0,
         textAlign: 'center',
-        height: 40,
+        height: 60,
         width: '100%',
-        fontSize: 16,
+        fontSize: 15,
         color: 'white',
-        lineHeight: 40,
-        backgroundColor:'#76ABAC'
+        lineHeight: 30,
+        backgroundColor:'#76ABAC',
+        
         
         
       },
@@ -131,8 +130,8 @@ const styles = StyleSheet.create({
     question2Style:{
         position: 'absolute',
         textAlign: 'center',
-        left: '15%',
-        top: 52,
+        left: '20%',
+        top: 65,
         fontSize: 12,
         color: 'grey',
         fontStyle: 'italic'
@@ -141,8 +140,20 @@ const styles = StyleSheet.create({
     lessAnnoying: {
         position:'absolute',
         width: 90,
-        top: 50
-}
+        top: 50,
+    },
+    
+    selectRouteStyle: {
+        position: 'absolute',
+        borderRadius: 0,
+        textAlign: 'center',
+        height: 61,
+        width: '100%',
+        fontSize: 20,
+        color: 'white',
+        lineHeight: 40,
+        backgroundColor:'#76ABAC',
+    }
     
     
 });

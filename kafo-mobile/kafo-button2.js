@@ -5,11 +5,15 @@ import { TouchableOpacity } from 'react-native'
 export default class KafoButton extends React.Component {
     
     constructor(props) {
-    super(props);      
+    super(props);    
+        
+            this.selectRoute = this.selectRoute.bind(this);
   }
+    
+    
     //set selectRouteProp to be the selectedBusIndex 
     //selectRouteProp is the selectRoute function with the parameter of the index 
-    buttonPressFunctions(){   
+    selectRoute(){   
             this.props.changeModal(2);
             this.props.selectRouteProp(this.props.selectedBusIndex);
         }
@@ -28,8 +32,8 @@ export default class KafoButton extends React.Component {
         <TouchableOpacity>
             <Text 
                 style={style}
-                onPress={() => this.buttonPressFunctions()}
-            >                    {this.props.routeNumber}{" "}
+                onPress={() => this.selectRoute()}
+            >       {this.props.routeNumber}{" "}
                     {this.props.routeName}
                 
             </Text>

@@ -45,13 +45,13 @@ export default class KafoTextInput extends Component {
 const styles = StyleSheet.create({
        textInputStyle:{ 
         height: 110,
-        width: 400,  
-        fontSize: 20,
+        width: 325,  
+        fontSize: 15,
         textAlign: 'center',
         textDecorationLine: 'underline',
-        color: '#76ABAC'
-        
-    }
+        color: '#76ABAC',
+        top: 20
+       }
 });
  
  

@@ -5,7 +5,7 @@ import KafoHeader from './kafo-header';
 import KafoTextInput from './kafo-textinput';
 import KafoSelectBus from './kafo-selectbus';
 import KafoMapCombined from './map/kafomap-combined';
-import KafoButton2 from './kafo-button2';
+//import KafoButton2 from './kafo-button2';
 import ArrivalPage from './kafo-arrival';    
 import KafoModal from './kafo-modal';
 
@@ -23,11 +23,12 @@ export default class App extends React.Component {
         };
          
 //        this.changeAppPage = this.changeAppPage.bind(this);
-        this.translink = this.translink.bind(this);
+            this.translink = this.translink.bind(this);
          this.coffeeShopFetch = this.coffeeShopFetch.bind(this);
          this.getUserLat = this.getUserLat.bind(this);
          this.getUserLong = this.getUserLong.bind(this);
      }
+    
  getUserLat(data){
      this.setState({
          userLat:data
