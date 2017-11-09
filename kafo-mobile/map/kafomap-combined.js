@@ -9,8 +9,8 @@ class KafoMapCombined extends Component {
         super(props);
         
         this.state={
-            lng: 49,
-            lat: -123,
+             lat: 49.250951,
+            lng: -123.116460,
             error: null,
             appState: 2,
         };
@@ -28,6 +28,12 @@ class KafoMapCombined extends Component {
                     lat:position.coords.latitude,
                     error: null,
                     });
+                     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=1000").then((resp)=>{
+                    console.log("resp");
+                    return resp.json();
+                    }).then((json)=>{
+                    console.log("test", json); 
+            });
                 },
             (error) => 
                 this.setState({ 
