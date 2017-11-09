@@ -23,39 +23,35 @@ export default class KafoTextInput extends Component {
         
         if (text.length == 5){
             this.props.translinkAPICall(text);
-            this.props.changePage(1);
+            this.props.changeModal(1);
         }
     }
 
   render() {
     return (
       <TextInput
-        style={inputStyles.textInputStyle}
+        style={styles.textInputStyle}
         onChangeText={(text) => this.updateText(text)}
         value={this.state.text}
         maxLength={6}
         placeholder={"Enter Stop ID"}
-keyboardType={'numeric'}
+        keyboardType={'numeric'}
 
       />
     );
   }
 }
 
-const inputStyles = StyleSheet.create({
-    
-    textInputStyle:{ 
-        height: 120,
+const styles = StyleSheet.create({
+       textInputStyle:{ 
+        height: 110,
         width: 400,  
-        borderColor: 'gray',
-        fontSize: 30,
+        fontSize: 20,
         textAlign: 'center',
-    },
-    
-  container: {
-    flex: 1,
-    fontSize: 30,
-    alignItems: 'center',
-  },
-    
+        textDecorationLine: 'underline',
+        color: '#76ABAC'
+        
+    }
 });
+ 
+ 

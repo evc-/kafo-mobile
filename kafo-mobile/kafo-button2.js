@@ -10,7 +10,7 @@ export default class KafoButton extends React.Component {
     //set selectRouteProp to be the selectedBusIndex 
     //selectRouteProp is the selectRoute function with the parameter of the index 
     buttonPressFunctions(){   
-            this.props.changePage(2);
+            this.props.changeModal(2);
             this.props.selectRouteProp(this.props.selectedBusIndex);
         }
 
@@ -29,9 +29,8 @@ export default class KafoButton extends React.Component {
             <Text 
                 style={style}
                 onPress={() => this.buttonPressFunctions()}
-            >
+            >                    {this.props.routeNumber}{" "}
                     {this.props.routeName}
-                    {this.props.routeNumber}
                 
             </Text>
         </TouchableOpacity> 
@@ -43,10 +42,10 @@ export default class KafoButton extends React.Component {
 
 const styles = StyleSheet.create({
      touchableStyle1: {
-        width: 450,
-        height: 100,
+        width: 400,
+        height: 80,
         backgroundColor: '#303C45',
-        fontSize: 30,
+        fontSize: 14,
         flex: 0,
         textAlign: 'center',
         lineHeight: 100,
@@ -55,10 +54,10 @@ const styles = StyleSheet.create({
     },
     
     touchableStyle2: {
-        width: 450,
-        height: 100,
+        width: 400,
+        height: 0,
         backgroundColor: '#6FA7A8',
-        fontSize: 30,
+        fontSize: 14,
         flex: 0,
         textAlign: 'center',
         lineHeight: 100,

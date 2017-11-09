@@ -8,22 +8,40 @@ class KafoMapCombined extends Component {
         super(props);
         
         this.state={
-            lng: 0,
-            lat: 0,
+             lat: 49.250951,
+            lng: -123.116460,
             error: null,
             appState: 2,
         };
+        this.addLat = this.addLat.bind(this);
+        this.addLong = this.addLong.bind(this);
         
     }
+    addLat(){
+        this.props.checkLat(this.state.lat);
+    }
+    addLong(){
+        this.props.checkLong(this.state.long);
+    }
     
+
         componentWillMount(){
-            this.watchId = navigator.geolocation.getCurrentPosition(
+            //set to true to get actual location 
+            if (true){
+                  this.watchId = navigator.geolocation.getCurrentPosition(
                 (position) => {
                     this.setState({
                     lng: position.coords.longitude,
                     lat:position.coords.latitude,
                     error: null,
                     });
+                    //get  coffee shops within a 500m radius
+                     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=500").then((resp)=>{
+                    console.log("resp");
+                    return resp.json();
+                    }).then((json)=>{
+                    console.log("test", json);
+            });
                 },
             (error) => 
                 this.setState({ 
@@ -32,22 +50,29 @@ class KafoMapCombined extends Component {
             
                 {enableHighAccuracy: false, timeout: 2000, maximumAge: 1000, distanceFilter: 10 },
                     );
+                
+            } else {
+                this.setState({
+                    lat: 49.250951,
+                    lng: -123.116460,
+                    error: null
+                })
             }
+          
+        }
     
       componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchId);
   }
                 
-
   render() {
-       
-                      
+              
     return (
 
         <View>
         
          <MapView 
-            style={styles2.map}
+            style={styles.map}
             provider = { PROVIDER_GOOGLE }
             region={{
                 latitude: this.state.lat,
@@ -56,28 +81,30 @@ class KafoMapCombined extends Component {
                 longitudeDelta: 0.045
             }}
         >
-        </MapView>
-
         <MapView.Marker
             coordinate={{
                 latitude: this.state.lat,
                 longitude: this.state.lng,
             }}
         />
-            <KafoResults/>
+        </MapView>
         </View>  
+
     );
 }
 }
 
-const styles2 = StyleSheet.create({
+const styles = StyleSheet.create({
   map: {
-    height: 400,
-    width: 400,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-  }
+      height: Dimensions.get('window').height,
+      width: Dimensions.get('window').width,
+      zIndex: -6000
+      
+  },
+    location: {
+        position:'absolute',
+        top: 20
+    }
 
 });
 
