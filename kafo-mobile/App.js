@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Image, StyleSheet, Keyboard, Text, View, ScrollView, Button } from 'react-native';
+import { AppRegistry, Image, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView,  Text, View, ScrollView, Button } from 'react-native';
 import KafoIcon from './kafo-icon';
 import KafoHeader from './kafo-header';
 import KafoTextInput from './kafo-textinput';
@@ -93,26 +93,23 @@ translink(stopNum) {
       
     if (true){
         var modal = null;
-              modal = (
-                <View style={{ justifyContent: 'space-around', alignItems:'center',}}>  
-                    <View style={styles.modalStyle}>
-                        <KafoModal
-                            tdata ={this.state.translinkData}
-    //                        changePage={(pagenum) => this.changeAppPage(pagenum)}
-                            translinkAPICall ={this.translink}
-                            coffeeShopCall = {this.coffeeShopFetch}
-                        />    
-                    </View>
-                </View>
-          
-            );
+                modal = (
+                    <KafoModal
+                        tdata ={this.state.translinkData}
+    //                  changePage={(pagenum) => this.changeAppPage(pagenum)}
+                        translinkAPICall ={this.translink}
+                        coffeeShopCall = {this.coffeeShopFetch}
+                    />    
+                );
 
             return (
-                <View style={{flex:1}}>
+                <View style={styles.container}>
                     <KafoMapCombined />
-                    <View style={styles.container}>
-                        {modal}
-                    </View>
+                        <View style={{justifyContent: 'space-around', alignItems:'center'}}>
+                                <View style={styles.modalStyle}>
+                                    {modal}
+                                </View>
+                        </View>
                 </View>
             );
       } 
@@ -122,18 +119,20 @@ translink(stopNum) {
 const styles = StyleSheet.create({
 
     modalStyle: {
-        position: 'absolute',
+        position:'absolute',
+        bottom: 20,
         borderRadius: 15,
-        bottom: 50,
         width: '90%',
-        backgroundColor:'rgba(255, 255, 255, 1.0)',
-        height: 220
+        backgroundColor:'rgba(255, 255, 255, 0.9)',
+        height: Dimensions.get('window').height * .3,
+
       },
     
-  container: {
+    container: {
         flex: 1,
-        flexDirection: 'column',
+        flexDirection: 'column'
   }
+    
 });
 
 

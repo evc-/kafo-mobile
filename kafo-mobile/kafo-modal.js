@@ -127,17 +127,7 @@ const styles = StyleSheet.create({
         color: 'red',
         fontSize: 12
     }
-    
-//    selectRouteStyle: {
-//        borderRadius: 0,
-//        textAlign: 'center',
-//        height: 61,
-//        width: '100%',
-//        fontSize: 20,
-//        color: 'white',
-//        lineHeight: 40,
-//        backgroundColor:'#76ABAC',
-//    }
+
     
 });
 
