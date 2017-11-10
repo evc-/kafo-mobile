@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Modal, Dimensions, Keyboard, AppRegistry, StyleSheet, ScrollView, Text, View, Button } from 'react-native';
-import KafoHeader from './kafo-header';
-import KafoIcon from './kafo-icon';
 import KafoTextInput from './kafo-textinput';
 import KafoButton from './kafo-button2';
 
@@ -84,7 +82,7 @@ class KafoModal extends Component {
           modal = (
                 <View style={{height: 300}}>
                 
-                <Text style={styles.question1Style}></Text>
+                <Text style={styles.question1Style}>Some success!</Text>
       
       </View>
           )

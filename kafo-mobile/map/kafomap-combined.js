@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Dimensions, AppRegistry, StyleSheet, Text, View, Button } from 'react-native';
-import KafoResults from '../kafo-results';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 class KafoMapCombined extends Component {
