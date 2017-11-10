@@ -28,11 +28,13 @@ export default class App extends React.Component {
      this.setState({
          userLat:data
      });
+     console.log(this.state.userLat);
  }
 getUserLong(data){
     this.setState({
         userLong:data
     });
+    console.log(this.state.userLong);
 }
 
 //we set "this" (app.js) to be pagenum, which is defined as zero up above. 
@@ -52,8 +54,7 @@ translink(stopNum) {
     .then(response => response.json())
     .then((responseJson) => {
         console.log(responseJson);
-        this.setState({translinkData:responseJson});     //set the state to be the response object from the translink api 
-        
+        this.setState({translinkData:responseJson});     //set the state to be the response object from the translink api
     })
     .catch((error) => {
         console.log(error);
@@ -68,16 +69,8 @@ translink(stopNum) {
     }
     
 //get  coffee shops within a 500m radius
-    coffeeShopFetch(){
-                     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=500").then((resp)=>{
-                    console.log("resp");
-                    return resp.json();
-                    }).then((json)=>{
-                    this.setState({
-                        coffeeShopData:json
-                    });
-                         console.log(this.state.coffeeShopData);
-            });
+    coffeeShopFetch(data){
+        console.log(data);
     }
     
   render() {
@@ -96,8 +89,6 @@ translink(stopNum) {
                         tdata ={this.state.translinkData}
 //                        changePage={(pagenum) => this.changeAppPage(pagenum)}
                         translinkAPICall ={this.translink}
-                        coffeeShopCall = {this.coffeeShopFetch}
-                        
                     >    
                         {this.props.children}
                     </KafoModal>
@@ -108,7 +99,7 @@ translink(stopNum) {
             return (
                 <View style={styles.container}>
                        
-                    <KafoMapCombined />
+                    <KafoMapCombined sendCSData = {this.coffeeShopFetch} getUserLong={this.checkLat} getUserLat = {this.checkLong} />
                     {modal}
 
                 </View>
