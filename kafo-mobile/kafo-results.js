@@ -38,10 +38,6 @@ const styles = StyleSheet.create({
     
     question1Style:{
         flex: 1,
-<<<<<<< HEAD
-        borderRadius: 10,
-=======
->>>>>>> 6422540c778d577a594499d0f9c550c26dd4249e
         textAlign: 'center',
         padding:15,
         width: '100%',
@@ -51,10 +47,6 @@ const styles = StyleSheet.create({
       },
     paragraph1Style:{
         flex: 1,
-<<<<<<< HEAD
-        borderRadius: 0,
-=======
->>>>>>> 6422540c778d577a594499d0f9c550c26dd4249e
         textAlign: 'center',
         width: '100%',
         padding: 15,
@@ -63,10 +55,6 @@ const styles = StyleSheet.create({
     },
     question2Style:{
         flex: 1,
-<<<<<<< HEAD
-        borderRadius: 10,
-=======
->>>>>>> 6422540c778d577a594499d0f9c550c26dd4249e
         textAlign: 'center',
         padding:15,
         width: '100%',
