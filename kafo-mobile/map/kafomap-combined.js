@@ -8,7 +8,7 @@ class KafoMapCombined extends Component {
         super(props);
         
         this.state={
-             lat: 49.250951,
+            lat: 49.250951,
             lng: -123.116460,
             error: null,
             appState: 2,
@@ -92,7 +92,7 @@ class KafoMapCombined extends Component {
     
         componentWillMount(){
             //set to true to get actual location 
-            if (false){
+            if (true){
                   this.watchId = navigator.geolocation.getCurrentPosition(
                 (position) => {
                     this.setState({
@@ -101,7 +101,7 @@ class KafoMapCombined extends Component {
                     error: null,
                     });
                     //get  coffee shops within a 500m radius
-                     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=500").then((CSresp)=>{
+                     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=10000").then((CSresp)=>{
                     console.log(CSresp);
                     return CSresp.json();
                     }).then((CSjson)=>{
@@ -139,7 +139,7 @@ class KafoMapCombined extends Component {
               var coffeeResp = null;
           if (this.state.coffeeShopData != '' ){
           //this isn't working!!!
-                coffeeResp = this.state.coffeeShopData.map(function callback(currentValue, index, array) {
+                var coffeeResp = this.state.coffeeShopData.map(function callback(currentValue, index, array) {
                     return(
                         <MapView.Marker 
                         id={index}
@@ -147,8 +147,8 @@ class KafoMapCombined extends Component {
                             latitude: currentValue.lat,
                             longitude: currentValue.lng}} 
                         title={currentValue.name}
-          />
-                    );
+                    />  
+                    )                                      
                 }, this);
         }
     return (
@@ -171,6 +171,7 @@ class KafoMapCombined extends Component {
                 longitude: this.state.lng,
             }}
         />
+        {coffeeResp}
         </MapView>
         </View>  
 
