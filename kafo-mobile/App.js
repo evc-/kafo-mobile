@@ -29,6 +29,7 @@ export default class App extends React.Component {
         this.coffeeShopFetch = this.coffeeShopFetch.bind(this);
         this.getUserLat = this.getUserLat.bind(this);
         this.getUserLong = this.getUserLong.bind(this);
+        this.translinkStopCall = this.translinkStopCall.bind(this);
      }
     
  getUserLat(data){
