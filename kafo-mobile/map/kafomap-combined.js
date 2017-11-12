@@ -136,7 +136,7 @@ class KafoMapCombined extends Component {
     }
                 
   render() {
-              var coffeeResp = null;
+          
           if (this.state.coffeeShopData != '' ){
           //this isn't working!!!
                 var coffeeResp = this.state.coffeeShopData.map(function callback(currentValue, index, array) {
@@ -167,8 +167,10 @@ class KafoMapCombined extends Component {
         >
         <MapView.Marker
             coordinate={{
+        
                 latitude: this.state.lat,
                 longitude: this.state.lng,
+        
             }}
         />
         {coffeeResp}
