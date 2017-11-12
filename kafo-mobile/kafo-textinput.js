@@ -24,6 +24,7 @@ export default class KafoTextInput extends Component {
         if (text.length == 5){
             this.props.translinkAPICall(text);
             this.props.changeModal(1);
+            this.props.translinkStopCall(text);
         }
     }
 

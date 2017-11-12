@@ -21,13 +21,15 @@ export default class App extends React.Component {
             userLat:"",
             userLong:"",
             positionBump: 0,
+            stopData: ''
         };
          
-//        this.changeAppPage = this.changeAppPage.bind(this);
+//      this.changeAppPage = this.changeAppPage.bind(this);
         this.translink = this.translink.bind(this);
         this.coffeeShopFetch = this.coffeeShopFetch.bind(this);
         this.getUserLat = this.getUserLat.bind(this);
         this.getUserLong = this.getUserLong.bind(this);
+        this.translinkStopCall = this.translinkStopCall.bind(this);
      }
     
  getUserLat(data){
@@ -82,6 +84,21 @@ translink(stopNum) {
         console.log(error);
     });
 }
+
+translinkStopCall(stopNum){
+        fetch('https://kafo-stop-call.herokuapp.com/translink/' + stopNum , {method:'GET', headers:{
+          "Content-Type": "application/json"
+          }})
+    .then(response => stopResp.json())
+    .then((stopRespJson) => {
+        console.log(stopRespJson);
+        this.setState({stopData:stopRespJson});     //set the state to be the response object from the translink api 
+        
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
 //this function takes an index parameter and saves the corresponding bus route to STATE as "selectedBus" 
     
     selectRoute(i){
@@ -107,16 +124,17 @@ translink(stopNum) {
                 modal = (
                     <KafoModal
                         tdata ={this.state.translinkData}
+                        translinkStopCall = {this.stopCallData}
     //                  changePage={(pagenum) => this.changeAppPage(pagenum)}
                         translinkAPICall ={this.translink}
-                        coffeeShopCall = {this.coffeeShopFetch}
                     />    
                 );
 
             return (
                 <KeyboardAvoidingView  style={styles.container}           
                     behaviour="padding">
-                    <KafoMapCombined />
+                    
+                    <KafoMapCombined sendCSData = {this.coffeeShopFetch} getUserLong={this.checkLat} getUserLat = {this.checkLong} />
                     <View 
                         style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .3 + 20 + this.state.positionBump} ]}>
                         {modal}

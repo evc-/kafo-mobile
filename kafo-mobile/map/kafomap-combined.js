@@ -8,14 +8,17 @@ class KafoMapCombined extends Component {
         super(props);
         
         this.state={
-             lat: 49.250951,
+            lat: 49.250951,
             lng: -123.116460,
             error: null,
             appState: 2,
+            coffeeShopData:''
+
         };
         this.addLat = this.addLat.bind(this);
         this.addLong = this.addLong.bind(this);
-        
+        this.addCoffeeShopData = this.addCoffeeShopData.bind(this);
+
     }
     addLat(){
         this.props.checkLat(this.state.lat);
@@ -36,6 +39,7 @@ class KafoMapCombined extends Component {
         //finally, return an object (for each shop) that includes its status and its coordinates. that way, we can place the colored icons on the coordinates! 
         
         var statusArray = shopAPIArray.map(function getShopStatus(currentShopObj, index, array) {
+            
             var shopCoords = this.getShopCoords(currentShopObj);
             var busStopCoords = this.getBusStopCoords(busStopNum);
             var walkingTimeValue = this.getWalkingTime(userLocation, shopCoords, busStopCoords);
@@ -97,12 +101,14 @@ class KafoMapCombined extends Component {
                     error: null,
                     });
                     //get  coffee shops within a 500m radius
-                     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=500").then((resp)=>{
-                    console.log("resp");
-                    return resp.json();
-                    }).then((json)=>{
-                    console.log("test", json);
-            });
+                     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=10000").then((CSresp)=>{
+                    console.log(CSresp);
+                    return CSresp.json();
+                    }).then((CSjson)=>{
+                    this.setState({
+                             coffeeShopData:CSjson
+                         });
+                     });
                 },
             (error) => 
                 this.setState({ 
@@ -125,9 +131,26 @@ class KafoMapCombined extends Component {
       componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchId);
   }
+     addCoffeeShopData(){
+        this.props.sendCSData(this.state.coffeeShopData);
+    }
                 
   render() {
-              
+              var coffeeResp = null;
+          if (this.state.coffeeShopData != '' ){
+          //this isn't working!!!
+                var coffeeResp = this.state.coffeeShopData.map(function callback(currentValue, index, array) {
+                    return(
+                        <MapView.Marker 
+                        id={index}
+                        coordinate={{
+                            latitude: currentValue.lat,
+                            longitude: currentValue.lng}} 
+                        title={currentValue.name}
+                    />  
+                    )                                      
+                }, this);
+        }
     return (
 
         <View>
@@ -148,6 +171,7 @@ class KafoMapCombined extends Component {
                 longitude: this.state.lng,
             }}
         />
+        {coffeeResp}
         </MapView>
         </View>  
 
