@@ -135,8 +135,9 @@ class KafoMapCombined extends Component {
         this.props.sendCSData(this.state.coffeeShopData);
     }
                 
-  /*{
-
+  render(){
+      
+      /*
               var coffeeResp = null;
           if (this.state.coffeeShopData != '' ){
           //this isn't working!!!
@@ -156,7 +157,8 @@ class KafoMapCombined extends Component {
                     />  
                     )                                      
                 }, this); 
-        }*/
+                */
+        
     return (
 
         <View>
@@ -186,6 +188,7 @@ class KafoMapCombined extends Component {
     );
 }
 }
+
 
 const styles = StyleSheet.create({
   map: {
