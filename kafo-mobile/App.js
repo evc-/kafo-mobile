@@ -89,7 +89,7 @@ translinkStopCall(stopNum){
         fetch('https://kafo-stop-call.herokuapp.com/translink/' + stopNum , {method:'GET', headers:{
           "Content-Type": "application/json"
           }})
-    .then(response => stopResp.json())
+    .then(response => response.json())
     .then((stopRespJson) => {
         console.log(stopRespJson);
         this.setState({stopData:stopRespJson});     //set the state to be the response object from the translink api 
