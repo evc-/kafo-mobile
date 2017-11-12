@@ -19,14 +19,15 @@ export default class App extends React.Component {
             translinkData: "",
             coffeeShopData: "",
             userLat:"",
-            userLong:""
+            userLong:"",
+            positionBump: 0,
         };
          
 //        this.changeAppPage = this.changeAppPage.bind(this);
-            this.translink = this.translink.bind(this);
-         this.coffeeShopFetch = this.coffeeShopFetch.bind(this);
-         this.getUserLat = this.getUserLat.bind(this);
-         this.getUserLong = this.getUserLong.bind(this);
+        this.translink = this.translink.bind(this);
+        this.coffeeShopFetch = this.coffeeShopFetch.bind(this);
+        this.getUserLat = this.getUserLat.bind(this);
+        this.getUserLong = this.getUserLong.bind(this);
      }
     
  getUserLat(data){
@@ -38,6 +39,23 @@ getUserLong(data){
     this.setState({
         userLong:data
     });
+}
+componentWillMount () {
+    this.keyboardWillShowSub = Keyboard.addListener('keyboardDidShow', this.keyboardWillShow);
+    this.keyboardWillHideSub = Keyboard.addListener('keyboardDidHide', this.keyboardWillHide);
+  }
+
+componentWillUnmount() {
+    this.keyboardWillShowSub.remove();
+    this.keyboardWillHideSub.remove();
+  }
+    
+keyboardWillShow = (event) => {
+    this.setState({positionBump: event.endCoordinates.height});
+}
+
+keyboardWillHide = (event) => {
+    this.setState({positionBump: 0});
 }
 
 //we set "this" (app.js) to be pagenum, which is defined as zero up above. 
@@ -103,14 +121,14 @@ translink(stopNum) {
                 );
 
             return (
-                <View style={styles.container}>
+                <KeyboardAvoidingView  style={styles.container}           
+                    behaviour="padding">
                     <KafoMapCombined />
-                        <View style={{justifyContent: 'space-around', alignItems:'center'}}>
-                                <View style={styles.modalStyle}>
-                                    {modal}
-                                </View>
-                        </View>
-                </View>
+                    <View 
+                        style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .3 + 20 + this.state.positionBump} ]}>
+                        {modal}
+                    </View>
+                </KeyboardAvoidingView >
             );
       } 
   }
@@ -119,18 +137,16 @@ translink(stopNum) {
 const styles = StyleSheet.create({
 
     modalStyle: {
-        position:'absolute',
-        bottom: 20,
         borderRadius: 15,
         width: '90%',
         backgroundColor:'rgba(255, 255, 255, 0.9)',
         height: Dimensions.get('window').height * .3,
-
       },
     
     container: {
         flex: 1,
-        flexDirection: 'column'
+        flexDirection: 'column',
+        alignItems:'center',
   }
     
 });

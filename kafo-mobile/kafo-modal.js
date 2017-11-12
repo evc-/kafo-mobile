@@ -77,6 +77,7 @@ class KafoModal extends Component {
               
                     {
               //EMULATOR ISSUE: SCROLLING CHANGES MODAL STATE
+              
               }
               
                     <ScrollView style={{flex: 1}}>
