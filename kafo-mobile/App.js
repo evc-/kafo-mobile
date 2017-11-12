@@ -21,6 +21,7 @@ export default class App extends React.Component {
             userLat:"",
             userLong:"",
             positionBump: 0,
+            stopData: ''
         };
          
 //        this.changeAppPage = this.changeAppPage.bind(this);
@@ -76,6 +77,19 @@ translink(stopNum) {
     .then((responseJson) => {
         console.log(responseJson);
         this.setState({translinkData:responseJson});     //set the state to be the response object from the translink api 
+        
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+    //grabs stop Lat&Long
+    fetch('https://kafo-stop-call.herokuapp.com/translink/' + stopNum , {method:'GET', headers:{
+          "Content-Type": "application/json"
+          }})
+    .then(response => stopresponse.json())
+    .then((stopresponseJson) => {
+        console.log(stopresponseJson);
+        this.setState({stopData:stopresponseJson});     //set the state to be the response object from the translink api 
         
     })
     .catch((error) => {
