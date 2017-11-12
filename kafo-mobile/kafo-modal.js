@@ -41,6 +41,7 @@ class KafoModal extends Component {
                     
                         <KafoTextInput 
                             translinkAPICall={this.props.translinkAPICall} 
+                            translinkStopCall={this.props.translinkStopCall} 
                             changeModal={(mstatenum) => this.changeModal(mstatenum)}
                         />
                     

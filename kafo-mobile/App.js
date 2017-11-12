@@ -124,7 +124,7 @@ translinkStopCall(stopNum){
                 modal = (
                     <KafoModal
                         tdata ={this.state.translinkData}
-                        translinkStopCall = {this.stopCallData}
+                        translinkStopCall = {this.translinkStopCall}
     //                  changePage={(pagenum) => this.changeAppPage(pagenum)}
                         translinkAPICall ={this.translink}
                     />    
