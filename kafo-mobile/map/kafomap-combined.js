@@ -136,10 +136,10 @@ class KafoMapCombined extends Component {
     }
                 
   render() {
-              var coffeeResp = null;
+              /*var coffeeResp = null;
           if (this.state.coffeeShopData != '' ){
           //this isn't working!!!
-                var coffeeResp = this.state.coffeeShopData.map(function callback(currentValue, index, array) {
+            var coffeeResp = this.state.coffeeShopData.map(function callback(currentValue, index, array) {
                     return(
                         <MapView.Marker 
                         id={index}
@@ -149,8 +149,8 @@ class KafoMapCombined extends Component {
                         title={currentValue.name}
                     />  
                     )                                      
-                }, this);
-        }
+                }, this); 
+        }*/
     return (
 
         <View>
@@ -171,7 +171,7 @@ class KafoMapCombined extends Component {
                 longitude: this.state.lng,
             }}
         />
-        {coffeeResp}
+       
         </MapView>
         </View>  
 

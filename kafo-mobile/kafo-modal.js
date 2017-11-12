@@ -4,7 +4,6 @@ import KafoHeader from './kafo-header';
 import KafoIcon from './kafo-icon';
 import KafoTextInput from './kafo-textinput';
 import KafoButton from './kafo-button2';
-import ResultsApp from './results/App';
 import KafoArrival from './kafo-arrival';
 
 class KafoModal extends Component {
