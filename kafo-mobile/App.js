@@ -109,7 +109,6 @@ translink(stopNum) {
                         tdata ={this.state.translinkData}
     //                  changePage={(pagenum) => this.changeAppPage(pagenum)}
                         translinkAPICall ={this.translink}
-                        coffeeShopCall = {this.coffeeShopFetch}
                     />    
                 );
 
@@ -117,6 +116,7 @@ translink(stopNum) {
                 <KeyboardAvoidingView  style={styles.container}           
                     behaviour="padding">
                     <KafoMapCombined />
+                    <KafoMapCombined sendCSData = {this.coffeeShopFetch} getUserLong={this.checkLat} getUserLat = {this.checkLong} />
                     <View 
                         style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .3 + 20 + this.state.positionBump} ]}>
                         {modal}
