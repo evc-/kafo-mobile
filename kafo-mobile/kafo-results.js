@@ -37,7 +37,7 @@ render() {
 const styles = StyleSheet.create({
     
     question1Style:{
-        borderRadius: 0,
+        borderRadius: 10,
         textAlign: 'center',
         padding:20,
         width: '100%',
@@ -54,9 +54,9 @@ const styles = StyleSheet.create({
         color: 'black'
     },
     question2Style:{
-        borderRadius: 0,
+        borderRadius: 10,
         textAlign: 'center',
-        padding:20,
+        padding:7,
         width: '100%',
         fontSize: 15,
         color: 'white',
