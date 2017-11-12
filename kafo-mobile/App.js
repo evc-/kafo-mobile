@@ -23,7 +23,7 @@ export default class App extends React.Component {
             positionBump: 0,
         };
          
-//        this.changeAppPage = this.changeAppPage.bind(this);
+//      this.changeAppPage = this.changeAppPage.bind(this);
         this.translink = this.translink.bind(this);
         this.coffeeShopFetch = this.coffeeShopFetch.bind(this);
         this.getUserLat = this.getUserLat.bind(this);
@@ -115,7 +115,7 @@ translink(stopNum) {
             return (
                 <KeyboardAvoidingView  style={styles.container}           
                     behaviour="padding">
-                    <KafoMapCombined />
+                    
                     <KafoMapCombined sendCSData = {this.coffeeShopFetch} getUserLong={this.checkLat} getUserLat = {this.checkLong} />
                     <View 
                         style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .3 + 20 + this.state.positionBump} ]}>
