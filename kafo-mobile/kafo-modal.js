@@ -5,6 +5,7 @@ import KafoIcon from './kafo-icon';
 import KafoTextInput from './kafo-textinput';
 import KafoButton from './kafo-button2';
 import KafoArrival from './kafo-arrival';
+import KafoResults from './kafo-results';
 
 class KafoModal extends Component {
     constructor(props){
@@ -90,17 +91,24 @@ class KafoModal extends Component {
           )
       } else if (this.state.modalState===2){
           modal = (
-              <View>
-                <View style={{flex: 1}} >
-                  <Text style={styles.question1Style}>life</Text>
-                </View>
-              
-              <View style={{flex: 1}}>
-                <KafoResults />
-              </View>
-            </View>
+        
+          <View style={{flex: 1}}>
+                <KafoResults 
+                    changeModal={this.changeModal}
+                />
+          </View>
           )
-      } 
+      } else if (this.state.modalState ===3){
+          modal = (
+               <View style={{flex: 1}}>
+                <Text>life</Text>
+              
+             /* <KafoResults 
+                    changeModal={this.changeModal}
+                />*/
+          </View>
+          )
+      }
       
     return (
         <View style={{flex:1}}>

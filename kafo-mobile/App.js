@@ -8,6 +8,7 @@ import KafoMapCombined from './map/kafomap-combined';
 //import KafoButton2 from './kafo-button2';
 import KafoArrival from './kafo-arrival';    
 import KafoModal from './kafo-modal';
+import KafoResults from './kafo-results';
 
 export default class App extends React.Component {
 
