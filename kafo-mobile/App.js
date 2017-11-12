@@ -82,14 +82,16 @@ translink(stopNum) {
     .catch((error) => {
         console.log(error);
     });
-    //grabs stop Lat&Long
-    fetch('https://kafo-stop-call.herokuapp.com/translink/' + stopNum , {method:'GET', headers:{
+}
+
+translinkStopCall(stopNum){
+        fetch('https://kafo-stop-call.herokuapp.com/translink/' + stopNum , {method:'GET', headers:{
           "Content-Type": "application/json"
           }})
-    .then(response => stopresponse.json())
-    .then((stopresponseJson) => {
-        console.log(stopresponseJson);
-        this.setState({stopData:stopresponseJson});     //set the state to be the response object from the translink api 
+    .then(response => stopResp.json())
+    .then((stopRespJson) => {
+        console.log(stopRespJson);
+        this.setState({stopData:stopRespJson});     //set the state to be the response object from the translink api 
         
     })
     .catch((error) => {
@@ -121,6 +123,7 @@ translink(stopNum) {
                 modal = (
                     <KafoModal
                         tdata ={this.state.translinkData}
+                        translinkStopCall = {this.stopCallData}
     //                  changePage={(pagenum) => this.changeAppPage(pagenum)}
                         translinkAPICall ={this.translink}
                     />    
