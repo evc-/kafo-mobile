@@ -22,7 +22,8 @@ export default class App extends React.Component {
             userLat:"",
             userLong:"",
             positionBump: 0,
-            stopData: ''
+            stopData: '',
+            busStopNum: ""
         };
          
 //      this.changeAppPage = this.changeAppPage.bind(this);
@@ -31,6 +32,7 @@ export default class App extends React.Component {
         this.getUserLat = this.getUserLat.bind(this);
         this.getUserLong = this.getUserLong.bind(this);
         this.translinkStopCall = this.translinkStopCall.bind(this);
+        this.setBusStopNum = this.setBusStopNum.bind(this);
      }
     
  getUserLat(data){
@@ -101,6 +103,12 @@ translinkStopCall(stopNum){
     });
 }
 
+setBusStopNum(busID){
+    this.setState({
+        busStopNum: busID
+    });
+}
+
 //this function takes an index parameter and saves the corresponding bus route to STATE as "selectedBus" 
     
     selectRoute(i){
@@ -129,6 +137,7 @@ translinkStopCall(stopNum){
                         translinkStopCall = {this.translinkStopCall}
     //                  changePage={(pagenum) => this.changeAppPage(pagenum)}
                         translinkAPICall ={this.translink}
+                        setBusStopNum ={this.setBusStopNum}
                     />    
                 );
 
@@ -137,6 +146,7 @@ translinkStopCall(stopNum){
                     behaviour="padding">
                     
                     <KafoMapCombined
+                        busID = {this.state.busStopNum}
                         getBusStopCoords = {this.translinkStopCall}
                         sendCSData = {this.coffeeShopFetch} getUserLong={this.checkLat} getUserLat = {this.checkLong} 
                     />

@@ -59,7 +59,7 @@ class KafoMapCombined extends Component {
     }
     
     //TODO: make this function take a bus stop ID and return its coordinates
-    getBusStopCoords(busStopNum){
+    getBusStopCoords(this.props.busID){
         var busStopCoords = {lat:0, long:0};
         return busStopCoords;
     }

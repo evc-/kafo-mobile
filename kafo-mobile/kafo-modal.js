@@ -45,6 +45,7 @@ class KafoModal extends Component {
                             translinkAPICall={this.props.translinkAPICall} 
                             translinkStopCall={this.props.translinkStopCall} 
                             changeModal={(mstatenum) => this.changeModal(mstatenum)}
+                            setBusStopNum={this.props.setBusStopNum}
                         />
                     
                 </View>
