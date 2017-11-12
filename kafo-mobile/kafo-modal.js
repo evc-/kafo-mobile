@@ -21,6 +21,7 @@ class KafoModal extends Component {
     
       changeModal(mstatenum){
             this.setState({modalState: mstatenum});
+          this.props.modalState(this.state.modalState);
             Keyboard.dismiss();
         }
     //returning undefined currently

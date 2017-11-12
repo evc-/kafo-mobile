@@ -33,6 +33,7 @@ export default class App extends React.Component {
         this.getUserLong = this.getUserLong.bind(this);
         this.translinkStopCall = this.translinkStopCall.bind(this);
         this.setBusStopNum = this.setBusStopNum.bind(this);
+        this.modalState = this.modalState.bind(this);
      }
     
  getUserLat(data){
@@ -121,6 +122,11 @@ setBusStopNum(busID){
      coffeeShopFetch(data){
         //console.log(data);
     }
+modalState(data){
+    this.setState({
+        modalState:data
+    });
+}
     
     
   render() {
@@ -138,6 +144,7 @@ setBusStopNum(busID){
     //                  changePage={(pagenum) => this.changeAppPage(pagenum)}
                         translinkAPICall ={this.translink}
                         setBusStopNum ={this.setBusStopNum}
+                        modalState = {this.modalState}
                     />    
                 );
 
@@ -147,6 +154,7 @@ setBusStopNum(busID){
                     
                     <KafoMapCombined
                         busID = {this.state.busStopNum}
+                        modalState = {this.state.modalState}
                         getBusStopCoords = {this.translinkStopCall}
                         sendCSData = {this.coffeeShopFetch} getUserLong={this.checkLat} getUserLat = {this.checkLong} 
                     />
