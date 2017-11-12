@@ -18,7 +18,6 @@ class KafoMapCombined extends Component {
         this.addLat = this.addLat.bind(this);
         this.addLong = this.addLong.bind(this);
         this.addCoffeeShopData = this.addCoffeeShopData.bind(this);
-        this.testgetBusCoords = this.testgetBusCoords.bind(this);
 
     }
     addLat(){
@@ -136,10 +135,6 @@ class KafoMapCombined extends Component {
         this.props.sendCSData(this.state.coffeeShopData);
     }
     
-    testgetBusCoords(){
-        this.props.getBusStopCoords(stopNum);
-        console.log("testerEvelyn" + stopNum);
-    }
     
 
                 
@@ -170,9 +165,7 @@ class KafoMapCombined extends Component {
     return (
 
         <View>
-        
-        <Button onPress={this.testgetBusCoords} title="clickme"/>
-        
+                
          <MapView 
             style={styles.map}
             provider = { PROVIDER_GOOGLE }
