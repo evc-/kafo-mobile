@@ -11,7 +11,7 @@ export default class ResultPage extends React.Component {
     
     trackerBut(){
         
-        this.props.changeDisplay(false);
+         this.props.changeModal(3);
         
     }
     
