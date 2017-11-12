@@ -92,11 +92,11 @@ class KafoModal extends Component {
           modal = (
               <View>
                 <View style={{flex: 1}} >
-                  {  <Text style={styles.question1Style}>life</Text>
+                  <Text style={styles.question1Style}>life</Text>
                 </View>
-              }
+              
               <View style={{flex: 1}}>
-                <KafoArrival />
+                <KafoResults />
               </View>
             </View>
           )
