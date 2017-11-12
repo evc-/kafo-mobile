@@ -38,9 +38,12 @@ const styles = StyleSheet.create({
     
     question1Style:{
         flex: 1,
+<<<<<<< HEAD
         borderRadius: 10,
+=======
+>>>>>>> 6422540c778d577a594499d0f9c550c26dd4249e
         textAlign: 'center',
-        padding:20,
+        padding:15,
         width: '100%',
         fontSize: 15,
         color: 'white',
@@ -48,18 +51,24 @@ const styles = StyleSheet.create({
       },
     paragraph1Style:{
         flex: 1,
+<<<<<<< HEAD
         borderRadius: 0,
+=======
+>>>>>>> 6422540c778d577a594499d0f9c550c26dd4249e
         textAlign: 'center',
-        padding:20,
         width: '100%',
-        fontSize: 15,
+        padding: 15,
+        fontSize: 14,
         color: 'black'
     },
     question2Style:{
         flex: 1,
+<<<<<<< HEAD
         borderRadius: 10,
+=======
+>>>>>>> 6422540c778d577a594499d0f9c550c26dd4249e
         textAlign: 'center',
-        padding:20,
+        padding:15,
         width: '100%',
         fontSize: 15,
         color: 'white',
