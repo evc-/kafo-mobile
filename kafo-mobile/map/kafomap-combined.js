@@ -59,7 +59,7 @@ class KafoMapCombined extends Component {
     }
     
     //TODO: make this function take a bus stop ID and return its coordinates
-    getBusStopCoords(this.props.busID){
+    getBusStopCoords(busStopNum){
         var busStopCoords = {lat:0, long:0};
         return busStopCoords;
     }
@@ -184,7 +184,28 @@ class KafoMapCombined extends Component {
         
             }}
         />
-       
+               
+        <MapView.Marker
+            coordinate={{
+                latitude: 49.2501606,
+                longitude:-123.0000981599999
+        }}
+        title={"Tim Hortons"}
+       />
+        <MapView.Marker
+            coordinate={{
+                latitude: 49.2507179999999,
+                longitude: -123.00140379999999
+        }}
+        title={"Gateway Deli"}
+        />
+        <MapView.Marker
+            coordinate={{
+                latitude: 49.2470834,
+                longitude: -123.00188270000001
+        }}
+        title={"The Stand"}
+        />
         </MapView>
         </View>  
 
