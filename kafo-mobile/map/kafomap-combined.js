@@ -88,7 +88,7 @@ class KafoMapCombined extends Component {
     
         componentWillMount(){
             //set to true to get actual location 
-            if (false){
+            if (true){
                   this.watchId = navigator.geolocation.getCurrentPosition(
                 (position) => {
                     this.setState({
