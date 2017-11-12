@@ -37,29 +37,26 @@ render() {
 const styles = StyleSheet.create({
     
     question1Style:{
-        flex: 0,
-        borderRadius: 10,
+        flex: 1,
         textAlign: 'center',
-        padding:20,
+        padding:15,
         width: '100%',
         fontSize: 15,
         color: 'white',
         backgroundColor:'#76ABAC',
       },
     paragraph1Style:{
-        flex: 0,
-        borderRadius: 0,
+        flex: 1,
         textAlign: 'center',
-        padding:20,
         width: '100%',
-        fontSize: 15,
+        padding: 15,
+        fontSize: 14,
         color: 'black'
     },
     question2Style:{
-        flex: 0,
-        borderRadius: 10,
+        flex: 1,
         textAlign: 'center',
-        padding:20,
+        padding:15,
         width: '100%',
         fontSize: 15,
         color: 'white',
