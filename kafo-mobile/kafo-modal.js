@@ -101,11 +101,9 @@ class KafoModal extends Component {
       } else if (this.state.modalState ===3){
           modal = (
                <View style={{flex: 1}}>
-                <Text>life</Text>
+                <Text>life
               
-             /* <KafoResults 
-                    changeModal={this.changeModal}
-                />*/
+              </Text>
           </View>
           )
       }
