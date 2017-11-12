@@ -36,6 +36,7 @@ class KafoMapCombined extends Component {
         //finally, return an object (for each shop) that includes its status and its coordinates. that way, we can place the colored icons on the coordinates! 
         
         var statusArray = shopAPIArray.map(function getShopStatus(currentShopObj, index, array) {
+            
             var shopCoords = this.getShopCoords(currentShopObj);
             var busStopCoords = this.getBusStopCoords(busStopNum);
             var walkingTimeValue = this.getWalkingTime(userLocation, shopCoords, busStopCoords);
