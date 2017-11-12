@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         padding:20,
         width: '100%',
-        fontSize: 15,
+        fontSize: 20,
         color: 'white',
         backgroundColor:'#76ABAC',
       },
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     question2Style:{
         textAlign: 'center',
         padding:15,
-        fontSize: 12,
+        fontSize: 15,
         color: 'grey',
         fontStyle: 'italic'
       },
