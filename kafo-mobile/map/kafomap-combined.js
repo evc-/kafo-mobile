@@ -135,18 +135,17 @@ class KafoMapCombined extends Component {
         this.props.sendCSData(this.state.coffeeShopData);
     }
                 
-  render() {
-<<<<<<< HEAD
-              /*var coffeeResp = null;
+  /*{
+
+              var coffeeResp = null;
           if (this.state.coffeeShopData != '' ){
           //this isn't working!!!
             var coffeeResp = this.state.coffeeShopData.map(function callback(currentValue, index, array) {
-=======
-          
+  
           if (this.state.coffeeShopData != '' ){
           //this isn't working!!!
                 var coffeeResp = this.state.coffeeShopData.map(function makeShopMaker(currentValue, index, array) {
->>>>>>> ed820125cd08c3966d7689f906214e7eeb84a0a2
+
                     return(
                         <MapView.Marker 
                         id={index}
