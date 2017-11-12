@@ -139,7 +139,7 @@ class KafoMapCombined extends Component {
               var coffeeResp = null;
           if (this.state.coffeeShopData != '' ){
           //this isn't working!!!
-                var coffeeResp = this.state.coffeeShopData.map(function callback(currentValue, index, array) {
+                var coffeeResp = this.state.coffeeShopData.map(function makeShopMaker(currentValue, index, array) {
                     return(
                         <MapView.Marker 
                         id={index}
