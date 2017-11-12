@@ -21,6 +21,7 @@ export default class App extends React.Component {
             userLat:"",
             userLong:"",
             positionBump: 0,
+            stopData: ''
         };
          
 //      this.changeAppPage = this.changeAppPage.bind(this);
@@ -82,6 +83,21 @@ translink(stopNum) {
         console.log(error);
     });
 }
+
+translinkStopCall(stopNum){
+        fetch('https://kafo-stop-call.herokuapp.com/translink/' + stopNum , {method:'GET', headers:{
+          "Content-Type": "application/json"
+          }})
+    .then(response => stopResp.json())
+    .then((stopRespJson) => {
+        console.log(stopRespJson);
+        this.setState({stopData:stopRespJson});     //set the state to be the response object from the translink api 
+        
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
 //this function takes an index parameter and saves the corresponding bus route to STATE as "selectedBus" 
     
     selectRoute(i){
@@ -107,6 +123,7 @@ translink(stopNum) {
                 modal = (
                     <KafoModal
                         tdata ={this.state.translinkData}
+                        translinkStopCall = {this.stopCallData}
     //                  changePage={(pagenum) => this.changeAppPage(pagenum)}
                         translinkAPICall ={this.translink}
                     />    
