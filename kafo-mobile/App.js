@@ -92,15 +92,14 @@ translink(stopNum) {
     
 //get  coffee shops within a 500m radius
     coffeeShopFetch(){
-                     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=500").then((resp)=>{
-                    console.log("resp");
-                    return resp.json();
-                    }).then((json)=>{
-                    this.setState({
-                        coffeeShopData:json
-                    });
-                         console.log(this.state.coffeeShopData);
+         fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=500").then((resp)=>{
+        return resp.json();
+        }).then((json)=>{
+            this.setState({
+                coffeeShopData:json
             });
+            console.log(json);
+        });
     }
     
   render() {

@@ -24,7 +24,59 @@ class KafoMapCombined extends Component {
         this.props.checkLong(this.state.long);
     }
     
-
+    getAllShopStatus(shopAPIArray, userLocation, busStopNum, busResponse){
+        
+        var statusArray = shopAPIArray.map(function getShopStatus(currentShopObj, index, array) {
+            var shopCoords = this.getShopCoords(currentShopObj);
+            var busStopCoords = this.getBusStopCoords(busStopNum);
+            var walkingTimeValue = this.getWalkingTime(userLocation, shopCoords, busStopCoords);
+            var shopStatus = this.checkShopStatus(walkingTimeValue, busResponse.expectedCountdown);
+            
+            return {Status:shopStatus, Coordinates:shopCoords};
+            
+        },this)
+        
+        return statusArray;
+    }
+    
+    //this function takes the object returned by the Places API call and gets its coordinates 
+    getShopCoords(mapsObj){
+        var shopCoords = {lat:0, long:0};
+        return shopCoords;
+    }
+    
+    //TODO: make this function take a bus stop ID and return its coordinates
+    getBusStopCoords(busStopNum){
+        var busStopCoords = {lat:0, long:0};
+        return busStopCoords;
+    }
+    
+    //this function adds up the walking times from the user location to the shop and then to the bus stop
+    //requires the direction api 
+    getWalkingTime(userlocation, shopCoords, busStopCoords){
+        var walkingTimeValue = 0; //minutes
+        //replace with userlocation to shopCoords to busCoords;
+        return walkingTimeValue;
+    }
+    
+    //this function takes the walking time value calculated from the previous function and compares it to the time until the next bus arrival, to return a status of red, green, or orange 
+    checkShopStatus(walkingTimeValue, nextBusTimeValue){
+        var timeRequired = walkingTimeValue + nextBusTimeValue; //TODO: add time buffer 
+        
+        if (timeRequired > nextBusTimeValue){
+            return "statusRed";
+        }
+        
+        if (timeRequired == nextBusTimeValue){
+            return "statusOrange";
+        }
+        
+        if (timeRequired < nextBusTimeValue){
+            return "statusGreen";
+        }
+    }
+    
+    
         componentWillMount(){
             //set to true to get actual location 
             if (false){
