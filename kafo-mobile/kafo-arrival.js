@@ -3,23 +3,30 @@ import { StyleSheet, Text, View, Button, TouchableOpacity} from 'react-native';
 
 export default class KafoArrival extends React.Component {
 
+    constructor(props){
+        super(props);
+        
+        this.state = {
+            curTime:null
+        };
+    }
+    
+    componentDidMount() {
+    setInterval( () => {
+      this.setState({
+        curTime : new Date().toLocaleString('en-US',
+                                            {hour: 'numeric', minute:'numeric', hour12:true})
+      })
+    },1000)
+  }
     
 render() {
     return (
-    <View>
-            <Text>
-                Placeholder Map
-            </Text>
-       
-            <Text 
-                style={styles.touchableStyle1}>
-                  Current Time     7:34 AM
-            </Text>
-       
-            <Text  
-                style={styles.touchableStyle2}>
-                   Untill Bus Arrives    6:59
-            </Text>
+    <View style={{flex: 1}}>
+        <Text style={styles.question1Style}>Heading to Waves Coffee!</Text>
+        
+        <Text style={styles.paragraph1Style}> Current Time: {"\n"} {this.state.curTime}</Text>
+        <Text style={styles.paragraph2Style}> Until bus arrives: </Text>
         
       </View>
     ); 
@@ -28,39 +35,33 @@ render() {
 
 const styles = StyleSheet.create({
      
-    Style1: {
+    question1Style:{
         flex: 1,
-        paddingTop: 50,
-        paddingBottom: 50,
-        width:'100%',
-        fontSize: 40,
+        borderRadius: 0,
         textAlign: 'center',
+        padding:20,
+        width: '100%',
+        fontSize: 15,
         color: 'white',
-        fontWeight: 'bold',
-        backgroundColor: '#F4EEE3',
-    },
-    
-    
-    touchableStyle1: {
+        backgroundColor:'#76ABAC',
+      },
+    paragraph1Style:{
         flex: 1,
-        paddingTop: 50,
-        paddingBottom: 50,
-        width:'100%',
-        backgroundColor:'#6FA7A8',
-        fontSize: 14,
-        textAlign: 'center',
-        color: '#F4EEE3',
-        fontWeight: 'bold',
+        borderRadius: 0,
+        textAlign: 'left',
+        padding:20,
+        width: '100%',
+        fontSize: 15,
+        color: '#303C45'
     },
-    touchableStyle2: {
+    paragraph2Style:{
         flex: 1,
-        paddingTop: 50,
-        paddingBottom: 50,
-        width:'100%',
-        backgroundColor:'#6FA7A8',
-        fontSize: 14,
-        textAlign: 'center',
-        color: '#F4EEE3',
-        fontWeight: 'bold',
-    }
+        borderRadius: 0,
+        textAlign: 'right',
+        padding:20,
+        marginTop:-40,
+        width: '100%',
+        fontSize: 15,
+        color: '#303C45',
+      }
 });
