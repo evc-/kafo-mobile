@@ -101,7 +101,7 @@ class KafoMapCombined extends Component {
                     error: null,
                     });
                     //get  coffee shops within a 500m radius
-                     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=500").then((CSresp)=>{
+                     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=100").then((CSresp)=>{
                    // console.log(CSresp);
                     return CSresp.json();
                     }).then((CSjson)=>{
