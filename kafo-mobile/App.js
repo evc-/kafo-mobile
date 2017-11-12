@@ -77,7 +77,7 @@ translink(stopNum) {
           }})
     .then(response => response.json())
     .then((responseJson) => {
-        console.log(responseJson);
+        //console.log(responseJson);
         this.setState({translinkData:responseJson});     //set the state to be the response object from the translink api 
         
     })
@@ -92,7 +92,7 @@ translinkStopCall(stopNum){
           }})
     .then(response => response.json())
     .then((stopRespJson) => {
-        console.log(stopRespJson);
+        //console.log(stopRespJson);
         this.setState({stopData:stopRespJson});     //set the state to be the response object from the translink api 
         
     })
@@ -100,6 +100,7 @@ translinkStopCall(stopNum){
         console.log(error);
     });
 }
+
 //this function takes an index parameter and saves the corresponding bus route to STATE as "selectedBus" 
     
     selectRoute(i){
@@ -110,7 +111,7 @@ translinkStopCall(stopNum){
     
 //get  coffee shops within a 500m radius
      coffeeShopFetch(data){
-        console.log(data);
+        //console.log(data);
     }
     
     
@@ -135,7 +136,10 @@ translinkStopCall(stopNum){
                 <KeyboardAvoidingView  style={styles.container}           
                     behaviour="padding">
                     
-                    <KafoMapCombined sendCSData = {this.coffeeShopFetch} getUserLong={this.checkLat} getUserLat = {this.checkLong} />
+                    <KafoMapCombined
+                        getBusStopCoords = {this.translinkStopCall}
+                        sendCSData = {this.coffeeShopFetch} getUserLong={this.checkLat} getUserLat = {this.checkLong} 
+                    />
                     <View 
                         style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .3 + 20 + this.state.positionBump} ]}>
                         {modal}

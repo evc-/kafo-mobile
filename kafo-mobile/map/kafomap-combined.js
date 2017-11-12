@@ -18,6 +18,7 @@ class KafoMapCombined extends Component {
         this.addLat = this.addLat.bind(this);
         this.addLong = this.addLong.bind(this);
         this.addCoffeeShopData = this.addCoffeeShopData.bind(this);
+        this.testgetBusCoords = this.testgetBusCoords.bind(this);
 
     }
     addLat(){
@@ -101,8 +102,8 @@ class KafoMapCombined extends Component {
                     error: null,
                     });
                     //get  coffee shops within a 500m radius
-                     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=10000").then((CSresp)=>{
-                    console.log(CSresp);
+                     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=500").then((CSresp)=>{
+                   // console.log(CSresp);
                     return CSresp.json();
                     }).then((CSjson)=>{
                     this.setState({
@@ -134,6 +135,13 @@ class KafoMapCombined extends Component {
      addCoffeeShopData(){
         this.props.sendCSData(this.state.coffeeShopData);
     }
+    
+    testgetBusCoords(){
+        this.props.getBusStopCoords(stopNum);
+        console.log("testerEvelyn" + stopNum);
+    }
+    
+
                 
   render(){
       
@@ -162,6 +170,8 @@ class KafoMapCombined extends Component {
     return (
 
         <View>
+        
+        <Button onPress={this.testgetBusCoords} title="clickme"/>
         
          <MapView 
             style={styles.map}
