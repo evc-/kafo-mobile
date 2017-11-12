@@ -24,7 +24,16 @@ class KafoMapCombined extends Component {
         this.props.checkLong(this.state.long);
     }
     
+    //this function combines the 4 different functions required. it will take in the array of shops fetched from the Places API, it'll take in the user location, the bus stop number they're at, and the entire bus response returned by the Translink API 
+    
     getAllShopStatus(shopAPIArray, userLocation, busStopNum, busResponse){
+        
+        //we need to check the status of each stop that is returned in the radius. so will use a map (like a for loop), to do the following functions to each item in the array 
+        //1. get the coordinates of the shop (for each shop in the array)
+        //2. get the coordinates of the bus stop 
+        //3. calucate the walking time (from user location to each shop, and to the bus stop)
+        //4. assign a status, taking the time required from walking and comparing it to the expected countdown property of the bus response from the translinkAPI 
+        //finally, return an object (for each shop) that includes its status and its coordinates. that way, we can place the colored icons on the coordinates! 
         
         var statusArray = shopAPIArray.map(function getShopStatus(currentShopObj, index, array) {
             var shopCoords = this.getShopCoords(currentShopObj);
