@@ -22,8 +22,7 @@ export default class App extends React.Component {
             userLat:"",
             userLong:"",
             positionBump: 0,
-            stopData: '',
-            busStopNum: ""
+            busStopCoords: ""
         };
          
 //      this.changeAppPage = this.changeAppPage.bind(this);
@@ -96,8 +95,13 @@ translinkStopCall(stopNum){
     .then(response => response.json())
     .then((stopRespJson) => {
         //console.log(stopRespJson);
-        this.setState({stopData:stopRespJson});     //set the state to be the response object from the translink api 
-        
+        var stopCoords = {
+            lat: stopRespJson.Latitude,
+            lng: stopRespJson.Longitude,
+        };
+        this.setState({
+            stopData:stopCoords
+        }); 
     })
     .catch((error) => {
         console.log(error);
@@ -157,6 +161,7 @@ modalState(data){
                         modalState = {this.state.modalState}
                         getBusStopCoords = {this.translinkStopCall}
                         sendCSData = {this.coffeeShopFetch} getUserLong={this.checkLat} getUserLat = {this.checkLong} 
+                        sendStopCoords = {this.state.busStopCoords}
                     />
                     <View 
                         style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .3 + 20 + this.state.positionBump} ]}>
