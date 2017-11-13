@@ -8,7 +8,7 @@ export default class KafoArrival extends React.Component {
         
         this.state = {
             curTime:null,
-            tillDespart: "",
+            tillDepart: null,
         };
     }
     
@@ -21,7 +21,7 @@ export default class KafoArrival extends React.Component {
     },1000)
     
     this.setState({
-        tillDespart:this.props.minsTillDepart
+        tillDepart:this.props.minsTillDepart
     });
   }
     
@@ -31,7 +31,7 @@ render() {
         <Text style={styles.question1Style}>Heading to Waves Coffee!</Text>
         
         <Text style={styles.paragraph1Style}> Current Time: {"\n"} {this.state.curTime}</Text>
-        <Text style={styles.paragraph2Style}> Until bus arrives: {"\n"} {this.state.tillDespart}</Text>
+        <Text style={styles.paragraph2Style}> Until bus arrives: {"\n"}TBD {this.state.tillDepart}</Text>
         
       </View>
     ); 
