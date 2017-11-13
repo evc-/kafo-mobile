@@ -22,7 +22,8 @@ export default class App extends React.Component {
             userLat:"",
             userLong:"",
             positionBump: 0,
-            stopData: ''
+            stopData: '',
+            busStopNum: ""
         };
          
 //      this.changeAppPage = this.changeAppPage.bind(this);
@@ -31,6 +32,8 @@ export default class App extends React.Component {
         this.getUserLat = this.getUserLat.bind(this);
         this.getUserLong = this.getUserLong.bind(this);
         this.translinkStopCall = this.translinkStopCall.bind(this);
+        this.setBusStopNum = this.setBusStopNum.bind(this);
+        this.modalState = this.modalState.bind(this);
      }
     
  getUserLat(data){
@@ -77,7 +80,7 @@ translink(stopNum) {
           }})
     .then(response => response.json())
     .then((responseJson) => {
-        console.log(responseJson);
+        //console.log(responseJson);
         this.setState({translinkData:responseJson});     //set the state to be the response object from the translink api 
         
     })
@@ -92,7 +95,7 @@ translinkStopCall(stopNum){
           }})
     .then(response => response.json())
     .then((stopRespJson) => {
-        console.log(stopRespJson);
+        //console.log(stopRespJson);
         this.setState({stopData:stopRespJson});     //set the state to be the response object from the translink api 
         
     })
@@ -100,6 +103,13 @@ translinkStopCall(stopNum){
         console.log(error);
     });
 }
+
+setBusStopNum(busID){
+    this.setState({
+        busStopNum: busID
+    });
+}
+
 //this function takes an index parameter and saves the corresponding bus route to STATE as "selectedBus" 
     
     selectRoute(i){
@@ -110,8 +120,13 @@ translinkStopCall(stopNum){
     
 //get  coffee shops within a 500m radius
      coffeeShopFetch(data){
-        console.log(data);
+        //console.log(data);
     }
+modalState(data){
+    this.setState({
+        modalState:data
+    });
+}
     
     
   render() {
@@ -128,6 +143,8 @@ translinkStopCall(stopNum){
                         translinkStopCall = {this.translinkStopCall}
     //                  changePage={(pagenum) => this.changeAppPage(pagenum)}
                         translinkAPICall ={this.translink}
+                        setBusStopNum ={this.setBusStopNum}
+                        modalState = {this.modalState}
                     />    
                 );
 
@@ -135,7 +152,12 @@ translinkStopCall(stopNum){
                 <KeyboardAvoidingView  style={styles.container}           
                     behaviour="padding">
                     
-                    <KafoMapCombined sendCSData = {this.coffeeShopFetch} getUserLong={this.checkLat} getUserLat = {this.checkLong} />
+                    <KafoMapCombined
+                        busID = {this.state.busStopNum}
+                        modalState = {this.state.modalState}
+                        getBusStopCoords = {this.translinkStopCall}
+                        sendCSData = {this.coffeeShopFetch} getUserLong={this.checkLat} getUserLat = {this.checkLong} 
+                    />
                     <View 
                         style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .3 + 20 + this.state.positionBump} ]}>
                         {modal}

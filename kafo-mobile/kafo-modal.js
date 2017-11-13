@@ -21,6 +21,7 @@ class KafoModal extends Component {
     
       changeModal(mstatenum){
             this.setState({modalState: mstatenum});
+          this.props.modalState(this.state.modalState);
             Keyboard.dismiss();
         }
     //returning undefined currently
@@ -45,6 +46,7 @@ class KafoModal extends Component {
                             translinkAPICall={this.props.translinkAPICall} 
                             translinkStopCall={this.props.translinkStopCall} 
                             changeModal={(mstatenum) => this.changeModal(mstatenum)}
+                            setBusStopNum={this.props.setBusStopNum}
                         />
                     
                 </View>
@@ -140,7 +142,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         padding:20,
         width: '100%',
-        fontSize: 15,
+        fontSize: 20,
         color: 'white',
         backgroundColor:'#76ABAC',
       },
@@ -148,7 +150,7 @@ const styles = StyleSheet.create({
     question2Style:{
         textAlign: 'center',
         padding:15,
-        fontSize: 12,
+        fontSize: 15,
         color: 'grey',
         fontStyle: 'italic'
       },
