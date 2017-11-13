@@ -99,13 +99,29 @@ class KafoModal extends Component {
           </View>
           )
       } else if (this.state.modalState ===3){
+          var estimateResponse = null;
+          
+          if(this.props.tdata){
+                  estimateResponse = this.props.tdata.map(function callback(currentValue, index, array){
+                      return (
+                          modal = (
+                          <KafoArrival 
+                            changeModal={this.changeModal}
+                            minsTillDepart={currentValue.Schedules.ExpectedCountdown}
+                          />
+                              )
+                      );
+                  }, this);
+          }
+          /*
           modal = (
                <View style={{flex: 1}}>
                 <KafoArrival 
                     changeModal={this.changeModal}
+                    
                 />
           </View>
-          )
+          )*/
       }
       
     return (

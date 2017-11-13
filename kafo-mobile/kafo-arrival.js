@@ -7,7 +7,8 @@ export default class KafoArrival extends React.Component {
         super(props);
         
         this.state = {
-            curTime:null
+            curTime:null,
+            tillDespart: "",
         };
     }
     
@@ -18,6 +19,10 @@ export default class KafoArrival extends React.Component {
                                             {hour: 'numeric', minute:'numeric', hour12:true})
       })
     },1000)
+    
+    this.setState({
+        tillDespart:this.props.minsTillDepart
+    });
   }
     
 render() {
@@ -26,7 +31,7 @@ render() {
         <Text style={styles.question1Style}>Heading to Waves Coffee!</Text>
         
         <Text style={styles.paragraph1Style}> Current Time: {"\n"} {this.state.curTime}</Text>
-        <Text style={styles.paragraph2Style}> Until bus arrives: </Text>
+        <Text style={styles.paragraph2Style}> Until bus arrives: {"\n"} {this.state.tillDespart}</Text>
         
       </View>
     ); 
@@ -59,7 +64,7 @@ const styles = StyleSheet.create({
         borderRadius: 0,
         textAlign: 'right',
         padding:20,
-        marginTop:-40,
+        //marginTop:-100,
         width: '100%',
         fontSize: 15,
         color: '#303C45',
