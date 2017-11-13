@@ -11,6 +11,10 @@ class KafoMapCombined extends Component {
             lat: 49.250951,
             lng: -123.116460,
             error: null,
+            userCoords: {
+                        lng:49.250951,
+                        lat:-123.116460
+                    },
             appState: 2,
             coffeeShopData:''
 
@@ -18,6 +22,7 @@ class KafoMapCombined extends Component {
         this.addLat = this.addLat.bind(this);
         this.addLong = this.addLong.bind(this);
         this.addCoffeeShopData = this.addCoffeeShopData.bind(this);
+        this.getWalkingTime = this.getWalkingTime.bind(this);
 
     }
     addLat(){
@@ -67,11 +72,20 @@ class KafoMapCombined extends Component {
     //this function adds up the walking times from the user location to the shop and then to the bus stop
     //requires the direction api 
     getWalkingTime(userlocation, shopCoords, busStopCoords){
-        var walkingTimeValue = 0; //minutes
+        //this is returning the user location and two undefined objects
+        //fetch will be uncommented when it works properly!
+        console.log(userlocation, shopCoords, busStopCoords);
+       /* fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+userLocation+"&destination="+busStopCoords+"&waypoints="+shopCoords+"&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI").then((directionsResp)=>{
+            return directionsResp.json();
+
+        }).then((directionsRespJson)=>{
+            console.log(directionsRespJson);
+        });
+*/
+        //var walkingTimeValue = 0; //minutes
         //replace with userlocation to shopCoords to busCoords;
-        return walkingTimeValue;
+        //return walkingTimeValue;
     }
-    
     //this function takes the walking time value calculated from the previous function and compares it to the time until the next bus arrival, to return a status of red, green, or orange 
     checkShopStatus(walkingTimeValue, nextBusTimeValue){
         var timeRequired = walkingTimeValue + nextBusTimeValue; //TODO: add time buffer 
@@ -99,6 +113,10 @@ class KafoMapCombined extends Component {
                     lng: position.coords.longitude,
                     lat:position.coords.latitude,
                     error: null,
+                    userCoords : {
+                        lng:position.coords.longitude,
+                        lat:position.coords.latitude
+                    }
                     });
                     //get  coffee shops within a 500m radius
                      fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=100").then((CSresp)=>{
@@ -171,6 +189,7 @@ class KafoMapCombined extends Component {
                 longitude:-123.0000981599999
         }}
         title={"Tim Hortons"}
+        onPress={this.getWalkingTime(this.state.userCoords, this.coordinate, this.props.busStopCoords)}
        />
         <MapView.Marker
             coordinate={{
