@@ -11,10 +11,6 @@ class KafoMapCombined extends Component {
             lat: 49.250951,
             lng: -123.116460,
             error: null,
-            userCoords: {
-                        lng:49.250951,
-                        lat:-123.116460
-                    },
             appState: 2,
             coffeeShopData:''
 
@@ -22,8 +18,6 @@ class KafoMapCombined extends Component {
         this.addLat = this.addLat.bind(this);
         this.addLong = this.addLong.bind(this);
         this.addCoffeeShopData = this.addCoffeeShopData.bind(this);
-        this.getWalkingTime = this.getWalkingTime.bind(this);
-        this.testDirectionsAPI = this.testDirectionsAPI.bind(this);
 
     }
     addLat(){
@@ -35,7 +29,7 @@ class KafoMapCombined extends Component {
     
     //this function combines the 4 different functions required. it will take in the array of shops fetched from the Places API, it'll take in the user location, the bus stop number they're at, and the entire bus response returned by the Translink API 
     
-    getAllShopStatus(shopAPIArray, userLocation, busResponse){
+    getAllShopStatus(shopAPIArray, userLocation, busStopNum, busResponse){
         
         //we need to check the status of each stop that is returned in the radius. so will use a map (like a for loop), to do the following functions to each item in the array 
         //1. get the coordinates of the shop (for each shop in the array)
@@ -47,6 +41,7 @@ class KafoMapCombined extends Component {
         var statusArray = shopAPIArray.map(function getShopStatus(currentShopObj, index, array) {
             
             var shopCoords = this.getShopCoords(currentShopObj);
+            var busStopCoords = this.getBusStopCoords(busStopNum);
             var walkingTimeValue = this.getWalkingTime(userLocation, shopCoords, busStopCoords);
             var shopStatus = this.checkShopStatus(walkingTimeValue, busResponse.expectedCountdown);
             
@@ -64,41 +59,18 @@ class KafoMapCombined extends Component {
     }
     
     //TODO: make this function take a bus stop ID and return its coordinates
-    getBusStopCoords(){
-        return this.props.sendStopCoords;
+    getBusStopCoords(busStopNum){
+        var busStopCoords = {lat:0, long:0};
+        return busStopCoords;
     }
     
     //this function adds up the walking times from the user location to the shop and then to the bus stop
     //requires the direction api 
-    
     getWalkingTime(userlocation, shopCoords, busStopCoords){
-        /*this is returning the user location and two undefined objects
-        fetch will be uncommented when it works properly!
-        console.log(userlocation, shopCoords, busStopCoords);
-       fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+userLocation+"&destination="+busStopCoords+"&waypoints="+shopCoords+"&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI")
-           .then((directionsResp)=>{
-            return directionsResp.json();
-
-        }).then((directionsRespJson)=>{
-            console.log(directionsRespJson);
-        });
-        //var walkingTimeValue = 0; //minutes
+        var walkingTimeValue = 0; //minutes
         //replace with userlocation to shopCoords to busCoords;
-        //return walkingTimeValue;
-    
-        */
+        return walkingTimeValue;
     }
-    
-testDirectionsAPI(){
-    fetch("https://maps.googleapis.com/maps/api/directions/json?origin=49.24944847090056,-123.00076246261597&destination=49.25150043342449,-123.00415277481079&waypoints=49.250337898575935,-123.00160467624664&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI")
-           .then((response)=>{
-            return response.json();
-
-        }).then((responseJson)=>{
-            console.log(responseJson);
-           });
-    console.log("sent fetch request!");
-}
     
     //this function takes the walking time value calculated from the previous function and compares it to the time until the next bus arrival, to return a status of red, green, or orange 
     checkShopStatus(walkingTimeValue, nextBusTimeValue){
@@ -127,10 +99,6 @@ testDirectionsAPI(){
                     lng: position.coords.longitude,
                     lat:position.coords.latitude,
                     error: null,
-                    userCoords : {
-                        lng:position.coords.longitude,
-                        lat:position.coords.latitude
-                    }
                     });
                     //get  coffee shops within a 500m radius
                      fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=100").then((CSresp)=>{
@@ -203,7 +171,6 @@ testDirectionsAPI(){
                 longitude:-123.0000981599999
         }}
         title={"Tim Hortons"}
-        onPress={this.testDirectionsAPI}
        />
         <MapView.Marker
             coordinate={{
