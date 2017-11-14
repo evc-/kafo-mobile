@@ -23,6 +23,7 @@ class KafoMapCombined extends Component {
         this.addLong = this.addLong.bind(this);
         this.addCoffeeShopData = this.addCoffeeShopData.bind(this);
         this.getWalkingTime = this.getWalkingTime.bind(this);
+        this.testDirectionsAPI = this.testDirectionsAPI.bind(this);
 
     }
     addLat(){
@@ -72,20 +73,33 @@ class KafoMapCombined extends Component {
     //this function adds up the walking times from the user location to the shop and then to the bus stop
     //requires the direction api 
     getWalkingTime(userlocation, shopCoords, busStopCoords){
-        //this is returning the user location and two undefined objects
-        //fetch will be uncommented when it works properly!
+        /*this is returning the user location and two undefined objects
+        fetch will be uncommented when it works properly!
         console.log(userlocation, shopCoords, busStopCoords);
-       /* fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+userLocation+"&destination="+busStopCoords+"&waypoints="+shopCoords+"&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI").then((directionsResp)=>{
+       fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+userLocation+"&destination="+busStopCoords+"&waypoints="+shopCoords+"&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI")
+           .then((directionsResp)=>{
             return directionsResp.json();
 
         }).then((directionsRespJson)=>{
             console.log(directionsRespJson);
         });
-*/
         //var walkingTimeValue = 0; //minutes
         //replace with userlocation to shopCoords to busCoords;
         //return walkingTimeValue;
+    
+        */
     }
+testDirectionsAPI(){
+    fetch("https://maps.googleapis.com/maps/api/directions/json?origin=49.24944847090056,-123.00076246261597&destination=49.25150043342449,-123.00415277481079&waypoints=49.250337898575935,-123.00160467624664&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI")
+           .then((response)=>{
+            return response.json();
+
+        }).then((responseJson)=>{
+            console.log(responseJson);
+           });
+    console.log("sent fetch request!");
+}
+    
     //this function takes the walking time value calculated from the previous function and compares it to the time until the next bus arrival, to return a status of red, green, or orange 
     checkShopStatus(walkingTimeValue, nextBusTimeValue){
         var timeRequired = walkingTimeValue + nextBusTimeValue; //TODO: add time buffer 
@@ -189,7 +203,7 @@ class KafoMapCombined extends Component {
                 longitude:-123.0000981599999
         }}
         title={"Tim Hortons"}
-        onPress={this.getWalkingTime(this.state.userCoords, this.coordinate, this.props.busStopCoords)}
+        onPress={this.testDirectionsAPI}
        />
         <MapView.Marker
             coordinate={{
