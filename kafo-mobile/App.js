@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { AppRegistry, Image, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView,  Text, View, ScrollView, Button } from 'react-native';
-import KafoIcon from './kafo-icon';
-import KafoHeader from './kafo-header';
 import KafoTextInput from './kafo-textinput';
-import KafoSelectBus from './kafo-selectbus';
+//import SelecBusHeader from './selecBusHeader';
 import KafoMapCombined from './map/kafomap-combined';
 //import KafoButton2 from './kafo-button2';
-import KafoArrival from './kafo-arrival';    
+import ArrivalModal from './arrivalModal';    
 import KafoModal from './kafo-modal';
-import KafoResults from './kafo-results';
+import CoffeeResultsModal from './coffeeResultsModal';
 
 export default class App extends React.Component {
 

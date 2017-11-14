@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Modal, Dimensions, Keyboard, AppRegistry, StyleSheet, ScrollView, Text, View, Button } from 'react-native';
-import KafoHeader from './kafo-header';
-import KafoIcon from './kafo-icon';
+
 import KafoTextInput from './kafo-textinput';
 import KafoButton from './kafo-button2';
-import KafoArrival from './kafo-arrival';
-import KafoResults from './kafo-results';
+import ArrivalModal from './arrivalModal';
+import CoffeeResultsModal from './coffeeResultsModal';
 
 class KafoModal extends Component {
     constructor(props){
@@ -95,7 +94,7 @@ class KafoModal extends Component {
           modal = (
         
           <View style={{flex: 1}}>
-                <KafoResults 
+                <CoffeeResultsModal 
                     changeModal={this.changeModal}
                 />
           </View>
@@ -107,7 +106,7 @@ class KafoModal extends Component {
                   estimateResponse = this.props.tdata.map(function callback(currentValue, index, array){
                       return (
                           modal = (
-                          <KafoArrival 
+                          <ArrivalModal 
                             changeModal={this.changeModal}
                             minsTillDepart={currentValue.Schedules.ExpectedCountdown}
                           />

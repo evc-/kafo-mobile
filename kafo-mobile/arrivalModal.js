@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity} from 'react-native';
 
-export default class KafoArrival extends React.Component {
+export default class ArrivalModal extends React.Component {
 
     constructor(props){
         super(props);
