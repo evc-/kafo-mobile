@@ -13,10 +13,10 @@ export default class ArrivalModal extends React.Component {
     }
     
     componentDidMount() {
-    setInterval( () => {
-      this.setState({
-        curTime : new Date().toLocaleString('en-US',
-                                            {hour: 'numeric', minute:'numeric', hour12:true})
+        setInterval( () => {
+            this.setState({
+            curTime : new Date().toLocaleString('en-US',
+            {hour: 'numeric', minute:'numeric', hour12:true})
       })
     },1000)
     

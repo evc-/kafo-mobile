@@ -20,8 +20,7 @@ export default class App extends React.Component {
             userLat:"",
             userLong:"",
             positionBump: 0,
-            stopData: '',
-            busStopNum: ""
+            busStopCoords: ""
         };
          
 //      this.changeAppPage = this.changeAppPage.bind(this);
@@ -94,19 +93,24 @@ translinkStopCall(stopNum){
     .then(response => response.json())
     .then((stopRespJson) => {
         //console.log(stopRespJson);
-        this.setState({stopData:stopRespJson});     //set the state to be the response object from the translink api 
-        
+        var stopCoords = {
+            lat: stopRespJson.Latitude,
+            lng: stopRespJson.Longitude,
+        };
+        this.setState({
+            busStopCoords:stopCoords
+        }); 
     })
     .catch((error) => {
         console.log(error);
     });
 }
 
-setBusStopNum(busID){
-    this.setState({
-        busStopNum: busID
-    });
-}
+//setBusStopNum(busID){
+//    this.setState({
+//        busStopNum: busID
+//    });
+//}
 
 //this function takes an index parameter and saves the corresponding bus route to STATE as "selectedBus" 
     
@@ -126,7 +130,6 @@ modalState(data){
     });
 }
     
-    
   render() {
 
 //add a selectedbusIndex prop so we have the index of which button they clicked on 
@@ -141,7 +144,7 @@ modalState(data){
                         translinkStopCall = {this.translinkStopCall}
     //                  changePage={(pagenum) => this.changeAppPage(pagenum)}
                         translinkAPICall ={this.translink}
-                        setBusStopNum ={this.setBusStopNum}
+//                      setBusStopNum ={this.setBusStopNum}
                         modalState = {this.modalState}
                     />    
                 );
@@ -151,10 +154,11 @@ modalState(data){
                     behaviour="padding">
                     
                     <KafoMapCombined
-                        busID = {this.state.busStopNum}
                         modalState = {this.state.modalState}
-                        getBusStopCoords = {this.translinkStopCall}
-                        sendCSData = {this.coffeeShopFetch} getUserLong={this.checkLat} getUserLat = {this.checkLong} 
+                        sendCSData = {this.coffeeShopFetch} 
+                        getUserLong ={this.checkLat} 
+                        getUserLat = {this.checkLong} 
+                        sendStopCoords = {this.state.busStopCoords}
                     />
                     <View 
                         style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .3 + 20 + this.state.positionBump} ]}>
