@@ -35,7 +35,7 @@ class KafoMapCombined extends Component {
     
     //this function combines the 4 different functions required. it will take in the array of shops fetched from the Places API, it'll take in the user location, the bus stop number they're at, and the entire bus response returned by the Translink API 
     
-    getAllShopStatus(shopAPIArray, userLocation, busStopNum, busResponse){
+    getAllShopStatus(shopAPIArray, userLocation, busResponse){
         
         //we need to check the status of each stop that is returned in the radius. so will use a map (like a for loop), to do the following functions to each item in the array 
         //1. get the coordinates of the shop (for each shop in the array)
@@ -47,7 +47,6 @@ class KafoMapCombined extends Component {
         var statusArray = shopAPIArray.map(function getShopStatus(currentShopObj, index, array) {
             
             var shopCoords = this.getShopCoords(currentShopObj);
-            var busStopCoords = this.getBusStopCoords(busStopNum);
             var walkingTimeValue = this.getWalkingTime(userLocation, shopCoords, busStopCoords);
             var shopStatus = this.checkShopStatus(walkingTimeValue, busResponse.expectedCountdown);
             
@@ -65,13 +64,13 @@ class KafoMapCombined extends Component {
     }
     
     //TODO: make this function take a bus stop ID and return its coordinates
-    getBusStopCoords(busStopNum){
-        var busStopCoords = {lat:0, long:0};
-        return busStopCoords;
+    getBusStopCoords(){
+        return this.props.sendStopCoords;
     }
     
     //this function adds up the walking times from the user location to the shop and then to the bus stop
     //requires the direction api 
+    
     getWalkingTime(userlocation, shopCoords, busStopCoords){
         /*this is returning the user location and two undefined objects
         fetch will be uncommented when it works properly!
@@ -89,6 +88,7 @@ class KafoMapCombined extends Component {
     
         */
     }
+    
 testDirectionsAPI(){
     fetch("https://maps.googleapis.com/maps/api/directions/json?origin=49.24944847090056,-123.00076246261597&destination=49.25150043342449,-123.00415277481079&waypoints=49.250337898575935,-123.00160467624664&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI")
            .then((response)=>{

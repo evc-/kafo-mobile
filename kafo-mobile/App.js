@@ -100,7 +100,7 @@ translinkStopCall(stopNum){
             lng: stopRespJson.Longitude,
         };
         this.setState({
-            stopData:stopCoords
+            busStopCoords:stopCoords
         }); 
     })
     .catch((error) => {
@@ -108,11 +108,11 @@ translinkStopCall(stopNum){
     });
 }
 
-setBusStopNum(busID){
-    this.setState({
-        busStopNum: busID
-    });
-}
+//setBusStopNum(busID){
+//    this.setState({
+//        busStopNum: busID
+//    });
+//}
 
 //this function takes an index parameter and saves the corresponding bus route to STATE as "selectedBus" 
     
@@ -132,7 +132,6 @@ modalState(data){
     });
 }
     
-    
   render() {
 
 //add a selectedbusIndex prop so we have the index of which button they clicked on 
@@ -147,7 +146,7 @@ modalState(data){
                         translinkStopCall = {this.translinkStopCall}
     //                  changePage={(pagenum) => this.changeAppPage(pagenum)}
                         translinkAPICall ={this.translink}
-                        setBusStopNum ={this.setBusStopNum}
+//                      setBusStopNum ={this.setBusStopNum}
                         modalState = {this.modalState}
                     />    
                 );
@@ -157,10 +156,10 @@ modalState(data){
                     behaviour="padding">
                     
                     <KafoMapCombined
-                        busID = {this.state.busStopNum}
                         modalState = {this.state.modalState}
-                        getBusStopCoords = {this.translinkStopCall}
-                        sendCSData = {this.coffeeShopFetch} getUserLong={this.checkLat} getUserLat = {this.checkLong} 
+                        sendCSData = {this.coffeeShopFetch} 
+                        getUserLong ={this.checkLat} 
+                        getUserLat = {this.checkLong} 
                         sendStopCoords = {this.state.busStopCoords}
                     />
                     <View 

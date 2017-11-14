@@ -25,7 +25,7 @@ export default class KafoTextInput extends Component {
             this.props.translinkAPICall(text);
             this.props.changeModal(1);
             this.props.translinkStopCall(text);
-            this.props.setBusStopNum(text);
+//            this.props.setBusStopNum(text);
         }
     }
 
