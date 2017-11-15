@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, Image, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView,  Text, View, ScrollView, Button } from 'react-native';
 import KafoTextInput from './kafo-textinput';
-//import SelecBusHeader from './selecBusHeader';
 import KafoMapCombined from './map/kafomap-combined';
-//import KafoButton2 from './kafo-button2';
 import ArrivalModal from './arrivalModal';    
 import KafoModal from './kafo-modal';
 import CoffeeResultsModal from './coffeeResultsModal';

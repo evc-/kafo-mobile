@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Modal, Dimensions, Keyboard, AppRegistry, StyleSheet, ScrollView, Text, View, Button } from 'react-native';
-
 import KafoTextInput from './kafo-textinput';
 import KafoButton from './kafo-button2';
 import ArrivalModal from './arrivalModal';
