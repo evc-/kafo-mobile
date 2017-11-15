@@ -118,7 +118,7 @@ setBusStopNum(busID){
     
 //get  coffee shops within a 500m radius
      coffeeShopFetch(data){
-        //console.log(data);
+//        console.log(data);
     }
 modalState(data){
     this.setState({

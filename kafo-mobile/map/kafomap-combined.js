@@ -101,12 +101,12 @@ class KafoMapCombined extends Component {
                     error: null,
                     });
                     //get  coffee shops within a 500m radius
-                     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=100").then((CSresp)=>{
-                   // console.log(CSresp);
+                     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=200").then((CSresp)=>{
+                    //console.log(CSresp);
                     return CSresp.json();
                     }).then((CSjson)=>{
                     this.setState({
-                             coffeeShopData:CSjson
+                             coffeeShopData:CSjson.results
                          });
                      });
                 },
@@ -140,27 +140,29 @@ class KafoMapCombined extends Component {
                 
   render(){
       
-      /*
+      
               var coffeeResp = null;
+      console.log("results",this.state.coffeeShopData);
           if (this.state.coffeeShopData != '' ){
           //this isn't working!!!
-            var coffeeResp = this.state.coffeeShopData.map(function callback(currentValue, index, array) {
+            coffeeResp = this.state.coffeeShopData.map((currentValue, index, array)=>{
   
-          if (this.state.coffeeShopData != '' ){
-          //this isn't working!!!
-                var coffeeResp = this.state.coffeeShopData.map(function makeShopMaker(currentValue, index, array) {
+//          if (this.state.coffeeShopData != '' ){
+//          //this isn't working!!!
+//                var coffeeResp = this.state.coffeeShopData.map(function makeShopMaker(currentValue, index, array) {
 
                     return(
                         <MapView.Marker 
                         id={index}
                         coordinate={{
-                            latitude: currentValue.lat,
-                            longitude: currentValue.lng}} 
+                            latitude: currentValue.geometry.location.lat,
+                            longitude: currentValue.geometry.location.lng}} 
                         title={currentValue.name}
                     />  
                     )                                      
-                }, this); 
-                */
+                });
+          }
+                
         var dummyShops = null;
       if (this.props.modalState >= 1){
           dummyShops = (
@@ -211,7 +213,7 @@ class KafoMapCombined extends Component {
         
             }}
         />
-               
+               {coffeeResp}
         {dummyShops}
         </MapView>
         </View>  
