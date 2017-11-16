@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Dimensions, Keyboard, AppRegistry, StyleSheet, ScrollView, Text, View, Button } from 'react-native';
 import KafoTextInput from './kafo-textinput';
-import KafoButton from './kafo-button2';
+import KafoButton from './kafo-button';
 import ArrivalModal from './arrivalModal';
 import CoffeeResultsModal from './coffeeResultsModal';
 
@@ -19,30 +19,30 @@ class KafoModal extends Component {
     
       changeModal(mstatenum){
             this.setState({modalState: mstatenum});
-          this.props.modalState(this.state.modalState);
+            this.props.modalState(this.state.modalState);
             Keyboard.dismiss();
         }
+    
     //returning undefined currently
         selectRoute(i){
-        this.setState({
-            selectedBus: this.props.selectRouteProp
-        });
-            console.log(this.state.selectedBus);
+            this.setState({
+                selectedBusIndex:i
+            });
+            console.log(this.state.selectedBusIndex);
     }
     
   render() {
       var modal = null; 
           
         if(this.state.modalState === 0){
-            
             modal =(
                 <View >
                     <Text style={styles.question1Style}> Got enough time for coffee?</Text>
                     <Text style={styles.question2Style}> Which bus stop are you going to?</Text>
                     
                         <KafoTextInput 
-                            translinkAPICall={this.props.translinkAPICall} 
-                            translinkStopCall={this.props.translinkStopCall} 
+                            tsRouteCall={this.props.tsRouteCall} 
+                            tsStopCall={this.props.tsStopCall} 
                             changeModal={(mstatenum) => this.changeModal(mstatenum)}
                             setBusStopNum={this.props.setBusStopNum}
                         />
@@ -52,21 +52,18 @@ class KafoModal extends Component {
                 
       } else if (this.state.modalState === 1){
           var busResponses = null;
-          
           if (this.props.tdata){
-          
                 busResponses = this.props.tdata.map(function callback(currentValue, index, array) {
                     return(
                         <KafoButton 
-                            key={index+"buttons"} 
+                            key={index} 
                             routeName={currentValue.RouteName} 
                             routeNumber={currentValue.RouteNo} 
                             minsTillDepart={currentValue.Schedules.ExpectedCountdown} 
                             buttonColor ={(index % 2 == 1)} 
-                            selectedBusIndex= {index}
-                            selectRouteProp={(i) => this.selectRoute(i)}
+                            busIndex = {index}
+                            selectRoute={(i) => this.selectRoute(i)}
                             changeModal={this.changeModal}
-                            getCoffeeShops ={this.props.coffeeShopCall}
                         />
                     );
                 }, this);
@@ -77,12 +74,6 @@ class KafoModal extends Component {
 
                 <View style={{flex: 1}}>
                     <Text style={styles.question1Style}> Select your route </Text>
-              
-                    {
-              //EMULATOR ISSUE: SCROLLING CHANGES MODAL STATE
-              
-              }
-              
                     <ScrollView style={{flex: 1}}>
                         {busResponses}
                     </ScrollView>
@@ -113,15 +104,6 @@ class KafoModal extends Component {
                       );
                   }, this);
           }
-          /*
-          modal = (
-               <View style={{flex: 1}}>
-                <KafoArrival 
-                    changeModal={this.changeModal}
-                    
-                />
-          </View>
-          )*/
       }
       
     return (

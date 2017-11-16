@@ -7,8 +7,6 @@ import KafoModal from './kafo-modal';
 import CoffeeResultsModal from './coffeeResultsModal';
 
 export default class App extends React.Component {
-
-//setting the "appState" to be zero as a baseline. the "appState" changes when we want other elements, like buttons or maps to appear. 
      constructor(props) {
         super(props);
         this.state = {
@@ -18,17 +16,14 @@ export default class App extends React.Component {
             userLat:"",
             userLong:"",
             positionBump: 0,
-            stopData: '',
+            stopCoords: '',
             busStopNum: ""
         };
-         
-//      this.changeAppPage = this.changeAppPage.bind(this);
-        this.translink = this.translink.bind(this);
-        this.coffeeShopFetch = this.coffeeShopFetch.bind(this);
+
+        this.tsRouteCall = this.tsRouteCall.bind(this);
         this.getUserLat = this.getUserLat.bind(this);
         this.getUserLong = this.getUserLong.bind(this);
-        this.translinkStopCall = this.translinkStopCall.bind(this);
-        this.setBusStopNum = this.setBusStopNum.bind(this);
+        this.tsStopCall = this.tsStopCall.bind(this);
         this.modalState = this.modalState.bind(this);
      }
     
@@ -60,63 +55,39 @@ keyboardWillHide = (event) => {
     this.setState({positionBump: 0});
 }
 
-//we set "this" (app.js) to be pagenum, which is defined as zero up above. 
-
-//    changeAppPage(pagenum){
-//        this.setState({appState: pagenum});
-//        Keyboard.dismiss();
-//    }
- 
-//translink function now takes stop number(stopNum) as a parameter. replaced dummy stop # with the parameter. 
-//passed translink function as prop to text input component below. 
-
-translink(stopNum) {
+tsRouteCall(stopNum) {
     fetch('https://kafo-call.herokuapp.com/translink/' + stopNum , {method:'GET', headers:{
           "Content-Type": "application/json"
           }})
     .then(response => response.json())
     .then((responseJson) => {
-        //console.log(responseJson);
-        this.setState({translinkData:responseJson});     //set the state to be the response object from the translink api 
-        
+        this.setState({translinkData:responseJson}); 
     })
     .catch((error) => {
         console.log(error);
     });
 }
 
-translinkStopCall(stopNum){
+tsStopCall(stopNum){
         fetch('https://kafo-stop-call.herokuapp.com/translink/' + stopNum , {method:'GET', headers:{
           "Content-Type": "application/json"
           }})
     .then(response => response.json())
     .then((stopRespJson) => {
-        //console.log(stopRespJson);
-        this.setState({stopData:stopRespJson});     //set the state to be the response object from the translink api 
-        
+        this.setState({
+            stopCoords:{
+            lat:stopRespJson.Latitude,
+            lng:stopRespJson.Longitude
+        }}); 
     })
     .catch((error) => {
         console.log(error);
     });
 }
-
-setBusStopNum(busID){
-    this.setState({
-        busStopNum: busID
-    });
-}
-
-//this function takes an index parameter and saves the corresponding bus route to STATE as "selectedBus" 
-    
-    selectRoute(i){
+    selectedBus(data){
         this.setState({
-            selectedBus: this.state.translinkData[i]
+            selectedBus: this.props.selectedBus
         });
-    }
-    
-//get  coffee shops within a 500m radius
-     coffeeShopFetch(data){
-//        console.log(data);
     }
 modalState(data){
     this.setState({
@@ -136,11 +107,11 @@ modalState(data){
                 modal = (
                     <KafoModal
                         tdata ={this.state.translinkData}
-                        translinkStopCall = {this.translinkStopCall}
-    //                  changePage={(pagenum) => this.changeAppPage(pagenum)}
-                        translinkAPICall ={this.translink}
+                        tsStopCall = {this.tsStopCall}
+                        tsRouteCall ={this.tsRouteCall}
                         setBusStopNum ={this.setBusStopNum}
                         modalState = {this.modalState}
+                        selectedRoute = {this.selectedBus}
                     />    
                 );
 
@@ -149,9 +120,8 @@ modalState(data){
                     behaviour="padding">
                     
                     <KafoMapCombined
-                        busID = {this.state.busStopNum}
                         modalState = {this.state.modalState}
-                        getBusStopCoords = {this.translinkStopCall}
+                        getBusStopCoords = {this.tsStopCall}
                         sendCSData = {this.coffeeShopFetch} getUserLong={this.checkLat} getUserLat = {this.checkLong} 
                     />
                     <View 

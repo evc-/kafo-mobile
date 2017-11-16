@@ -100,6 +100,7 @@ class KafoMapCombined extends Component {
                     lat:position.coords.latitude,
                     error: null,
                     });
+                    
                     //get  coffee shops within a 500m radius
                      fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=200").then((CSresp)=>{
                     //console.log(CSresp);
@@ -143,14 +144,10 @@ class KafoMapCombined extends Component {
       
               var coffeeResp = null;
       console.log("results",this.state.coffeeShopData);
+      if (this.props.modalState >= 1){
           if (this.state.coffeeShopData != '' ){
           //this isn't working!!!
             coffeeResp = this.state.coffeeShopData.map((currentValue, index, array)=>{
-  
-//          if (this.state.coffeeShopData != '' ){
-//          //this isn't working!!!
-//                var coffeeResp = this.state.coffeeShopData.map(function makeShopMaker(currentValue, index, array) {
-
                     return(
                         <MapView.Marker 
                         id={index}
@@ -162,34 +159,6 @@ class KafoMapCombined extends Component {
                     )                                      
                 });
           }
-                
-        var dummyShops = null;
-      if (this.props.modalState >= 1){
-          dummyShops = (
-          <View>
-              <MapView.Marker
-            coordinate={{
-                latitude: 49.2501606,
-                longitude:-123.0000981599999
-        }}
-        title={"Tim Hortons"}
-       />
-        <MapView.Marker
-            coordinate={{
-                latitude: 49.2507179999999,
-                longitude: -123.00140379999999
-        }}
-        title={"Gateway Deli"}
-        />
-        <MapView.Marker
-            coordinate={{
-                latitude: 49.2470834,
-                longitude: -123.00188270000001
-        }}
-        title={"The Stand"}
-        />
-              </View>
-          )
       }
     return (
 
@@ -214,7 +183,6 @@ class KafoMapCombined extends Component {
             }}
         />
                {coffeeResp}
-        {dummyShops}
         </MapView>
         </View>  
 
