@@ -21,21 +21,24 @@ export default class App extends React.Component {
         };
 
         this.tsRouteCall = this.tsRouteCall.bind(this);
-        this.getUserLat = this.getUserLat.bind(this);
-        this.getUserLong = this.getUserLong.bind(this);
+        this.checkLat = this.checkLat.bind(this);
+        this.checkLong = this.checkLong.bind(this);
         this.tsStopCall = this.tsStopCall.bind(this);
         this.modalState = this.modalState.bind(this);
+        this.getCoffeeShops = this.getCoffeeShops.bind(this);
      }
     
- getUserLat(data){
+ checkLat(data){
      this.setState({
          userLat:data
      });
+     console.log(this.state.userLat);
  }
-getUserLong(data){
+checkLong(data){
     this.setState({
         userLong:data
     });
+    console.log(this.state.userLong);
 }
 componentWillMount () {
     this.keyboardWillShowSub = Keyboard.addListener('keyboardDidShow', this.keyboardWillShow);
@@ -94,8 +97,77 @@ modalState(data){
         modalState:data
     });
 }
+//get  coffee shops within a 500m radius
+getCoffeeShops(){
+    fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLat+","+this.state.userLong+"&type=cafe&radius=200").then((CSresp)=>{
+                    return CSresp.json();
+                    }).then((CSjson)=>{
+                    this.setState({
+                             coffeeShopData:CSjson
+                         });
+    });
+}
+ //this function combines the 4 different functions required. it will take in the array of shops fetched from the Places API, it'll take in the user location, the bus stop number they're at, and the entire bus response returned by the Translink API 
     
+    getAllShopStatus(shopAPIArray, userLocation, busStopNum, busResponse){
+        
+        //we need to check the status of each stop that is returned in the radius. so will use a map (like a for loop), to do the following functions to each item in the array 
+        //1. get the coordinates of the shop (for each shop in the array)
+        //2. get the coordinates of the bus stop 
+        //3. calucate the walking time (from user location to each shop, and to the bus stop)
+        //4. assign a status, taking the time required from walking and comparing it to the expected countdown property of the bus response from the translinkAPI 
+        //finally, return an object (for each shop) that includes its status and its coordinates. that way, we can place the colored icons on the coordinates! 
+        
+        var statusArray = shopAPIArray.map(function getShopStatus(currentShopObj, index, array) {
+            
+            var shopCoords = this.getShopCoords(currentShopObj);
+            var busStopCoords = this.getBusStopCoords(busStopNum);
+            var walkingTimeValue = this.getWalkingTime(userLocation, shopCoords, busStopCoords);
+            var shopStatus = this.checkShopStatus(walkingTimeValue, busResponse.expectedCountdown);
+            
+            return {Status:shopStatus, Coordinates:shopCoords};
+            
+        },this)
+        
+        return statusArray;
+    }
     
+    //this function takes the object returned by the Places API call and gets its coordinates 
+    getShopCoords(mapsObj){
+        var shopCoords = {lat:0, long:0};
+        return shopCoords;
+    }
+    
+    //TODO: make this function take a bus stop ID and return its coordinates
+    getBusStopCoords(busStopNum){
+        var busStopCoords = {lat:0, long:0};
+        return busStopCoords;
+    }
+    
+    //this function adds up the walking times from the user location to the shop and then to the bus stop
+    //requires the direction api 
+    getWalkingTime(userlocation, shopCoords, busStopCoords){
+        var walkingTimeValue = 0; //minutes
+        //replace with userlocation to shopCoords to busCoords;
+        return walkingTimeValue;
+    }
+    
+    //this function takes the walking time value calculated from the previous function and compares it to the time until the next bus arrival, to return a status of red, green, or orange 
+    checkShopStatus(walkingTimeValue, nextBusTimeValue){
+        var timeRequired = walkingTimeValue + nextBusTimeValue; //TODO: add time buffer 
+        
+        if (timeRequired > nextBusTimeValue){
+            return "statusRed";
+        }
+        
+        if (timeRequired == nextBusTimeValue){
+            return "statusOrange";
+        }
+        
+        if (timeRequired < nextBusTimeValue){
+            return "statusGreen";
+        }
+    }    
   render() {
 
 //add a selectedbusIndex prop so we have the index of which button they clicked on 
@@ -120,9 +192,12 @@ modalState(data){
                     behaviour="padding">
                     
                     <KafoMapCombined
+                        getCoffeeShops = {this.getCoffeeShops}
                         modalState = {this.state.modalState}
                         getBusStopCoords = {this.tsStopCall}
-                        sendCSData = {this.coffeeShopFetch} getUserLong={this.checkLat} getUserLat = {this.checkLong} 
+                        coffeeShopData = {this.state.coffeeShopData.results} 
+                        userLong = {this.checkLat} 
+                        userLat = {this.checkLong} 
                     />
                     <View 
                         style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .3 + 20 + this.state.positionBump} ]}>
