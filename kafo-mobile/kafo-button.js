@@ -15,6 +15,7 @@ export default class KafoButton extends React.Component {
             this.props.changeModal(2);
             console.log("press!");
             this.props.selectRoute(this.props.busIndex);
+            this.props.getCoffeeShops();
         }
 
   render() {
@@ -32,7 +33,7 @@ export default class KafoButton extends React.Component {
             <Text 
                style={style}
                 onPress={() => this.selectRoute()}
-            >       {this.props.routeNumber}{" "}
+    >       {this.props.routeNumber}{" "}
                     {this.props.routeName}
             </Text>
         </TouchableOpacity> 

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Dimensions, AppRegistry, StyleSheet, Text, View, Button } from 'react-native';
 import CoffeeResultsModal from '../coffeeResultsModal';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-
 class KafoMapCombined extends Component {
     constructor(props){
         super(props);
@@ -16,17 +15,18 @@ class KafoMapCombined extends Component {
         this.addLong = this.addLong.bind(this);
     }
     addLat(){
-        this.props.userLat(this.state.lat);
+        var lat = this.state.lat;
+        this.props.userLat(lat);
     }
     addLong(){
-        this.props.userLong(this.state.lng);
+        var lng = this.state.lng;
+        this.props.userLong(lng);
     }
         componentWillMount(){
             //set to true to get actual location 
             if (true){
                   this.watchId = navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    this.props.getCoffeeShops();
                     this.setState({
                     lng: position.coords.longitude,
                     lat:position.coords.latitude,
@@ -49,17 +49,15 @@ class KafoMapCombined extends Component {
                     error: null
                 })
             }
-          
         }
     
       componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchId);
   }             
   render(){
-      
     var coffeeResp = null;
       //console.log("results",this.props.coffeeShopData);
-      if (this.props.modalState >= 1){
+ if (this.props.modalState >= 1){
           if (this.props.coffeeShopData){
             coffeeResp = this.props.coffeeShopData.map((currentValue, index, array)=>{
                     return(
@@ -73,7 +71,9 @@ class KafoMapCombined extends Component {
                     )                                      
                 });
           }
-      }
+ }
+    
+      
     return (
 
         <View>

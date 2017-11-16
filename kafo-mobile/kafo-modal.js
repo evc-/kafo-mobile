@@ -64,6 +64,7 @@ class KafoModal extends Component {
                             busIndex = {index}
                             selectRoute={(i) => this.selectRoute(i)}
                             changeModal={this.changeModal}
+                            getCoffeeShops = {this.props.getCoffeeShops}
                         />
                     );
                 }, this);

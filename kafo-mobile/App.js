@@ -13,10 +13,12 @@ export default class App extends React.Component {
             appState: 0,
             translinkData: "",
             coffeeShopData: "",
-            userLat:"",
-            userLong:"",
+ //           userLat:49.24943966121919,
+//            userLong:-123.00086935603458,
+            userLat:'',
+            userLong:'',
             positionBump: 0,
-            stopCoords: '',
+            busStopCoords: '',
             busStopNum: ""
         };
 
@@ -26,6 +28,7 @@ export default class App extends React.Component {
         this.tsStopCall = this.tsStopCall.bind(this);
         this.modalState = this.modalState.bind(this);
         this.getCoffeeShops = this.getCoffeeShops.bind(this);
+        this.apiWaypoints = this.apiWaypoints.bind(this);
      }
     
  checkLat(data){
@@ -33,6 +36,8 @@ export default class App extends React.Component {
          userLat:data
      });
      console.log(this.state.userLat);
+    
+     
  }
 checkLong(data){
     this.setState({
@@ -70,6 +75,16 @@ tsRouteCall(stopNum) {
         console.log(error);
     });
 }
+// attached to the "Go" button in Modal screen 4
+apiWaypoints(){
+    fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLat+","+this.state.userLong+"&destination=49.25150043342449,-123.00415277481079&waypoints=49.250337898575935,-123.00160467624664&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI")
+            .then((directionsResp)=>{
+              return directionsResp.json();
+  
+          }).then((directionsRespJson)=>{
+              console.log("directions" +directionsResp.json);
+          });
+}
 
 tsStopCall(stopNum){
         fetch('https://kafo-stop-call.herokuapp.com/translink/' + stopNum , {method:'GET', headers:{
@@ -78,7 +93,7 @@ tsStopCall(stopNum){
     .then(response => response.json())
     .then((stopRespJson) => {
         this.setState({
-            stopCoords:{
+            busStopCoords:{
             lat:stopRespJson.Latitude,
             lng:stopRespJson.Longitude
         }}); 
@@ -99,17 +114,18 @@ modalState(data){
 }
 //get  coffee shops within a 500m radius
 getCoffeeShops(){
-    fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLat+","+this.state.userLong+"&type=cafe&radius=200").then((CSresp)=>{
+    fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLat+","+this.state.userLong+"&type=cafe&radius=500").then((CSresp)=>{
                     return CSresp.json();
                     }).then((CSjson)=>{
+                    console.log(CSjson);
                     this.setState({
-                             coffeeShopData:CSjson
+                             coffeeShopData:CSjson.results
                          });
     });
 }
  //this function combines the 4 different functions required. it will take in the array of shops fetched from the Places API, it'll take in the user location, the bus stop number they're at, and the entire bus response returned by the Translink API 
     
-    getAllShopStatus(shopAPIArray, userLocation, busStopNum, busResponse){
+    getAllShopStatus(shopAPIArray, userLocation, busStopCoords, busResponse){
         
         //we need to check the status of each stop that is returned in the radius. so will use a map (like a for loop), to do the following functions to each item in the array 
         //1. get the coordinates of the shop (for each shop in the array)
@@ -184,6 +200,7 @@ getCoffeeShops(){
                         setBusStopNum ={this.setBusStopNum}
                         modalState = {this.modalState}
                         selectedRoute = {this.selectedBus}
+                        getCoffeeShops = {this.getCoffeeShops}
                     />    
                 );
 
@@ -192,10 +209,9 @@ getCoffeeShops(){
                     behaviour="padding">
                     
                     <KafoMapCombined
-                        getCoffeeShops = {this.getCoffeeShops}
                         modalState = {this.state.modalState}
                         getBusStopCoords = {this.tsStopCall}
-                        coffeeShopData = {this.state.coffeeShopData.results} 
+                        coffeeShopData = {this.state.coffeeShopData} 
                         userLong = {this.checkLat} 
                         userLat = {this.checkLong} 
                     />
