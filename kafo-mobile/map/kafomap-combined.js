@@ -11,18 +11,17 @@ class KafoMapCombined extends Component {
             lng: -123.116460,
             error: null
         };
-        this.addLat = this.addLat.bind(this);
-        this.addLong = this.addLong.bind(this);
+        //this.addLat = this.addLat.bind(this);
+        //this.addLong = this.addLong.bind(this);
     }
-    addLat(){
+   /* addLat(){
         var lat = this.state.lat;
         this.props.userLat(lat);
     }
     addLong(){
         var lng = this.state.lng;
         this.props.userLong(lng);
-    }
-        componentWillMount(){
+    }        componentWillMount(){
             //set to true to get actual location 
             if (true){
                   this.watchId = navigator.geolocation.getCurrentPosition(
@@ -49,10 +48,10 @@ class KafoMapCombined extends Component {
                     error: null
                 })
             }
-        }
+        }*/
     
       componentWillUnmount() {
-        navigator.geolocation.clearWatch(this.watchId);
+        //navigator.geolocation.clearWatch(this.watchId);
   }             
   render(){
     var coffeeResp = null;

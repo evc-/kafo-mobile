@@ -13,10 +13,10 @@ export default class App extends React.Component {
             appState: 0,
             translinkData: "",
             coffeeShopData: "",
- //           userLat:49.24943966121919,
-//            userLong:-123.00086935603458,
-            userLat:'',
-            userLong:'',
+           lat:49.24943966121919,
+           lng:-123.00086935603458,
+//            userLat:'',
+//            userLong:'',
             positionBump: 0,
             busStopCoords: '',
             busStopNum: ""
@@ -31,7 +31,8 @@ export default class App extends React.Component {
         this.apiWaypoints = this.apiWaypoints.bind(this);
      }
     
- checkLat(data){
+    
+ /*(data){
      this.setState({
          userLat:data
      });
@@ -44,8 +45,33 @@ checkLong(data){
         userLong:data
     });
     console.log(this.state.userLong);
-}
+}*/
 componentWillMount () {
+    if (true){
+            this.watchId = navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    this.setState({
+                    lng: position.coords.longitude,
+                    lat:position.coords.latitude,
+                    error: null,
+                    });
+                console.log(this.state.lng, this.state.lat);
+                },
+            (error) => 
+                this.setState({ 
+                    error: error.message
+                }),
+            
+                {enableHighAccuracy: false, timeout: 2000, maximumAge: 1000, distanceFilter: 10 },
+                    );
+            } else {
+                this.setState({
+                    lat: 49.250951,
+                    lng: -123.116460,
+                    error: null
+                })
+            }
+    
     this.keyboardWillShowSub = Keyboard.addListener('keyboardDidShow', this.keyboardWillShow);
     this.keyboardWillHideSub = Keyboard.addListener('keyboardDidHide', this.keyboardWillHide);
   }
@@ -53,6 +79,7 @@ componentWillMount () {
 componentWillUnmount() {
     this.keyboardWillShowSub.remove();
     this.keyboardWillHideSub.remove();
+    navigator.geolocation.clearWatch(this.watchId);
   }
     
 keyboardWillShow = (event) => {
@@ -114,7 +141,7 @@ modalState(data){
 }
 //get  coffee shops within a 500m radius
 getCoffeeShops(){
-    fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLat+","+this.state.userLong+"&type=cafe&radius=500").then((CSresp)=>{
+    fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=500").then((CSresp)=>{
                     return CSresp.json();
                     }).then((CSjson)=>{
                     console.log(CSjson);
@@ -212,8 +239,8 @@ getCoffeeShops(){
                         modalState = {this.state.modalState}
                         getBusStopCoords = {this.tsStopCall}
                         coffeeShopData = {this.state.coffeeShopData} 
-                        userLong = {this.checkLat} 
-                        userLat = {this.checkLong} 
+                        //userLong = {this.checkLat} 
+                        //userLat = {this.checkLong} 
                     />
                     <View 
                         style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .3 + 20 + this.state.positionBump} ]}>
