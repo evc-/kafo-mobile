@@ -15,37 +15,18 @@ export default class App extends React.Component {
             coffeeShopData: "",
            lat:49.24943966121919,
            lng:-123.00086935603458,
-//            userLat:'',
-//            userLong:'',
             positionBump: 0,
             busStopCoords: '',
             busStopNum: ""
         };
 
         this.tsRouteCall = this.tsRouteCall.bind(this);
-        this.checkLat = this.checkLat.bind(this);
-        this.checkLong = this.checkLong.bind(this);
         this.tsStopCall = this.tsStopCall.bind(this);
         this.modalState = this.modalState.bind(this);
         this.getCoffeeShops = this.getCoffeeShops.bind(this);
         this.apiWaypoints = this.apiWaypoints.bind(this);
      }
-    
-    
- /*(data){
-     this.setState({
-         userLat:data
-     });
-     console.log(this.state.userLat);
-    
-     
- }
-checkLong(data){
-    this.setState({
-        userLong:data
-    });
-    console.log(this.state.userLong);
-}*/
+
 componentWillMount () {
     if (true){
             this.watchId = navigator.geolocation.getCurrentPosition(
@@ -55,7 +36,6 @@ componentWillMount () {
                     lat:position.coords.latitude,
                     error: null,
                     });
-                console.log(this.state.lng, this.state.lat);
                 },
             (error) => 
                 this.setState({ 
@@ -141,7 +121,7 @@ modalState(data){
 }
 //get  coffee shops within a 500m radius
 getCoffeeShops(){
-    fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+position.coords.latitude+","+position.coords.longitude+"&type=cafe&radius=500").then((CSresp)=>{
+    fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.lat+","+this.state.lng+"&type=cafe&radius=500").then((CSresp)=>{
                     return CSresp.json();
                     }).then((CSjson)=>{
                     console.log(CSjson);
@@ -239,8 +219,8 @@ getCoffeeShops(){
                         modalState = {this.state.modalState}
                         getBusStopCoords = {this.tsStopCall}
                         coffeeShopData = {this.state.coffeeShopData} 
-                        //userLong = {this.checkLat} 
-                        //userLat = {this.checkLong} 
+                        userLat = {this.state.lat}
+                        userLng = {this.state.lng}
                     />
                     <View 
                         style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .3 + 20 + this.state.positionBump} ]}>
