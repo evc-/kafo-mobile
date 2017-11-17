@@ -30,11 +30,13 @@ class KafoMapCombined extends Component {
             coffeeResp = this.props.coffeeShopData.map((currentValue, index, array)=>{
                     return(
                         <MapView.Marker 
+                        key={index}
                         id={index}
                         coordinate={{
                             latitude: currentValue.geometry.location.lat,
                             longitude: currentValue.geometry.location.lng}} 
                         title={currentValue.name}
+                        //image={require('../assets/green-shop.png')}
                     />  
                     )                                      
                 });

@@ -18,7 +18,6 @@ export default class KafoTextInput extends Component {
 //TODO: show error for if stop number is invalid 
     
     updateText(text){
-        console.log(text);
         this.setState({text});
         
         if (text.length == 5){

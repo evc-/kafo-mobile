@@ -104,6 +104,7 @@ tsStopCall(stopNum){
             lat:stopRespJson.Latitude,
             lng:stopRespJson.Longitude
         }}); 
+            console.log(this.state.busStopCoords);
     })
     .catch((error) => {
         console.log(error);
@@ -124,7 +125,6 @@ getCoffeeShops(){
     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.lat+","+this.state.lng+"&type=cafe&radius=500").then((CSresp)=>{
                     return CSresp.json();
                     }).then((CSjson)=>{
-                    console.log(CSjson);
                     this.setState({
                              coffeeShopData:CSjson.results
                          });
