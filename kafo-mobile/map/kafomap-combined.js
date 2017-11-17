@@ -36,7 +36,11 @@ class KafoMapCombined extends Component {
                             latitude: currentValue.geometry.location.lat,
                             longitude: currentValue.geometry.location.lng}} 
                         title={currentValue.name}
-                        //image={require('../assets/green-shop.png')}
+                    /*if(currentValue.status ==="good"){
+                    image={require('../assets/green-shop.png')}
+                    } else if ( .status === "maybe"){
+                        immage={require('../assets/yellow-shop.png')}
+                    }*/
                     />  
                     )                                      
                 });

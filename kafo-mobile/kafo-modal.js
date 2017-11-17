@@ -25,10 +25,7 @@ class KafoModal extends Component {
     
     //returning undefined currently
         selectRoute(i){
-            this.setState({
-                selectedBusIndex:i
-            });
-            console.log(this.state.selectedBusIndex);
+            console.log(this.props.tdata[i]);
     }
     
   render() {
@@ -61,8 +58,8 @@ class KafoModal extends Component {
                             routeNumber={currentValue.RouteNo} 
                             minsTillDepart={currentValue.Schedules.ExpectedCountdown} 
                             buttonColor ={(index % 2 == 1)} 
-                            busIndex = {index}
-                            selectRoute={(i) => this.selectRoute(i)}
+                            busIndex={index}
+                            selectRoute={this.selectRoute}
                             changeModal={this.changeModal}
                             getCoffeeShops = {this.props.getCoffeeShops}
                         />
