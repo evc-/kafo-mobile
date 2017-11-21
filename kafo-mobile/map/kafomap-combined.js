@@ -30,12 +30,15 @@ class KafoMapCombined extends Component {
             coffeeResp = this.props.coffeeShopData.map((currentValue, index, array)=>{
                     return(
                         <MapView.Marker 
+                        style={styles.icon}
                         key={index}
                         id={index}
                         coordinate={{
                             latitude: currentValue.geometry.location.lat,
                             longitude: currentValue.geometry.location.lng}} 
                         title={currentValue.name}
+                        image={require('../img/storeLocator.png')}
+                        
                     /*if(currentValue.status ==="good"){
                     image={require('../assets/green-shop.png')}
                     } else if ( .status === "maybe"){
@@ -58,18 +61,23 @@ class KafoMapCombined extends Component {
             region={{
                 latitude: this.state.lat,
                 longitude: this.state.lng,
-                latitudeDelta: 0.075,
-                longitudeDelta: 0.045
+                latitudeDelta: 0.0065,
+                longitudeDelta: 0.0025
             }}
         >
         <MapView.Marker
+          style={styles.icons}
             coordinate={{
-        
                 latitude: this.state.lat,
                 longitude: this.state.lng,
-        
             }}
+         image={require('../img/user.png')}
+            
+        
         />
+        
+         
+           
                {coffeeResp}
         </MapView>
         </View>  
@@ -85,7 +93,13 @@ const styles = StyleSheet.create({
       width: Dimensions.get('window').width,
       zIndex: -6000
       
-  }
+  },
+    icons: {
+        height: 10,
+        width:10,
+        position:'relative',
+    }
+    
 });
 
 export default KafoMapCombined;
