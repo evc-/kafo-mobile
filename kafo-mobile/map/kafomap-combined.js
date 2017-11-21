@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, AppRegistry, StyleSheet, Text, View, Button } from 'react-native';
+import { Dimensions, AppRegistry, StyleSheet, Text, View, Button, Image } from 'react-native';
 import CoffeeResultsModal from '../coffeeResultsModal';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 class KafoMapCombined extends Component {
