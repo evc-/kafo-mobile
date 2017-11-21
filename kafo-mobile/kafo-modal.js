@@ -68,7 +68,7 @@ class KafoModal extends Component {
                     );
                 }, this);
         } else {
-            busResponses = <Text style={styles.errorStyle}>Not a Valid route </Text>
+//            busResponses = <Text style={styles.errorStyle}>Not a Valid route </Text>
         }
           modal =(
 
@@ -86,7 +86,7 @@ class KafoModal extends Component {
           <View style={{flex: 1}}>
                 <CoffeeResultsModal 
                     changeModal={this.changeModal}
-                    transitData={this.state.selectedBus}
+                    //transitData={this.state.selectedBus}
                 />
           </View>
           )
