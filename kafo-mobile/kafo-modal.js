@@ -68,7 +68,7 @@ class KafoModal extends Component {
                     );
                 }, this);
         } else {
-            busResponses = <Text style={styles.errorStyle}>Not a Valid route </Text>
+//            busResponses = <Text style={styles.errorStyle}>Not a Valid route </Text>
         }
           modal =(
 
