@@ -61,8 +61,8 @@ class KafoMapCombined extends Component {
             region={{
                 latitude: this.state.lat,
                 longitude: this.state.lng,
-                latitudeDelta: 0.0065,
-                longitudeDelta: 0.0025
+                latitudeDelta: 0.005,
+                longitudeDelta: 0.0005
             }}
         >
         <MapView.Marker
