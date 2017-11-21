@@ -10,7 +10,8 @@ class KafoModal extends Component {
         super(props);
         
         this.state={
-            modalState: 0
+            modalState: 0,
+            selectedBus:''
         };
         
             this.changeModal = this.changeModal.bind(this);
@@ -23,9 +24,10 @@ class KafoModal extends Component {
             Keyboard.dismiss();
         }
     
-    //returning undefined currently
         selectRoute(i){
-            console.log(this.props.tdata[i]);
+            this.setState({
+                selectedBus:this.props.tdata[i]
+            });
     }
     
   render() {
@@ -84,6 +86,7 @@ class KafoModal extends Component {
           <View style={{flex: 1}}>
                 <CoffeeResultsModal 
                     changeModal={this.changeModal}
+                    transitData={this.state.selectedBus}
                 />
           </View>
           )

@@ -208,6 +208,7 @@ getCoffeeShops(){
                         modalState = {this.modalState}
                         selectedRoute = {this.selectedBus}
                         getCoffeeShops = {this.getCoffeeShops}
+                        coffeeShopData = {this.state.coffeeShopData} 
                     />    
                 );
 
