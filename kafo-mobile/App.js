@@ -128,6 +128,7 @@ getCoffeeShops(){
                     this.setState({
                              coffeeShopData:CSjson.results
                          });
+        console.log(this.state.coffeeShopData)
     });
 }
  //this function combines the 4 different functions required. it will take in the array of shops fetched from the Places API, it'll take in the user location, the bus stop number they're at, and the entire bus response returned by the Translink API 
