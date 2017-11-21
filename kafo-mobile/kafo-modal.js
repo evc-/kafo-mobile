@@ -85,7 +85,7 @@ class KafoModal extends Component {
         
           <View style={{flex: 1}}>
                 <CoffeeResultsModal 
-                    //changeModal={this.changeModal}
+                    changeModal={this.changeModal}
                     //transitData={this.state.selectedBus}
                 />
           </View>

@@ -51,8 +51,17 @@ render() {
         return(
             <View key={index}>
                 <Text>{obj.name}</Text>
-                <Text>Go</Text>
-                        </View>
+                <View 
+                    style={styles.goBtnStyle}
+                >
+                    <TouchableOpacity
+                    onPress={() => this.startTimer()}
+                    >
+                        <Text style={styles.goBtnText}
+                        >Go</Text>
+                    </TouchableOpacity>  
+                </View>
+            </View>
                     );
                 }, this);
     
@@ -63,13 +72,6 @@ render() {
         <ScrollView>
               {shopInfo}
         </ScrollView>
-                <TouchableOpacity> 
-                    <Text 
-                        style={styles.question2Style}
-                        onPress={() => this.startTimer()}>
-                 Start Live Bus Tracker & Timer
-                    </Text>
-                </TouchableOpacity> 
         </View>
     
     )
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
     question1Style:{
         flex: 1,
         textAlign: 'center',
-        padding:15,
+        padding:10,
         width: '100%',
         fontSize: 15,
         color: 'white',
@@ -102,5 +104,14 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: 'white',
         backgroundColor: '#303C45'
-      }
+      },
+    goBtnStyle:{
+        backgroundColor: '#303C45',
+        borderRadius: 20,
+        width:"8%",
+    },
+    goBtnText:{
+        fontSize: 15,
+        color: 'white',
+    }
 });
