@@ -215,6 +215,7 @@ getCoffeeShops(){
                 <KeyboardAvoidingView  style={styles.container}           
                     behaviour="padding">
                     
+                
                     <KafoMapCombined
                         modalState = {this.state.modalState}
                         getBusStopCoords = {this.tsStopCall}
@@ -222,9 +223,13 @@ getCoffeeShops(){
                         userLat = {this.state.lat}
                         userLng = {this.state.lng}
                     />
+                
+                <Text style={[styles.header]}> kafo </Text> 
+                
                     <View 
                         style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .3 + 20 + this.state.positionBump} ]}>
                         {modal}
+            
                     </View>
                 </KeyboardAvoidingView >
             );
@@ -242,10 +247,24 @@ const styles = StyleSheet.create({
       },
     
     container: {
-        flex: 1,
+        flex: 3,
         flexDirection: 'column',
         alignItems:'center',
-  }
+  },
+    
+    header: {
+        flex: 1,
+        textAlign:'center',
+        color: '#42565E',
+        fontWeight: 'bold',
+        fontSize: 27,
+        backgroundColor:'rgba(255, 255, 255, 0.7)',
+        position: 'absolute',
+        top: 0,
+        width: '100%',
+        padding: 15
+        
+    }
     
 });
 

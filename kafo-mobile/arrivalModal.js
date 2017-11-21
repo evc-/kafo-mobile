@@ -30,7 +30,7 @@ render() {
     <View style={{flex: 1}}>
         <Text style={styles.question1Style}>Heading to Waves Coffee!</Text>
         
-        <Text style={styles.paragraph1Style}> Current Time: {"\n"} {this.state.curTime}</Text>
+        <Text style={styles.paragraph1Style}> Current Time: {this.state.curTime}</Text>
         <Text style={styles.paragraph2Style}> Until bus arrives: {"\n"}TBD {this.state.tillDepart}</Text>
         
       </View>

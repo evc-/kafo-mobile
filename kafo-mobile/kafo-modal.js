@@ -92,11 +92,19 @@ class KafoModal extends Component {
           
           if(this.props.tdata){
                   estimateResponse = this.props.tdata.map(function callback(currentValue, index, array){
+                      var minsTillDepart = 0;
+                      for(var i = 0; i < currentValue.Schedules.length; i++){
+                          if(currentValue.Schedules[i].ExpectedCountdown > 0){
+                              minsTillDepart = currentValue.Schedules[i].ExpectedCountdown;
+                              
+                              break;
+                          }
+                      }
                       return (
                           modal = (
                           <ArrivalModal 
                             changeModal={this.changeModal}
-                            minsTillDepart={currentValue.Schedules.ExpectedCountdown}
+                            minsTillDepart={currentValue.Schedules[0].ExpectedCountdown}
                           />
                               )
                       );
