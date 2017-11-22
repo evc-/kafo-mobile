@@ -98,6 +98,7 @@ class KafoModal extends Component {
                       var minsTillDepart = 0;
                       for(var i = 0; i < currentValue.Schedules.length; i++){
                           if(currentValue.Schedules[i].ExpectedCountdown > 0){
+                              
                               minsTillDepart = currentValue.Schedules[i].ExpectedCountdown;
                               
                               break;

@@ -7,22 +7,10 @@ class KafoMapCombined extends Component {
         super(props);
         
         this.state={
-            lat: 49.250951,
-            lng: -123.116460,
             error: null
         };
-       // this.getUserCoords = this.getUserCoords.bind(this);
     }
         
-    componentWillMount(){
-        if(true){
-            this.setState({
-                lat:this.props.userLat,
-                lng:this.props.userLng
-            });
-        }
-    }
-
   render(){
     var coffeeResp = null;
  if (this.props.modalState >= 1){
@@ -59,8 +47,8 @@ class KafoMapCombined extends Component {
             style={styles.map}
             provider = { PROVIDER_GOOGLE }
             region={{
-                latitude: this.state.lat,
-                longitude: this.state.lng,
+                latitude: this.props.userLat,
+                longitude: this.props.userLng,
                 latitudeDelta: 0.005,
                 longitudeDelta: 0.0005
             }}
@@ -68,8 +56,8 @@ class KafoMapCombined extends Component {
         <MapView.Marker
           style={styles.icons}
             coordinate={{
-                latitude: this.state.lat,
-                longitude: this.state.lng,
+                latitude: this.props.userLat,
+                longitude: this.props.userLng,
             }}
          image={require('../img/user.png')}
             

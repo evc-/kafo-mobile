@@ -13,28 +13,31 @@ export default class App extends React.Component {
             appState: 0,
             translinkData: "",
             coffeeShopData: "",
-            lat:49.24943966121919,
-            lng:-123.00086935603458,
+            userLocation: {lat: 49.24943966121919, lng:-123.00086935603458 },
             positionBump: 0,
-            busStopCoords: '',
-            busStopNum: ""
+            busStopCoords: {lat: null, lng: null},
+            busStopNum: null
         };
-
+    
         this.tsRouteCall = this.tsRouteCall.bind(this);
         this.tsStopCall = this.tsStopCall.bind(this);
         this.modalState = this.modalState.bind(this);
         this.getCoffeeShops = this.getCoffeeShops.bind(this);
         this.apiWaypoints = this.apiWaypoints.bind(this);
+        this.getAllShopDirections = this.getAllShopDirections.bind(this);
+        //this.getStatuses = this.getStatuses.bind(this);
      }
 
+/*SIMPLE FUNCTIONS*/
+    
 componentWillMount () {
     if (true){
             this.watchId = navigator.geolocation.getCurrentPosition(
                 (position) => {
                     this.setState({
-                    lng: position.coords.longitude,
-                    lat:position.coords.latitude,
-                    error: null,
+                        //changing userlocation to be an object with lat and long 
+                        userLocation: {lng: position.coords.longitude, lat:position.coords.latitude},
+                        error: null,
                     });
                 },
             (error) => 
@@ -46,8 +49,7 @@ componentWillMount () {
                     );
             } else {
                 this.setState({
-                    lat: 49.250951,
-                    lng: -123.116460,
+                    userLocation: {lat: 49.250951, lng: -123.116460},
                     error: null
                 })
             }
@@ -61,7 +63,7 @@ componentWillUnmount() {
     this.keyboardWillHideSub.remove();
     navigator.geolocation.clearWatch(this.watchId);
   }
-    
+         
 keyboardWillShow = (event) => {
     this.setState({positionBump: event.endCoordinates.height});
 }
@@ -69,7 +71,22 @@ keyboardWillShow = (event) => {
 keyboardWillHide = (event) => {
     this.setState({positionBump: 0});
 }
+ 
+selectedBus(data){
+    this.setState({
+        selectedBus: this.props.selectedBus
+    });
+}
 
+modalState(data){
+    this.setState({
+        modalState:data
+    });
+}
+
+/*API CALLS*/
+
+//get transit information 
 tsRouteCall(stopNum) {
     fetch('https://kafo-call.herokuapp.com/translink/' + stopNum , {method:'GET', headers:{
           "Content-Type": "application/json"
@@ -82,17 +99,8 @@ tsRouteCall(stopNum) {
         console.log(error);
     });
 }
-// attached to the "Go" button in Modal screen 4
-apiWaypoints(){
-    fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLat+","+this.state.userLong+"&destination=49.25150043342449,-123.00415277481079&waypoints=49.250337898575935,-123.00160467624664&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI")
-            .then((directionsResp)=>{
-              return directionsResp.json();
-  
-          }).then((directionsRespJson)=>{
-              console.log("directions" +directionsResp.json);
-          });
-}
 
+//get bus stop long and lat from translink 
 tsStopCall(stopNum){
         fetch('https://kafo-stop-call.herokuapp.com/translink/' + stopNum , {method:'GET', headers:{
           "Content-Type": "application/json"
@@ -104,79 +112,81 @@ tsStopCall(stopNum){
             lat:stopRespJson.Latitude,
             lng:stopRespJson.Longitude
         }}); 
-            console.log(this.state.busStopCoords);
     })
     .catch((error) => {
         console.log(error);
     });
 }
-    selectedBus(data){
-        this.setState({
-            selectedBus: this.props.selectedBus
-        });
-    }
-modalState(data){
-    this.setState({
-        modalState:data
-    });
-}
+
 //get  coffee shops within a 500m radius
 getCoffeeShops(){
-    fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.lat+","+this.state.lng+"&type=cafe&radius=500").then((CSresp)=>{
-                    return CSresp.json();
-                    }).then((CSjson)=>{
-                    this.setState({
-                             coffeeShopData:CSjson.results
-                         });
-        console.log(this.state.coffeeShopData)
+    fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500").then((CSresp)=>{
+        return CSresp.json();
+    }).then((CSjson)=>{
+        this.setState({
+            coffeeShopData:CSjson.results
+        }, 
+            this.getAllShopDirections //run get walking directions to each shop 
+        ); 
     });
 }
- //this function combines the 4 different functions required. it will take in the array of shops fetched from the Places API, it'll take in the user location, the bus stop number they're at, and the entire bus response returned by the Translink API 
+
+//send directions request to google maps for 'from user location to bus stop with coffee shop on the way' 
+//returns a 'promise' which is sort of like an unfulfilled request 
+apiWaypoints(coffeeShop, busStop){    
+    return fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&destination="+busStop.lat+","+busStop.lng+"&waypoints="+coffeeShop.lat+","+coffeeShop.lng+"&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI")
+            .then((directionsResp)=>{
+                return directionsResp.json();
+          }).then((directionsRespJson)=>{
+              return directionsRespJson;
+          });
+}
+
+/*COMPLEX FUNCTIONS*/
+
+//get only the coordinates for each shop  
+getShopCoords(mapsObj){
+    var shopCoords = mapsObj.geometry.location;
+    return shopCoords;
+}
+
+//get only directions for one shop 
+shopDirections(shopCoords, busStopCoords){
+    var walkingTimeValue = 0; //minutes
+    var allDirections = this.apiWaypoints(shopCoords, busStopCoords); //apiwaypoints returns a promise    
+    return allDirections;
+}
     
-    getAllShopStatus(shopAPIArray, userLocation, busStopCoords, busResponse){
-        
-        //we need to check the status of each stop that is returned in the radius. so will use a map (like a for loop), to do the following functions to each item in the array 
-        //1. get the coordinates of the shop (for each shop in the array)
-        //2. get the coordinates of the bus stop 
-        //3. calucate the walking time (from user location to each shop, and to the bus stop)
-        //4. assign a status, taking the time required from walking and comparing it to the expected countdown property of the bus response from the translinkAPI 
-        //finally, return an object (for each shop) that includes its status and its coordinates. that way, we can place the colored icons on the coordinates! 
-        
-        var statusArray = shopAPIArray.map(function getShopStatus(currentShopObj, index, array) {
-            
+//get walking directions for all shops 
+getAllShopDirections(){
+        var promisedDirectionsArr = this.state.coffeeShopData.map(function getDirections(currentShopObj, index, array) {
             var shopCoords = this.getShopCoords(currentShopObj);
-//          var busStopCoords = this.getBusStopCoords(busStopNum);
             var busStopCoords = this.state.busStopCoords;
-            var walkingTimeValue = this.getWalkingTime(userLocation, shopCoords, busStopCoords);
-            var shopStatus = this.checkShopStatus(walkingTimeValue, busResponse.expectedCountdown);
-            
-            return {Status:shopStatus, Coordinates:shopCoords};
-            
+            var shopDirections = this.shopDirections(shopCoords, busStopCoords);
+            return shopDirections; //return array of promises 
         },this)
         
-        return statusArray;
+        //loop over all coffee shop data to get directions to each of them 
+        //but will only get an array of promises, because apiWaypoints returns a promise
+        //(shopDirections runs apiWaypoints inside it)
+        //must resolve promises 
+        //would usually use .then but you cant do .then on an array
+        //so do promise.all
+
+        var promisedDirection = Promise.all(promisedDirectionsArr);
+        promisedDirection.then((Directions)=>{ 
+             var Statuses = Directions.map(function getStatuses(currentValue, index, array){
+                 console.log(currentValue);
+                 var shopStatus = this.checkShopStatus(walkingTimeValue, busResponse.expectedCountdown);
+                 return {Status:shopStatus, Coordinates:shopCoords};
+                 return statusArray;
+
+             })
+        });
     }
-    
-    //this function takes the object returned by the Places API call and gets its coordinates 
-    getShopCoords(mapsObj){
-        var shopCoords = {lat:0, long:0};
-        return shopCoords;
-    }
-    
-    //TODO: make this function take a bus stop ID and return its coordinates
-//    getBusStopCoords(busStopNum){
-//        var busStopCoords = {lat:0, long:0};
-//        return busStopCoords;
-//    }
-    
-    //this function adds up the walking times from the user location to the shop and then to the bus stop
-    //requires the direction api 
-    getWalkingTime(userlocation, shopCoords, busStopCoords){
-        var walkingTimeValue = 0; //minutes
-        //replace with userlocation to shopCoords to busCoords;
-        return walkingTimeValue;
-    }
-    
+
+
+
     //this function takes the walking time value calculated from the previous function and compares it to the time until the next bus arrival, to return a status of red, green, or orange 
     checkShopStatus(walkingTimeValue, nextBusTimeValue){
         var timeRequired = walkingTimeValue + nextBusTimeValue; //TODO: add time buffer 
@@ -192,7 +202,8 @@ getCoffeeShops(){
         if (timeRequired < nextBusTimeValue){
             return "statusGreen";
         }
-    }    
+    }
+
   render() {
 
 //add a selectedbusIndex prop so we have the index of which button they clicked on 
@@ -223,8 +234,8 @@ getCoffeeShops(){
                         modalState = {this.state.modalState}
                         getBusStopCoords = {this.tsStopCall}
                         coffeeShopData = {this.state.coffeeShopData} 
-                        userLat = {this.state.lat}
-                        userLng = {this.state.lng}
+                        userLat = {this.state.userLocation.lat}
+                        userLng = {this.state.userLocation.lng}
                     />
                 
                 <Text style={[styles.header]}> kafo </Text> 
