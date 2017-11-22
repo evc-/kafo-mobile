@@ -5,6 +5,7 @@ import KafoMapCombined from './map/kafomap-combined';
 import ArrivalModal from './arrivalModal';    
 import KafoModal from './kafo-modal';
 import CoffeeResultsModal from './coffeeResultsModal';
+import Loading from './loading';
 
 export default class App extends React.Component {
      constructor(props) {
@@ -19,7 +20,8 @@ export default class App extends React.Component {
             busStopCoords: {lat: null, lng: null},
             busStopNum: null,
             selectedBus: "",
-            shopWithStatus: null
+            shopWithStatus: null,
+            toggle: false
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
@@ -29,6 +31,7 @@ export default class App extends React.Component {
         this.apiWaypoints = this.apiWaypoints.bind(this);
         this.getAllShopDirections = this.getAllShopDirections.bind(this);
         this.selectedBus = this.selectedBus.bind(this);
+        this.animateEnd = this.animateEnd.bind(this);
      }
 
 /*SIMPLE FUNCTIONS*/
@@ -232,9 +235,28 @@ getAllShopDirections(){
             return "statusGreen";
         }
     }
+    
+    animateEnd(data){
+        this.setState({
+            toggle: data
+        });
+        
+        console.log("toggle changed")
+    }
 
-  render() {      
-    if (true){
+  render() {
+      
+      var display = null;
+      
+      if(this.state.toggle === false){
+          display = (
+              <Loading 
+                animateEnd = {this.animateEnd}
+              />
+          )
+          
+          return display;
+      } else if (this.state.toggle === true){
         var modal = null;
                 modal = (
                     <KafoModal
