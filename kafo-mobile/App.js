@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { AppRegistry, Image, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView,  Text, View, ScrollView, Button } from 'react-native';
+import { AppRegistry, Image, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView,  Text, View, ScrollView, Button, ActivityIndicator } from 'react-native';
 import KafoTextInput from './kafo-textinput';
 import KafoMapCombined from './map/kafomap-combined';
 import ArrivalModal from './arrivalModal';    
 import KafoModal from './kafo-modal';
 import CoffeeResultsModal from './coffeeResultsModal';
+import Loading from './loading'
 
 export default class App extends React.Component {
      constructor(props) {
@@ -17,7 +18,8 @@ export default class App extends React.Component {
             lng:-123.00086935603458,
             positionBump: 0,
             busStopCoords: '',
-            busStopNum: ""
+            busStopNum: "",
+            toggle: false
         };
 
         this.tsRouteCall = this.tsRouteCall.bind(this);
@@ -25,6 +27,7 @@ export default class App extends React.Component {
         this.modalState = this.modalState.bind(this);
         this.getCoffeeShops = this.getCoffeeShops.bind(this);
         this.apiWaypoints = this.apiWaypoints.bind(this);
+        this.animateEnd = this.animateEnd.bind(this);
      }
 
 componentWillMount () {
@@ -192,14 +195,34 @@ getCoffeeShops(){
         if (timeRequired < nextBusTimeValue){
             return "statusGreen";
         }
-    }    
+    }  
+    
+    
+    animateEnd(data){
+        
+       
+        this.setState({
+            toggle: data
+        });
+        console.log("toggle changed");
+    }
+    
   render() {
+       var display = null;
 
 //add a selectedbusIndex prop so we have the index of which button they clicked on 
 //add a selectRouteProp so we can call have the selectRoute function from the button component 
 //if the state exists, map the object (in the state) to create the buttons
-      
-    if (true){
+     if(this.state.toggle === false){
+        display = (
+             <Loading 
+            animateEnd = {this.animateEnd}
+            />
+         )
+        
+        return display;
+         
+     } else if (this.state.toggle === true){
         var modal = null;
                 modal = (
                     <KafoModal

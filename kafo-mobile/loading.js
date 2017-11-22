@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 
-export default class App extends React.Component {
+export default class Loading extends React.Component {
     
     state = {
         animating: true,
@@ -14,7 +14,9 @@ export default class App extends React.Component {
             isLoading: false
         })
         
-        this.props.animateEnd();
+        var toggle = true;
+        
+        this.props.animateEnd(toggle);
     }, 6000)
     
     componentDidMount = () =>
