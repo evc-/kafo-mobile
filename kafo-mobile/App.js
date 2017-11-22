@@ -78,6 +78,8 @@ selectedBus(busIndex){
     this.setState({
         selectedBus: this.state.translinkData[busIndex]
     });
+    console.log("selecting bus");
+    console.log(this.state.translinkData);
 }
 
 modalState(data){
@@ -188,8 +190,7 @@ getAllShopDirections(){
                  //get total walking time in seconds 
                  var walkingtimeValue = currentValue.routes[0].legs[0].duration.value + currentValue.routes[0].legs[1].duration.value;
                  console.log("expected bus");
-                 console.log(this.state.selectedBus);
-                 consoel.log(this.state.selectedBus.expectedCountdown)
+                 console.log(this.state.selectedBus.expectedCountdown)
                  var shopStatus = this.checkShopStatus(walkingtimeValue, this.state.selectedBus.expectedCountdown);
 //                 return {Status:shopStatus, Coordinates:shopCoords};
 //                 return statusArray;
