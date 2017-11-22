@@ -18,7 +18,6 @@ class KafoMapCombined extends Component {
             coffeeResp = this.props.coffeeShopData.map((currentValue, index, array)=>{
                     return(
                         <MapView.Marker 
-                        style={styles.icon}
                         key={index}
                         id={index}
                         coordinate={{
@@ -54,7 +53,6 @@ class KafoMapCombined extends Component {
             }}
         >
         <MapView.Marker
-          style={styles.icons}
             coordinate={{
                 latitude: this.props.userLat,
                 longitude: this.props.userLng,
@@ -82,11 +80,6 @@ const styles = StyleSheet.create({
       zIndex: -6000
       
   },
-    icons: {
-        height: 10,
-        width:10,
-        position:'relative',
-    }
     
 });
 
