@@ -197,7 +197,7 @@ getCoffeeShops(){
 
 //add a selectedbusIndex prop so we have the index of which button they clicked on 
 //add a selectRouteProp so we can call have the selectRoute function from the button component 
-//if the state exists, map the object (in the state) to create the buttons 
+//if the state exists, map the object (in the state) to create the buttons
       
     if (true){
         var modal = null;
