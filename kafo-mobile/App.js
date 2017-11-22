@@ -18,7 +18,8 @@ export default class App extends React.Component {
             positionBump: 0,
             busStopCoords: {lat: null, lng: null},
             busStopNum: null,
-            selectedBus: ""
+            selectedBus: "",
+            shopWithStatus: null
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
@@ -122,9 +123,14 @@ tsStopCall(stopNum){
 
 //get  coffee shops within a 500m radius
 getCoffeeShops(){
+    console.log("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500");
     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500").then((CSresp)=>{
         return CSresp.json();
-    }).then((CSjson)=>{
+    }, (reason)=>{
+        console.log("get coffee shops fetch failed");
+        console.log(reason);
+    }
+    ).then((CSjson)=>{
         this.setState({
             coffeeShopData:CSjson.results
         }, 
@@ -161,13 +167,14 @@ shopDirections(shopCoords, busStopCoords){
     
 //get walking directions for all shops 
 getAllShopDirections(){
+        console.log("message");
         var promisedDirectionsArr = this.state.coffeeShopData.map(function getDirections(currentShopObj, index, array) {
             var shopCoords = this.getShopCoords(currentShopObj);
             var busStopCoords = this.state.busStopCoords;
             var shopDirections = this.shopDirections(shopCoords, busStopCoords);
             
             return shopDirections; //return array of promises 
-        },this)
+        },this);
         
         //loop over all coffee shop data to get directions to each of them 
         //but will only get an array of promises, because apiWaypoints returns a promise
@@ -196,15 +203,17 @@ getAllShopDirections(){
                        orderTime:this.state.selectedBus.Schedules[0].ExpectedCountdown - walkingtimeValue/60 ,
                        coords: this.state.coffeeShopData[index].geometry.location
                    }
-                 console.log(shopWithStatus);
+
                  return shopWithStatus;
                  
-                 
-             }, this)
+             }, this);
              
              this.setState=({
-                 shopWithStatus: shopWithStatus
+                 shopWithStatus: Statuses
              });
+            
+            console.log(Statuses);
+            
         });
     }
 
