@@ -15,7 +15,6 @@ class KafoModal extends Component {
         };
         
             this.changeModal = this.changeModal.bind(this);
-            this.selectRoute = this.selectRoute.bind(this);
     }
     
       changeModal(mstatenum){
@@ -24,12 +23,12 @@ class KafoModal extends Component {
             Keyboard.dismiss();
         }
     
-        selectRoute(i){
-            this.setState({
-                selectedBus:this.props.tdata[i]
-            });
-    }
-    
+//        selectRoute(i){
+//            this.setState({
+//                selectedBus:this.props.tdata[i]
+//            });
+//    }
+
   render() {
       var modal = null; 
           
@@ -61,7 +60,7 @@ class KafoModal extends Component {
                             minsTillDepart={currentValue.Schedules.ExpectedCountdown} 
                             buttonColor ={(index % 2 == 1)} 
                             busIndex={index}
-                            selectRoute={this.selectRoute}
+                            selectedBus={this.props.selectedBus}
                             changeModal={this.changeModal}
                             getCoffeeShops = {this.props.getCoffeeShops}
                         />
@@ -86,7 +85,6 @@ class KafoModal extends Component {
           <View style={{flex: 1}}>
                 <CoffeeResultsModal 
                     changeModal={this.changeModal}
-                    //transitData={this.state.selectedBus}
                 />
           </View>
           )

@@ -9,6 +9,7 @@ import CoffeeResultsModal from './coffeeResultsModal';
 export default class App extends React.Component {
      constructor(props) {
         super(props);
+         
         this.state = {
             appState: 0,
             translinkData: "",
@@ -16,7 +17,8 @@ export default class App extends React.Component {
             userLocation: {lat: 49.24943966121919, lng:-123.00086935603458 },
             positionBump: 0,
             busStopCoords: {lat: null, lng: null},
-            busStopNum: null
+            busStopNum: null,
+            selectedBus: ""
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
@@ -25,7 +27,7 @@ export default class App extends React.Component {
         this.getCoffeeShops = this.getCoffeeShops.bind(this);
         this.apiWaypoints = this.apiWaypoints.bind(this);
         this.getAllShopDirections = this.getAllShopDirections.bind(this);
-        //this.getStatuses = this.getStatuses.bind(this);
+        this.selectedBus = this.selectedBus.bind(this);
      }
 
 /*SIMPLE FUNCTIONS*/
@@ -72,9 +74,9 @@ keyboardWillHide = (event) => {
     this.setState({positionBump: 0});
 }
  
-selectedBus(data){
+selectedBus(busIndex){
     this.setState({
-        selectedBus: this.props.selectedBus
+        selectedBus: this.state.translinkData[busIndex]
     });
 }
 
@@ -153,8 +155,9 @@ getShopCoords(mapsObj){
 //get only directions for one shop 
 shopDirections(shopCoords, busStopCoords){
     var walkingTimeValue = 0; //minutes
-    var allDirections = this.apiWaypoints(shopCoords, busStopCoords); //apiwaypoints returns a promise    
+    var allDirections = this.apiWaypoints(shopCoords, busStopCoords); //apiwaypoints returns a promise  
     return allDirections;
+    
 }
     
 //get walking directions for all shops 
@@ -163,6 +166,7 @@ getAllShopDirections(){
             var shopCoords = this.getShopCoords(currentShopObj);
             var busStopCoords = this.state.busStopCoords;
             var shopDirections = this.shopDirections(shopCoords, busStopCoords);
+            
             return shopDirections; //return array of promises 
         },this)
         
@@ -176,18 +180,24 @@ getAllShopDirections(){
         var promisedDirection = Promise.all(promisedDirectionsArr);
         promisedDirection.then((Directions)=>{ 
              var Statuses = Directions.map(function getStatuses(currentValue, index, array){
-                 console.log(currentValue);
-                 var shopStatus = this.checkShopStatus(walkingTimeValue, busResponse.expectedCountdown);
-                 return {Status:shopStatus, Coordinates:shopCoords};
-                 return statusArray;
+                 console.log("wat");
+                 //from house to shop 
+                 console.log(currentValue.routes[0].legs[0].duration.value);
+                 //from shop to bus stop  
+                 console.log(currentValue.routes[0].legs[1].duration.value);
+                 //get total walking time in seconds 
+                 var walkingtimeValue = currentValue.routes[0].legs[0].duration.value + currentValue.routes[0].legs[1].duration.value;
+                 console.log("expected bus");
+                 console.log(this.state.selectedBus);
+                 consoel.log(this.state.selectedBus.expectedCountdown)
+                 var shopStatus = this.checkShopStatus(walkingtimeValue, this.state.selectedBus.expectedCountdown);
+//                 return {Status:shopStatus, Coordinates:shopCoords};
+//                 return statusArray;
 
              })
         });
     }
 
-
-
-    //this function takes the walking time value calculated from the previous function and compares it to the time until the next bus arrival, to return a status of red, green, or orange 
     checkShopStatus(walkingTimeValue, nextBusTimeValue){
         var timeRequired = walkingTimeValue + nextBusTimeValue; //TODO: add time buffer 
         
@@ -219,7 +229,7 @@ getAllShopDirections(){
                         tsRouteCall ={this.tsRouteCall}
                         setBusStopNum ={this.setBusStopNum}
                         modalState = {this.modalState}
-                        selectedRoute = {this.selectedBus}
+                        selectedBus = {this.selectedBus}
                         getCoffeeShops = {this.getCoffeeShops}
                         coffeeShopData = {this.state.coffeeShopData} 
                     />    
