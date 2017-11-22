@@ -30,7 +30,6 @@ class KafoMapCombined extends Component {
             coffeeResp = this.props.coffeeShopData.map((currentValue, index, array)=>{
                     return(
                         <MapView.Marker 
-                        style={styles.icon}
                         key={index}
                         id={index}
                         coordinate={{
@@ -56,7 +55,6 @@ class KafoMapCombined extends Component {
         <View>
                 
          <MapView 
-            style={styles.map}
             provider = { PROVIDER_GOOGLE }
             region={{
                 latitude: this.state.lat,
@@ -94,11 +92,6 @@ const styles = StyleSheet.create({
       zIndex: -6000
       
   },
-    icons: {
-        height: 10,
-        width:10,
-        position:'relative',
-    }
     
 });
 
