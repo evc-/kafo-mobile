@@ -78,8 +78,6 @@ selectedBus(busIndex){
     this.setState({
         selectedBus: this.state.translinkData[busIndex]
     });
-    console.log("selecting bus");
-    console.log(this.state.translinkData);
 }
 
 modalState(data){
@@ -159,7 +157,6 @@ shopDirections(shopCoords, busStopCoords){
     var walkingTimeValue = 0; //minutes
     var allDirections = this.apiWaypoints(shopCoords, busStopCoords); //apiwaypoints returns a promise  
     return allDirections;
-    
 }
     
 //get walking directions for all shops 
@@ -182,20 +179,32 @@ getAllShopDirections(){
         var promisedDirection = Promise.all(promisedDirectionsArr);
         promisedDirection.then((Directions)=>{ 
              var Statuses = Directions.map(function getStatuses(currentValue, index, array){
-                 console.log("wat");
                  //from house to shop 
                  console.log(currentValue.routes[0].legs[0].duration.value);
                  //from shop to bus stop  
                  console.log(currentValue.routes[0].legs[1].duration.value);
                  //get total walking time in seconds 
                  var walkingtimeValue = currentValue.routes[0].legs[0].duration.value + currentValue.routes[0].legs[1].duration.value;
+                 
                  console.log("expected bus");
-                 console.log(this.state.selectedBus.expectedCountdown)
-                 var shopStatus = this.checkShopStatus(walkingtimeValue, this.state.selectedBus.expectedCountdown);
-//                 return {Status:shopStatus, Coordinates:shopCoords};
-//                 return statusArray;
-
-             })
+                 var shopStatus = this.checkShopStatus(walkingtimeValue/60, this.state.selectedBus.Schedules[0].ExpectedCountdown);
+                 
+                 var shopWithStatus = {
+                       name:this.state.coffeeShopData[index].name,
+                       status:shopStatus,
+                       journeyTime: walkingtimeValue/60,
+                       orderTime:this.state.selectedBus.Schedules[0].ExpectedCountdown - walkingtimeValue/60 ,
+                       coords: this.state.coffeeShopData[index].geometry.location
+                   }
+                 console.log(shopWithStatus);
+                 return shopWithStatus;
+                 
+                 
+             }, this)
+             
+             this.setState=({
+                 shopWithStatus: shopWithStatus
+             });
         });
     }
 
@@ -215,12 +224,7 @@ getAllShopDirections(){
         }
     }
 
-  render() {
-
-//add a selectedbusIndex prop so we have the index of which button they clicked on 
-//add a selectRouteProp so we can call have the selectRoute function from the button component 
-//if the state exists, map the object (in the state) to create the buttons
-      
+  render() {      
     if (true){
         var modal = null;
                 modal = (

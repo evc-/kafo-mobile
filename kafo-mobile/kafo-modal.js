@@ -23,11 +23,11 @@ class KafoModal extends Component {
             Keyboard.dismiss();
         }
     
-//        selectRoute(i){
-//            this.setState({
-//                selectedBus:this.props.tdata[i]
-//            });
-//    }
+        selectRoute(i){
+            this.setState({
+                selectedBus:this.props.tdata[i]
+           });
+    }
 
   render() {
       var modal = null; 
