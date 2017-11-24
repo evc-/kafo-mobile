@@ -7,12 +7,22 @@ class KafoMapCombined extends Component {
         super(props);
         
         this.state={
-            error: null
-        };
+            error: null,
+        }
     }
-        
+    
+busStop(){
+    if(this.props.busStopCoords){
+        this.setState({
+            busLat:this.props.busStopCoords.lat,
+            busLng:this.props.busStopCoords.lng
+        });
+        console.log("kafomapcombined bus stop coordinates are: "+this.state.busLat + this.state.busLng);
+    }
+}
   render(){
-    var coffeeResp = null;
+
+var coffeeResp = null;
  if (this.props.modalState >= 1){
           if (this.props.coffeeShopData){
             coffeeResp = this.props.coffeeShopData.map((currentValue, index, array)=>{
@@ -35,8 +45,22 @@ class KafoMapCombined extends Component {
                     )                                      
                 });
           }
+      
  }
-    
+/*var busStop = null;
+if(this.state.busStop){
+                busStop = (
+                    <MapView.Marker
+                        coordinate={{
+                            latitute: this.state.busStop.lat,
+                            longitude: this.state.busStop.lng
+                                }}
+                        id={"busStop"}
+                        />
+                )
+            console.log(this.state.busStop);
+            }
+*/
       
     return (
 
@@ -58,13 +82,9 @@ class KafoMapCombined extends Component {
                 longitude: this.props.userLng,
             }}
          image={require('../img/user.png')}
-            
-        
+             
         />
-        
-         
-           
-               {coffeeResp}
+        {coffeeResp}
         </MapView>
         </View>  
 

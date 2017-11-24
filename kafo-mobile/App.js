@@ -117,7 +117,7 @@ tsStopCall(stopNum){
             busStopCoords:{
             lat:stopRespJson.Latitude,
             lng:stopRespJson.Longitude
-        }}); 
+        }});
     })
     .catch((error) => {
         console.log(error);
@@ -285,6 +285,7 @@ getAllShopDirections(){
                         coffeeShopData = {this.state.coffeeShopData} 
                         userLat = {this.state.userLocation.lat}
                         userLng = {this.state.userLocation.lng}
+                        busStopCoords = {this.state.busStopCoords}
                     />
                 
                 <Text style={[styles.header]}> kafo </Text> 
