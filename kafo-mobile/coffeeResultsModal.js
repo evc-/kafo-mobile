@@ -37,28 +37,32 @@ render() {
     if(this.props.shopWithStatus){
     var shopInfo = this.props.shopWithStatus.map(function callback(obj, index) {
         return(
+            
             <View key={index}>
-                <Text>{obj.name}</Text>
-                <Text>{obj.status}</Text>
+                <Text style={styles.shopText}>{obj.name}</Text>
+                <Text style={styles.shopText}>{obj.status}</Text>
                 <View 
                     style={styles.goBtnStyle}
                 >
                     <TouchableOpacity
                     onPress={()=>this.startTimer()}
                     >
-                        <Text style={styles.goBtnText}
-                        >Go</Text>
+                    <Text style={styles.goBtnText}>GO</Text>
                     </TouchableOpacity>  
                 </View>
             </View>
+                                     
+                                                 
                     );
                 }, this);
 }
     return (
        
-        <View style={{flex: 1}} >
-                  <Text style={styles.question1Style}>Here are the shops!</Text>
-        <ScrollView>
+        <View style={{flex:1}} >
+        <View>
+            <Text style={styles.question1Style}> Here are the shops!</Text>
+        </View>
+        <ScrollView style={{flex:3, flexDirection:'column'}}>
               {shopInfo}
         </ScrollView>
         </View>
@@ -69,38 +73,33 @@ render() {
 const styles = StyleSheet.create({
     
     question1Style:{
-        flex: 1,
-        textAlign: 'center',
-        padding:10,
         width: '100%',
         fontSize: 15,
+        padding: 25,
         color: 'white',
+        textAlign: 'center',
         backgroundColor:'#76ABAC',
       },
-    paragraph1Style:{
-        flex: 1,
-        textAlign: 'center',
-        width: '100%',
-        padding: 15,
-        fontSize: 14,
-        color: 'black'
-    },
-    question2Style:{
-        flex: 1,
-        textAlign: 'center',
-        padding:25,
-        width: '100%',
-        fontSize: 15,
-        color: 'white',
-        backgroundColor: '#303C45'
-      },
+    
+   shopText: {
+       color:'#303C45',
+       fontSize: 15,
+       
+   },
+    
+    
     goBtnStyle:{
         backgroundColor: '#303C45',
         borderRadius: 20,
-        width:"8%",
+        width:"10%",
+        padding: 5,
+        textAlign: 'center',
+        
+        
     },
     goBtnText:{
         fontSize: 15,
         color: 'white',
+        
     }
 });
