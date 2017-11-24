@@ -195,12 +195,14 @@ getAllShopDirections(){
                  
                  console.log("expected bus");
                  var shopStatus = this.checkShopStatus(walkingtimeValue/60, this.state.selectedBus.Schedules[0].ExpectedCountdown);
+                 //currently only getting first bus - we may want to include the second bus as well for high traffic location 
                  
                  var shopWithStatus = {
                        name:this.state.coffeeShopData[index].name,
                        status:shopStatus,
+                        nextBus: this.state.selectedBus.Schedules[0].ExpectedCountdown,
                        journeyTime: walkingtimeValue/60,
-                       orderTime:this.state.selectedBus.Schedules[0].ExpectedCountdown - walkingtimeValue/60 ,
+                       orderTime:this.state.selectedBus.Schedules[0].ExpectedCountdown - (walkingtimeValue/60) ,
                        coords: this.state.coffeeShopData[index].geometry.location
                    }
 

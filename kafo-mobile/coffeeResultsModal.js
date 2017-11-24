@@ -55,7 +55,7 @@ render() {
                     style={styles.goBtnStyle}
                 >
                     <TouchableOpacity
-                    onPress={() => this.startTimer()}
+                    onPress={()=>this.startTimer()}
                     >
                         <Text style={styles.goBtnText}
                         >Go</Text>
