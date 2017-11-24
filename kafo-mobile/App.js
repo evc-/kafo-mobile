@@ -213,7 +213,7 @@ getAllShopDirections(){
                  
              }, this);
              
-             this.setState=({
+             this.setState({
                  shopWithStatus: Statuses
              });
             
@@ -269,7 +269,8 @@ getAllShopDirections(){
                         modalState = {this.modalState}
                         selectedBus = {this.selectedBus}
                         getCoffeeShops = {this.getCoffeeShops}
-                        coffeeShopData = {this.state.coffeeShopData} 
+                        coffeeShopData = {this.state.coffeeShopData}
+                        shopWithStatus = {this.state.shopWithStatus}
                     />    
                 );
 

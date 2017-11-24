@@ -11,8 +11,10 @@ export default class CoffeeResultsModal extends React.Component {
         this.startTimer = this.startTimer.bind(this);
     }
     componentWillMount(){
+        if(this.props.shopWithStatus !== undefined){
             this.setState({
-               coffeeShops:[
+               coffeeShops:this.props.shopWithStatus
+                /*[
                    {
                        name:'Tim Hortons',
                        status:'Good',
@@ -22,35 +24,22 @@ export default class CoffeeResultsModal extends React.Component {
                            lat:'49.250338',
                            long:'-123.001602'
                        }
-                   },
-                   {
-                       name:'The Rix',
-                       status:'Good',
-                       coords:{
-                           lat:'49.251237',
-                           long:'-123.000622'
-                       }
-                   },
-                {
-                       name:'Tim Hortons Express',
-                       status:'Too far',
-                       coords:{
-                           lat:'49.254136',
-                           long:'-123.000956'
-                       }
-                   },
-               ] 
+                   }
+                   ]*/
             });
+        }
     }
     startTimer(){
         this.props.changeModal(3);
     }
 
 render() {
-    var shopInfo = this.state.coffeeShops.map(function callback(obj, index) {
+    if(this.props.shopWithStatus){
+    var shopInfo = this.props.shopWithStatus.map(function callback(obj, index) {
         return(
             <View key={index}>
                 <Text>{obj.name}</Text>
+                <Text>{obj.status}</Text>
                 <View 
                     style={styles.goBtnStyle}
                 >
@@ -64,7 +53,7 @@ render() {
             </View>
                     );
                 }, this);
-    
+}
     return (
        
         <View style={{flex: 1}} >
