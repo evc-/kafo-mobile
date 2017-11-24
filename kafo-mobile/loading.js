@@ -14,7 +14,9 @@ export default class App extends React.Component {
             isLoading: false
         })
         
-        this.props.animateEnd();
+        var toggle = true;
+        
+        this.props.animateEnd(toggle);
     }, 6000)
     
     componentDidMount = () =>
