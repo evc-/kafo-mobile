@@ -90,6 +90,12 @@ modalState(data){
     });
 }
 
+animateEnd(data){
+    this.setState({
+        toggle: data
+    });
+}
+
 /*API CALLS*/
 
 //get transit information 
@@ -105,6 +111,14 @@ tsRouteCall(stopNum) {
         console.log(error);
     });
 }
+
+//p.then(onFulfilled[, onRejected]);
+//
+//p.then(function(value) {
+//  // fulfillment
+//}, function(reason) {
+//  // rejection
+//});
 
 //get bus stop long and lat from translink 
 tsStopCall(stopNum){
@@ -150,7 +164,9 @@ apiWaypoints(coffeeShop, busStop){
                 return directionsResp.json();
           }).then((directionsRespJson)=>{
               return directionsRespJson;
+        console.log(directionsRespJson);
           });
+        
 }
 
 /*COMPLEX FUNCTIONS*/
@@ -167,16 +183,32 @@ shopDirections(shopCoords, busStopCoords){
     var allDirections = this.apiWaypoints(shopCoords, busStopCoords); //apiwaypoints returns a promise  
     return allDirections;
 }
+
+checkShopStatus(walkingTimeValue, nextBusTimeValue){
+        var timeRequired = walkingTimeValue; //TODO: add time buffer 
+        
+        if (timeRequired > nextBusTimeValue){
+            return "statusRed";
+        }
+        
+        else if (timeRequired == nextBusTimeValue){
+            return "statusOrange";
+        }
+        
+       else if (timeRequired < nextBusTimeValue){
+            return "statusGreen";
+        }
+}
     
 //get walking directions for all shops 
 getAllShopDirections(){
-        console.log("message");
         var promisedDirectionsArr = this.state.coffeeShopData.map(function getDirections(currentShopObj, index, array) {
             var shopCoords = this.getShopCoords(currentShopObj);
             var busStopCoords = this.state.busStopCoords;
             var shopDirections = this.shopDirections(shopCoords, busStopCoords);
             
             return shopDirections; //return array of promises 
+            console.log(shopDirections);
         },this);
         
         //loop over all coffee shop data to get directions to each of them 
@@ -188,25 +220,31 @@ getAllShopDirections(){
 
         var promisedDirection = Promise.all(promisedDirectionsArr);
         promisedDirection.then((Directions)=>{ 
+            console.log(Directions);
              var Statuses = Directions.map(function getStatuses(currentValue, index, array){
-                 //from house to shop 
-                 console.log(currentValue.routes[0].legs[0].duration.value);
-                 //from shop to bus stop  
-                 console.log(currentValue.routes[0].legs[1].duration.value);
-                 //get total walking time in seconds 
-                 var walkingtimeValue = currentValue.routes[0].legs[0].duration.value + currentValue.routes[0].legs[1].duration.value;
                  
-                 console.log("expected bus");
+                 //from house to shop 
+                 //console.log(currentValue.routes[0].legs[0].duration.value);
+                 //from shop to bus stop  
+                 //console.log(currentValue.routes[0].legs[1].duration.value);
+                 
+                 //get total walking time in seconds 
+                 
+                 var walkingtimeValue = currentValue.routes[0].legs[0].duration.value + currentValue.routes[0].legs[1].duration.value;
+            
                  var shopStatus = this.checkShopStatus(walkingtimeValue/60, this.state.selectedBus.Schedules[0].ExpectedCountdown);
                  //currently only getting first bus - we may want to include the second bus as well for high traffic location 
                  
+                 var polyline= currentValue.routes[0].legs[0].steps[0].polyline.points;
+
                  var shopWithStatus = {
-                       name:this.state.coffeeShopData[index].name,
-                       status:shopStatus,
+                        name:this.state.coffeeShopData[index].name,
+                        status:shopStatus,
                         nextBus: this.state.selectedBus.Schedules[0].ExpectedCountdown,
-                       journeyTime: walkingtimeValue/60,
-                       orderTime:this.state.selectedBus.Schedules[0].ExpectedCountdown - (walkingtimeValue/60) ,
-                       coords: this.state.coffeeShopData[index].geometry.location
+                        journeyTime: walkingtimeValue/60,
+                        orderTime:this.state.selectedBus.Schedules[0].ExpectedCountdown - (walkingtimeValue/60) ,
+                        coords: this.state.coffeeShopData[index].geometry.location,
+                        polyline: polyline
                    }
 
                  return shopWithStatus;
@@ -221,30 +259,7 @@ getAllShopDirections(){
             
         });
     }
-
-    checkShopStatus(walkingTimeValue, nextBusTimeValue){
-        var timeRequired = walkingTimeValue + nextBusTimeValue; //TODO: add time buffer 
-        
-        if (timeRequired > nextBusTimeValue){
-            return "statusRed";
-        }
-        
-        if (timeRequired == nextBusTimeValue){
-            return "statusOrange";
-        }
-        
-        if (timeRequired < nextBusTimeValue){
-            return "statusGreen";
-        }
-    }
     
-    animateEnd(data){
-        this.setState({
-            toggle: data
-        });
-        
-        console.log("toggle changed")
-    }
 
   render() {
       
