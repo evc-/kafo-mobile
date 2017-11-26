@@ -86,6 +86,7 @@ class KafoModal extends Component {
                 <CoffeeResultsModal 
                     changeModal={this.changeModal}
                     shopWithStatus = {this.props.shopWithStatus}
+                    getShopIndex = {this.props.getShopIndex}
                 />
           </View>
           )

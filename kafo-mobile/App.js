@@ -21,7 +21,8 @@ export default class App extends React.Component {
             busStopNum: null,
             selectedBus: "",
             shopWithStatus: null,
-            toggle: false
+            toggle: false,
+            shopIndex:"",
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
@@ -63,6 +64,12 @@ componentWillMount () {
     this.keyboardWillShowSub = Keyboard.addListener('keyboardDidShow', this.keyboardWillShow);
     this.keyboardWillHideSub = Keyboard.addListener('keyboardDidHide', this.keyboardWillHide);
   }
+
+selectedShop(data){
+    this.setState({
+        shopIndex:data
+    })
+}
 
 componentWillUnmount() {
     this.keyboardWillShowSub.remove();
@@ -271,6 +278,7 @@ getAllShopDirections(){
                         getCoffeeShops = {this.getCoffeeShops}
                         coffeeShopData = {this.state.coffeeShopData}
                         shopWithStatus = {this.state.shopWithStatus}
+                        getShopIndex = {this.selectedShop}
                     />    
                 );
 
@@ -286,6 +294,7 @@ getAllShopDirections(){
                         userLat = {this.state.userLocation.lat}
                         userLng = {this.state.userLocation.lng}
                         busStopCoords = {this.state.busStopCoords}
+                        sendShopIndex = {this.state.shopIndex}
                     />
                 
                 <Text style={[styles.header]}> kafo </Text> 
