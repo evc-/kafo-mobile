@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert } from 'react-native';
-import { TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Button, Alert, Image, TouchableOpacity } from 'react-native';
 
 export default class KafoButton extends React.Component {
     
@@ -28,14 +27,17 @@ export default class KafoButton extends React.Component {
     return (
         
       <View>
-        <TouchableOpacity>
-            <Text 
-               style={style}
-                onPress={() => this.selectRoute()}>    
-                <Text style={{color: "orange", fontSize: 70}}>{this.props.routeNumber}</Text>
-                {" "}
-                <Text style={{color: "blue"}}>{this.props.routeName}</Text>
-            </Text>
+        <TouchableOpacity style={style}>
+        <Image 
+            source={require('./img/front-bus-icon.png')} 
+            style={{width: 10, height: 10}}
+        />
+        <Text onPress={() => this.selectRoute()}>
+        
+                <Text style={{fontSize: 60, color: '#42565E', textAlign: 'left', fontWeight: 'bold'}}>{this.props.routeNumber}{"\n"}</Text>
+                <Text style={{fontSize: 20, color: '#42565E', textAlign: 'left', fontWeight: 'bold'}}>{this.props.routeName}</Text>
+                <Text style={{fontSize: 15, color: '#42565E', textAlign: 'right'}}>{this.props.minsTillDepart}</Text>
+        </Text>
         </TouchableOpacity> 
       </View>
         
@@ -50,30 +52,31 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 20,
         paddingBottom: 20,
-        width: '80%',
-        backgroundColor: '#303C45',
-        fontSize: 14,
-        textAlign: 'center',
-        color: '#F4EEE3',
-        fontWeight: 'bold',
-        borderRadius:10,
-        justifyContent: 'center'
+        width: '100%',
+        backgroundColor: '#F7F7F7',
+        justifyContent: 'center',
+        borderLeftColor: '#42565E',
+        borderLeftWidth: 30,
+         borderBottomWidth: 3, 
+         borderBottomColor: '#acacac',
+         paddingLeft: 35
     },
     
     touchableStyle2: {
         flex: 1,
         paddingTop: 20,
         paddingBottom: 20,
-        width: '80%',
-        backgroundColor: '#42565E',
-        fontSize: 14,
-        textAlign: 'center',
-        color: '#F4EEE3',
-        fontWeight: 'bold',
-        borderRadius:10,
-        justifyContent: 'center'
+        width: '100%',
+        backgroundColor: '#F7F7F7',
+        justifyContent: 'center',
+        borderLeftColor: '#42565E',
+        borderLeftWidth: 30,
+        borderBottomWidth: 3, 
+        borderBottomColor: '#acacac',
+        paddingLeft: 35
     }
     
 });
         
+
 

@@ -320,9 +320,9 @@ const styles = StyleSheet.create({
 
     modalStyle: {
         borderRadius: 15,
-        width: '90%',
+        width: '100%',
         backgroundColor:'rgba(255, 255, 255, 0.9)',
-        height: Dimensions.get('window').height * .3,
+        height: Dimensions.get('window').height * .5,
       },
     
     container: {
