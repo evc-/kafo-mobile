@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         padding: 25,
         color: 'white',
-        textAlign: 'center',
+        //textAlign: 'center',
         backgroundColor:'#76ABAC',
       },
     
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         width:"10%",
         padding: 5,
-        textAlign: 'center',
+        //textAlign: 'center',
         
         
     },

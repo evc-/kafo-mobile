@@ -36,7 +36,8 @@ export default class KafoTextInput extends Component {
         maxLength={6}
         placeholder={"Enter Stop ID"}
         keyboardType={'numeric'}
-
+        underlineColorAndroid={'transparent'}
+        autoFocus={true}
       />
     );
   }
@@ -44,10 +45,9 @@ export default class KafoTextInput extends Component {
 
 const styles = StyleSheet.create({
        textInputStyle:{ 
-        padding: 40,
-        fontSize: 15,
+        padding: 10,
+        fontSize: 25,
         textAlign: 'center',
-        textDecorationLine: 'underline',
         color: '#76ABAC',
        }
 });
