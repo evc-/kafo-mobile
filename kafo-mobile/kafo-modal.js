@@ -36,7 +36,7 @@ class KafoModal extends Component {
             modal =(
                 <View >
                     <Text style={styles.question1Style}> Got enough time for coffee?</Text>
-                    <Text style={styles.question2Style}> Which bus stop are you going to?</Text>
+                    <Text style={styles.question2Style}>{this.props.errorMsg}</Text>
                     
                         <KafoTextInput 
                             tsRouteCall={this.props.tsRouteCall} 
@@ -63,6 +63,7 @@ class KafoModal extends Component {
                             selectedBus={this.props.selectedBus}
                             changeModal={this.changeModal}
                             getCoffeeShops = {this.props.getCoffeeShops}
+                            
                         />
                     );
                 }, this);

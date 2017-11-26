@@ -21,7 +21,8 @@ export default class App extends React.Component {
             busStopNum: null,
             selectedBus: "",
             shopWithStatus: null,
-            toggle: false
+            toggle: false,
+            errorMsg: "What bus are you going to?"
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
@@ -109,23 +110,29 @@ tsRouteCall(stopNum) {
         if (responseJson.Code){
             switch (responseJson.Code) {
                 case "3001":
-                console.log("error 3001");
+                    this.setState({errorMsg: "Invalid Stop ID. Check the sign beside the stop!"})
                 break;
-              case "3002":
-                console.log("error 3002");
+                case "3002":
+                    this.setState({errorMsg: "Stop ID Not Found. Double check the sign beside the stop."})
                 break;
-              case "1013":
-                console.log("error 1013");
+                case "3003":
+                    this.setState({errorMsg: "We had a problem getting the estimates for this stop. Try re-entering the ID."})
+                break;
+                case "3005":
+                    this.setState({errorMsg: "Sorry, there are no routes serving this stop right now"})
                 break;
             }
         } else {
         this.setState({translinkData:responseJson}); 
+        this.modalState(1);
         }
     },
         (reason) => { //this happens if we can't communicate to translink 
         console.log("error handling");
         console.log(reason);
     })
+    
+    
 }
 
 //get bus stop long and lat from translink 
@@ -294,6 +301,7 @@ getAllShopDirections(){
                         getCoffeeShops = {this.getCoffeeShops}
                         coffeeShopData = {this.state.coffeeShopData}
                         shopWithStatus = {this.state.shopWithStatus}
+                        errorMsg = {this.state.errorMsg}
                     />    
                 );
 
