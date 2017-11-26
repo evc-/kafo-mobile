@@ -105,20 +105,28 @@ tsRouteCall(stopNum) {
           }})
     .then(response => response.json())
     .then((responseJson) => {
+        console.log(responseJson);
+        if (responseJson.Code){
+            switch (responseJson.Code) {
+                case "3001":
+                console.log("error 3001");
+                break;
+              case "3002":
+                console.log("error 3002");
+                break;
+              case "1013":
+                console.log("error 1013");
+                break;
+            }
+        } else {
         this.setState({translinkData:responseJson}); 
+        }
+    },
+        (reason) => { //this happens if we can't communicate to translink 
+        console.log("error handling");
+        console.log(reason);
     })
-    .catch((error) => {
-        console.log(error);
-    });
 }
-
-//p.then(onFulfilled[, onRejected]);
-//
-//p.then(function(value) {
-//  // fulfillment
-//}, function(reason) {
-//  // rejection
-//});
 
 //get bus stop long and lat from translink 
 tsStopCall(stopNum){
