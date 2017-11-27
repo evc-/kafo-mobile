@@ -79,7 +79,6 @@ var coffeeResp = null;
                             longitude: currentValue.geometry.location.lng}} 
                         title={currentValue.name}
                         image={require('../img/storeLocator.png')}
-                        style={{height:"2%", width:"2%"}}
                     />  
                     
                     )                                      
