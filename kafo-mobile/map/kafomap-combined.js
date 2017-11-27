@@ -67,7 +67,6 @@ if(this.state.busStop){
         <View>
                 
          <MapView 
-            style={styles.map}
             provider = { PROVIDER_GOOGLE }
             region={{
                 latitude: this.props.userLat,

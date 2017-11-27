@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Image, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView,  Text, View, ScrollView, Button } from 'react-native';
+import { AppRegistry, Image, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView,  Text, View, ScrollView, Button, ActivityIndicator } from 'react-native';
 import KafoTextInput from './kafo-textinput';
 import KafoMapCombined from './map/kafomap-combined';
 import ArrivalModal from './arrivalModal';    
@@ -23,7 +23,10 @@ export default class App extends React.Component {
             shopWithStatus: null,
             toggle: false,
             errorMsg: "What bus are you going to?",
-            modalState: 0
+            modalState: 0,
+            busStopCoords: '',
+            busStopNum: "",
+            toggle: false
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
@@ -304,6 +307,34 @@ getAllShopDirections(){
           
           return display;
       } else if (this.state.toggle === true){
+    }  
+    
+    
+    animateEnd(data){
+        
+       
+        this.setState({
+            toggle: data
+        });
+        console.log("toggle changed");
+    }
+    
+  render() {
+       var display = null;
+
+//add a selectedbusIndex prop so we have the index of which button they clicked on 
+//add a selectRouteProp so we can call have the selectRoute function from the button component 
+//if the state exists, map the object (in the state) to create the buttons
+     if(this.state.toggle === false){
+        display = (
+             <Loading 
+            animateEnd = {this.animateEnd}
+            />
+         )
+        
+        return display;
+         
+     } else if (this.state.toggle === true){
         var modal = null;
                 modal = (
                     <KafoModal
