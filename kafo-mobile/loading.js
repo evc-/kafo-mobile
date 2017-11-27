@@ -17,7 +17,7 @@ export default class App extends React.Component {
         var toggle = true;
         
         this.props.animateEnd(toggle);
-    }, 6000)
+    }, 3000)
     
     componentDidMount = () =>
     this.closeActivityIndicator()

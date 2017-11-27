@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Dimensions, AppRegistry, StyleSheet, Text, View, Button, Image } from 'react-native';
 import CoffeeResultsModal from '../coffeeResultsModal';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import Polyline from 'react-native-maps';
+import Polyline from '@mapbox/polyline';
 
 class KafoMapCombined extends Component {
     constructor(props){
@@ -10,16 +10,21 @@ class KafoMapCombined extends Component {
         
         this.state={
             error: null,
+            coords: [],
         }
     }
 
 componentDidMount(){
-     this.getDirections({this.props.userLat}, {this.props.userLng}, {this.props.sendShopIndex.lat},{this.props.sendShopIndex.lng})
-}    
+    if(true){
+        this.getDirections(this.props.userLat, this.props.userLng,this.props.sendShopIndex.lat,this.props.sendShopIndex.lng)
+        }    
+    }
+    
+//async sends a request without witing for a reply    
 async getDirections(startLoc, destinationLoc) {
         try {
-            let resp = Myroute fetch('https://maps.googleapis.com/maps/api/directions/json?origin=${this.props.userLat}, {this.props.userLng}&destination=${this.props.sendShopIndex.lat},{this.props.sendShopIndex.lng}')
-            let respJson = Myroute resp.json();
+            let resp = await fetch("https://maps.googleapis.com/maps/api/directions/json?origin=${ startLoc }&destination=${ destinationLoc }")
+            let respJson = await resp.json();
             let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
             let coords = points.map((point, index) => {
                 return  {
@@ -48,12 +53,21 @@ busStop(){
     
     
   render(){
-
+var comp=null;
 var coffeeResp = null;
  if (this.props.modalState >= 1){
           if (this.props.coffeeShopData){
             coffeeResp = this.props.coffeeShopData.map((currentValue, index, array)=>{
-                    return(
+//                    if(this.props.coffeeShopData[index].currentValue.status === "statusGreen"){
+//                    comp=(image={require('../img/Green.png')})
+//                    } 
+//                    else if(this.props.coffeeShopData[index].currentValue.status === "statusOrange"){
+//                       comp=(image={require('../img/Orange.png')})
+//                    }
+//                    else if(this.props.coffeeShopData[index].currentValue.status === "statusRed"){
+//                      comp=(image={require('../img/Red.png')})
+//                    }
+                return(
                         <MapView.Marker 
                         key={index}
                         id={index}
@@ -62,18 +76,27 @@ var coffeeResp = null;
                             longitude: currentValue.geometry.location.lng}} 
                         title={currentValue.name}
                         image={require('../img/storeLocator.png')}
+//                        {comp}
+                                    
                         
-                    /*if(currentValue.status ==="good"){
-                    image={require('../assets/green-shop.png')}
-                    } else if ( .status === "maybe"){
-                        immage={require('../assets/yellow-shop.png')}
-                    }*/
+                        
+                   
+                   
                     />  
+                    
                     )                                      
                 });
           }
       
- }
+ 
+    var lines ="null";
+    if(this.props.sendShopIndex !== null){ 
+        lines = (     
+            <MapView.Polyline 
+            coordinates={this.state.coords}
+            strokeWidth={2}
+            strokeColor="blue"/>)
+    }
 /*var busStop = null;
 if(this.state.busStop){
                 busStop = (
@@ -88,7 +111,7 @@ if(this.state.busStop){
             console.log(this.state.busStop);
             }
 */
-      
+      }
     return (
 
         <View>
@@ -108,10 +131,11 @@ if(this.state.busStop){
                 latitude: this.props.userLat,
                 longitude: this.props.userLng,
             }}
-         image={require('../img/user.png')}
+         image={require('../img/user02.png')}
              
         />
         {coffeeResp}
+        {lines}
         </MapView>
         </View>  
 
