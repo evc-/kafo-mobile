@@ -299,11 +299,8 @@ getAllShopDirections(){
             
         });
     }
-    
-
   render() {
-      
-      var display = null;
+       var display = null;
      if(this.state.toggle === false){
         display = (
              <Loading 
@@ -333,7 +330,7 @@ getAllShopDirections(){
                     />    
                 );
 
-            return (
+    return (
                 <KeyboardAvoidingView  style={styles.container}           
                     behaviour="padding">
                     

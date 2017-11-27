@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Dimensions, AppRegistry, StyleSheet, Text, View, Button, Image } from 'react-native';
 import CoffeeResultsModal from '../coffeeResultsModal';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import Polyline from '@mapbox/polyline';
+
 
 class KafoMapCombined extends Component {
     constructor(props){
@@ -14,31 +14,31 @@ class KafoMapCombined extends Component {
         }
     }
 
-componentDidMount(){
-    if(true){
-        this.getDirections(this.props.userLat, this.props.userLng,this.props.sendShopIndex.lat,this.props.sendShopIndex.lng)
-        }    
-    }
+//componentDidMount(){
+//    if(true){
+//        this.getDirections(this.props.userLat, this.props.userLng,this.props.sendShopIndex.lat,this.props.sendShopIndex.lng)
+//        }    
+//    }
     
 //async sends a request without witing for a reply    
-async getDirections(startLoc, destinationLoc) {
-        try {
-            let resp = await fetch("https://maps.googleapis.com/maps/api/directions/json?origin=${ startLoc }&destination=${ destinationLoc }")
-            let respJson = await resp.json();
-            let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
-            let coords = points.map((point, index) => {
-                return  {
-                    latitude : point[0],
-                    longitude : point[1]
-                }
-            })
-            this.setState({coords: coords})
-            return coords
-        } catch(error) {
-            alert(error)
-            return error
-        }
-    }
+//async getDirections(startLoc, destinationLoc) {
+//        try {
+//            let resp = await fetch("https://maps.googleapis.com/maps/api/directions/json?origin=${ startLoc }&destination=${ destinationLoc }")
+//            let respJson = await resp.json();
+//            let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
+//            let coords = points.map((point, index) => {
+//                return  {
+//                    latitude : point[0],
+//                    longitude : point[1]
+//                }
+//            })
+//            this.setState({coords: coords})
+//            return coords
+//        } catch(error) {
+//            alert(error)
+//            return error
+//        }
+//    }
     
 busStop(){
     if(this.props.busStopCoords){
@@ -76,7 +76,7 @@ var coffeeResp = null;
                             longitude: currentValue.geometry.location.lng}} 
                         title={currentValue.name}
                         image={require('../img/storeLocator.png')}
-//                        {comp}
+
                                     
                         
                         
@@ -88,15 +88,15 @@ var coffeeResp = null;
                 });
           }
       
- 
-    var lines ="null";
- /*   if(this.props.sendShopIndex !== null){ 
-        lines = (     
-            <MapView.Polyline 
-            coordinates={this.state.coords}
-            strokeWidth={2}
-            strokeColor="blue"/>)
-    }*/
+
+//    var lines ="null";
+//    if(this.props.sendShopIndex !== null){ 
+//        lines = (     
+//            <MapView.Polyline 
+//            coordinates={this.state.coords}
+//            strokeWidth={2}
+//            strokeColor="blue"/>)
+//    }
 /*var busStop = null;
 if(this.state.busStop){
                 busStop = (
@@ -117,6 +117,7 @@ if(this.state.busStop){
         <View>
                 
          <MapView 
+            style={styles.map}
             provider = { PROVIDER_GOOGLE }
             region={{
                 latitude: this.props.userLat,
@@ -134,7 +135,7 @@ if(this.state.busStop){
              
         />
         {coffeeResp}
-        {lines}
+
         </MapView>
         </View>  
 
