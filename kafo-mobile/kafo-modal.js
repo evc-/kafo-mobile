@@ -11,7 +11,8 @@ class KafoModal extends Component {
         
         this.state={
             modalState: this.props.modalState,
-            selectedBus:''
+            selectedBus:'',
+            selectedShop:''
         };
         
             this.changeModal = this.changeModal.bind(this);
@@ -32,6 +33,11 @@ class KafoModal extends Component {
             this.setState({
                 selectedBus:this.props.tdata[i]
            });
+    }
+    selectShop(i){
+        this.setState({
+            selectedShop:this.props.shopWithStatus[i]
+        });
     }
 
   render() {
@@ -92,6 +98,7 @@ class KafoModal extends Component {
                 <CoffeeResultsModal 
                     changeModal={this.changeModal}
                     shopWithStatus = {this.props.shopWithStatus}
+              selectShop = {this.props.selectShop}
                 />
           </View>
           )

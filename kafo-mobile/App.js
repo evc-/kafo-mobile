@@ -19,6 +19,7 @@ export default class App extends React.Component {
             busStopCoords: {lat: null, lng: null},
             busStopNum: null,
             selectedBus: "",
+            selectedIndex:"",
             shopWithStatus: null,
             toggle: false,
             errorMsg: "What bus are you going to?",
@@ -33,6 +34,7 @@ export default class App extends React.Component {
         this.apiWaypoints = this.apiWaypoints.bind(this);
         this.getAllShopDirections = this.getAllShopDirections.bind(this);
         this.selectedBus = this.selectedBus.bind(this);
+        this.selectedShop = this.selectedShop.bind(this);
         this.animateEnd = this.animateEnd.bind(this);
      }
 
@@ -85,7 +87,12 @@ selectedBus(busIndex){
         selectedBus: this.state.translinkData[busIndex]
     });
 }
-
+selectedShop(shopIndex){
+    this.setState({
+        selectedShop: this.state.shopWithStatus[shopIndex]
+    });
+    console.log("App.js Line 93: "+this.state.shopWithStatus[shopIndex]);
+}
 //modalState(data){
 //    this.setState({
 //        modalState:data
@@ -307,6 +314,7 @@ getAllShopDirections(){
                         changeModalState = {this.changeModalState}
                         modalState = {this.state.modalState}
                         selectedBus = {this.selectedBus}
+                        selectedShop= {this.selectedShop}
                         getCoffeeShops = {this.getCoffeeShops}
                         coffeeShopData = {this.state.coffeeShopData}
                         shopWithStatus = {this.state.shopWithStatus}

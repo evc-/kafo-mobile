@@ -29,23 +29,24 @@ export default class CoffeeResultsModal extends React.Component {
             });
         }
     }
-    startTimer(){
+    startTimer(i){
         this.props.changeModal(3);
+        this.props.selectShop(i);
     }
 
 render() {
     if(this.props.shopWithStatus){
-    var shopInfo = this.props.shopWithStatus.map(function callback(obj, index) {
+    var shopInfo = this.props.shopWithStatus.map(function callback(obj, i) {
         return(
             
-            <View key={index}>
+            <View key={i}>
                 <Text style={styles.shopText}>{obj.name}</Text>
                 <Text style={styles.shopText}>{obj.status}</Text>
                 <View 
                     style={styles.goBtnStyle}
                 >
                     <TouchableOpacity
-                    onPress={()=>this.startTimer()}
+                    onPress={this.startTimer.bind(this, i)}
                     >
                     <Text style={styles.goBtnText}>GO</Text>
                     </TouchableOpacity>  
