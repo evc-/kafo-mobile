@@ -316,7 +316,7 @@ getAllShopDirections(){
 //      } else if (this.state.toggle === true){
 //    }  
     
-    
+
 //    animateEnd(data){
 //        this.setState({
 //            toggle: data
