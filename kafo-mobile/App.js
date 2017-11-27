@@ -102,6 +102,8 @@ selectedShop(shopIndex){
         selectedShop: this.state.shopWithStatus[shopIndex]
       });
    console.log("App.js Line 93: "+this.state.shopWithStatus[shopIndex].name);
+   console.log("App.js Line 93: "+this.state.shopWithStatus[shopIndex].coords.lat);
+   console.log("App.js Line 93: "+this.state.shopWithStatus[shopIndex].coords.lng);
 }
 //modalState(data){
 //    this.setState({
@@ -373,7 +375,7 @@ getAllShopDirections(){
                         userLat = {this.state.userLocation.lat}
                         userLng = {this.state.userLocation.lng}
                         busStopCoords = {this.state.busStopCoords}
-                        sendShopIndex = {this.state.shopIndex}
+                        sendShopIndex = {this.selectedShop}
                     />
                 
                 <Text style={[styles.header]}> kafo </Text> 
