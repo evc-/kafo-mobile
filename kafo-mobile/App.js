@@ -265,7 +265,7 @@ getAllShopDirections(){
                  var shopStatus = this.checkShopStatus(walkingtimeValue/60, this.state.selectedBus.Schedules[0].ExpectedCountdown);
                  //currently only getting first bus - we may want to include the second bus as well for high traffic location 
                  
-                 var polyline= currentValue.routes[0].legs[0].steps[0].polyline.points;
+                 var polyline= currentValue.routes[0].legs[0].steps[0].polyline.points;       
 
                  var shopWithStatus = {
                         name:this.state.coffeeShopData[index].name,
@@ -354,9 +354,11 @@ const styles = StyleSheet.create({
 
     modalStyle: {
         borderRadius: 15,
-        width: '100%',
+        width: '90%',
         backgroundColor:'rgba(255, 255, 255, 0.9)',
         height: Dimensions.get('window').height * .5,
+       
+        
       },
     
     container: {
