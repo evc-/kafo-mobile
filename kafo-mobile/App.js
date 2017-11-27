@@ -318,11 +318,9 @@ getAllShopDirections(){
     
     
     animateEnd(data){
-        
-       
         this.setState({
             toggle: data
-        });
+        })
         console.log("toggle changed");
     }
     
