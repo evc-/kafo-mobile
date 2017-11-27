@@ -281,7 +281,7 @@ getAllShopDirections(){
                         name:this.state.coffeeShopData[index].name,
                         status:shopStatus,
                         nextBus: this.state.selectedBus.Schedules[0].ExpectedCountdown,
-                        journeyTime: walkingtimeValue/60,
+                        journeyTime:Number((walkingtimeValue/60).toFixed()),
                         orderTime:this.state.selectedBus.Schedules[0].ExpectedCountdown - (walkingtimeValue/60) ,
                         coords: this.state.coffeeShopData[index].geometry.location,
                         polyline: polyline

@@ -122,8 +122,8 @@ if(this.state.busStop){
             region={{
                 latitude: this.props.userLat,
                 longitude: this.props.userLng,
-                latitudeDelta: 0.005,
-                longitudeDelta: 0.0005
+                latitudeDelta: 0.008,
+                longitudeDelta: 0.0008
             }}
         >
         <MapView.Marker
