@@ -6,7 +6,6 @@ export default class CoffeeResultsModal extends React.Component {
         super(props);
         this.state={
             coffeeShops:[],
-            setIndex:0
         }
        
         this.startTimer = this.startTimer.bind(this);
@@ -20,15 +19,8 @@ export default class CoffeeResultsModal extends React.Component {
         }
     }
     startTimer(i){
-        this.setState({
-            setIndex:i
-        })
-        this.props.getShopIndex(this.state.setIndex);
-        this.props.changeModal(3);
-        
         this.props.changeModal(3);
         this.props.selectShop(i);
-        console.log(i);
     }
 
 render() {
@@ -48,13 +40,13 @@ render() {
             
             <View key={i}>
                 <Text style={styles.shopText}>{obj.name}</Text>
-                <Text style={styles.statusStyle}>{obj.status}</Text>
+                <Text style={styles.statusStyle}>Bus arrives in {obj.nextBus} min</Text>
+                <Text style={styles.statusStyle}>Trip time is {obj.journeyTime} min</Text>
             
             <View 
                     style={styles.goBtnStyle}
                 >
                     <TouchableOpacity
-                    onPress={()=>this.startTimer.bind(this,index)}
                     onPress={this.startTimer.bind(this, i)}
                     >
                     <Text style={styles.goBtnText}>GO</Text>

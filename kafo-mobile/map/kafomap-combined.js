@@ -11,6 +11,7 @@ class KafoMapCombined extends Component {
         this.state={
             error: null,
             coords: [],
+            busStopCoords: null
         }
     }
 
@@ -20,7 +21,7 @@ componentDidMount(){
         }    
     }
     
-//async sends a request without witing for a reply    
+//async sends a request without witing for a reply
 async getDirections(startLoc, destinationLoc) {
         try {
             let resp = await fetch("https://maps.googleapis.com/maps/api/directions/json?origin=${ startLoc }&destination=${ destinationLoc }")
@@ -49,10 +50,40 @@ busStop(){
         console.log("kafomapcombined bus stop coordinates are: "+this.state.busLat + this.state.busLng);
     }
 }
+=======
+//async getDirections(startLoc, destinationLoc) {
+//        try {
+//            let resp = await fetch("https://maps.googleapis.com/maps/api/directions/json?origin=${ startLoc }&destination=${ destinationLoc }")
+//            let respJson = await resp.json();
+//            let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
+//            let coords = points.map((point, index) => {
+//                return  {
+//                    latitude : point[0],
+//                    longitude : point[1]
+//                }
+//            })
+//            this.setState({coords: coords})
+//            return coords
+//        } catch(error) {
+//            alert(error)
+//            return error
+//        }
+//    }
 
     
     
   render(){
+      
+var busStop = null;
+if(this.props.busStopCoords){
+    busStop = (
+        <MapView.Marker 
+                coordinate={{
+                     latitude:this.props.busStopCoords.lat,
+                    longitude: this.props.busStopCoords.lng}} 
+                    />  
+    )
+}
 var comp=null;
 var coffeeResp = null;
  if (this.props.modalState >= 1){
@@ -76,19 +107,13 @@ var coffeeResp = null;
                             longitude: currentValue.geometry.location.lng}} 
                         title={currentValue.name}
                         image={require('../img/storeLocator.png')}
-
-                                    
-                        
-                        
-                   
-                   
                     />  
                     
                     )                                      
                 });
           }
       
- 
+
 //    var lines ="null";
 //    if(this.props.sendShopIndex !== null){ 
 //        lines = (     
@@ -97,20 +122,6 @@ var coffeeResp = null;
 //            strokeWidth={2}
 //            strokeColor="blue"/>)
 //    }
-/*var busStop = null;
-if(this.state.busStop){
-                busStop = (
-                    <MapView.Marker
-                        coordinate={{
-                            latitute: this.state.busStop.lat,
-                            longitude: this.state.busStop.lng
-                                }}
-                        id={"busStop"}
-                        />
-                )
-            console.log(this.state.busStop);
-            }
-*/
       }
     return (
 
@@ -122,8 +133,8 @@ if(this.state.busStop){
             region={{
                 latitude: this.props.userLat,
                 longitude: this.props.userLng,
-                latitudeDelta: 0.005,
-                longitudeDelta: 0.0005
+                latitudeDelta: 0.008,
+                longitudeDelta: 0.0008
             }}
         >
         <MapView.Marker
@@ -134,6 +145,7 @@ if(this.state.busStop){
          image={require('../img/user02.png')}
              
         />
+        {busStop}
         {coffeeResp}
 
         </MapView>

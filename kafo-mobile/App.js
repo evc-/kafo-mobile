@@ -283,7 +283,7 @@ getAllShopDirections(){
                         name:this.state.coffeeShopData[index].name,
                         status:shopStatus,
                         nextBus: this.state.selectedBus.Schedules[0].ExpectedCountdown,
-                        journeyTime: walkingtimeValue/60,
+                        journeyTime:Number((walkingtimeValue/60).toFixed()),
                         orderTime:this.state.selectedBus.Schedules[0].ExpectedCountdown - (walkingtimeValue/60) ,
                         coords: this.state.coffeeShopData[index].geometry.location,
                         polyline: polyline
@@ -301,37 +301,8 @@ getAllShopDirections(){
             
         });
     }
-    
-
-//  render() {
-//      
-//      var display = null;
-//      
-//      if(this.state.toggle === false){
-//          display = (
-//              <Loading 
-//                animateEnd = {this.animateEnd}
-//              />
-//          )
-//          
-//          return display;
-//      } else if (this.state.toggle === true){
-//    }  
-    
-
-//    animateEnd(data){
-//        this.setState({
-//            toggle: data
-//        })
-//        console.log("toggle changed");
-//    }
-    
   render() {
        var display = null;
-
-//add a selectedbusIndex prop so we have the index of which button they clicked on 
-//add a selectRouteProp so we can call have the selectRoute function from the button component 
-//if the state exists, map the object (in the state) to create the buttons
      if(this.state.toggle === false){
         display = (
              <Loading 
@@ -356,7 +327,6 @@ getAllShopDirections(){
                         getCoffeeShops = {this.getCoffeeShops}
                         coffeeShopData = {this.state.coffeeShopData}
                         shopWithStatus = {this.state.shopWithStatus}
-                        getShopIndex = {this.selectedShop}
                         errorMsg = {this.state.errorMsg}
 
                     />    
@@ -376,12 +346,13 @@ getAllShopDirections(){
                         userLng = {this.state.userLocation.lng}
                         busStopCoords = {this.state.busStopCoords}
                         sendShopIndex = {this.selectedShop}
+                        sendShopIndex = {this.state.selectedShop}
                     />
                 
                 <Text style={[styles.header]}> kafo </Text> 
                 
                     <View 
-                        style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .3 + 20 + this.state.positionBump} ]}>
+                        style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .5 + 20 + this.state.positionBump} ]}>
                         {modal}
             
                     </View>
@@ -397,9 +368,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         width: '90%',
         backgroundColor:'rgba(255, 255, 255, 0.9)',
-        height: Dimensions.get('window').height * .5,
-       
-        
+        height: Dimensions.get('window').height * .5
       },
     
     container: {
@@ -413,7 +382,7 @@ const styles = StyleSheet.create({
         textAlign:'center',
         color: '#42565E',
         fontWeight: 'bold',
-        fontSize: 27,
+        fontSize: 15,
         backgroundColor:'rgba(255, 255, 255, 0.7)',
         position: 'absolute',
         top: 0,
