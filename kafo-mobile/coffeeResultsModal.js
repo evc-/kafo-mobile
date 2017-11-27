@@ -40,7 +40,8 @@ render() {
             
             <View key={i}>
                 <Text style={styles.shopText}>{obj.name}</Text>
-                <Text style={styles.statusStyle}>{obj.status}</Text>
+                <Text style={styles.statusStyle}>Bus arrives in {obj.nextBus} min</Text>
+                <Text style={styles.statusStyle}>Trip time is {obj.journeyTime} min</Text>
             
             <View 
                     style={styles.goBtnStyle}

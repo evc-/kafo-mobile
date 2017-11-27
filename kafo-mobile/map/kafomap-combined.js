@@ -11,6 +11,7 @@ class KafoMapCombined extends Component {
         this.state={
             error: null,
             coords: [],
+            busStopCoords: null
         }
     }
 
@@ -39,20 +40,22 @@ class KafoMapCombined extends Component {
 //            return error
 //        }
 //    }
-    
-busStop(){
-    if(this.props.busStopCoords){
-        this.setState({
-            busLat:this.props.busStopCoords.lat,
-            busLng:this.props.busStopCoords.lng
-        });
-        console.log("kafomapcombined bus stop coordinates are: "+this.state.busLat + this.state.busLng);
-    }
-}
+
 
     
     
   render(){
+      
+var busStop = null;
+if(this.props.busStopCoords){
+    busStop = (
+        <MapView.Marker 
+                coordinate={{
+                     latitude:this.props.busStopCoords.lat,
+                    longitude: this.props.busStopCoords.lng}} 
+                    />  
+    )
+}
 var comp=null;
 var coffeeResp = null;
  if (this.props.modalState >= 1){
@@ -76,12 +79,6 @@ var coffeeResp = null;
                             longitude: currentValue.geometry.location.lng}} 
                         title={currentValue.name}
                         image={require('../img/storeLocator.png')}
-
-                                    
-                        
-                        
-                   
-                   
                     />  
                     
                     )                                      
@@ -97,20 +94,6 @@ var coffeeResp = null;
 //            strokeWidth={2}
 //            strokeColor="blue"/>)
 //    }
-/*var busStop = null;
-if(this.state.busStop){
-                busStop = (
-                    <MapView.Marker
-                        coordinate={{
-                            latitute: this.state.busStop.lat,
-                            longitude: this.state.busStop.lng
-                                }}
-                        id={"busStop"}
-                        />
-                )
-            console.log(this.state.busStop);
-            }
-*/
       }
     return (
 
@@ -122,8 +105,8 @@ if(this.state.busStop){
             region={{
                 latitude: this.props.userLat,
                 longitude: this.props.userLng,
-                latitudeDelta: 0.005,
-                longitudeDelta: 0.0005
+                latitudeDelta: 0.008,
+                longitudeDelta: 0.0008
             }}
         >
         <MapView.Marker
@@ -134,6 +117,7 @@ if(this.state.busStop){
          image={require('../img/user02.png')}
              
         />
+        {busStop}
         {coffeeResp}
 
         </MapView>
