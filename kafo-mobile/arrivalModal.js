@@ -29,7 +29,7 @@ render() {
     return (
     <View style={{flex: 1}}>
         <View style={styles.headerContainer}>
-        <Text style={styles.question1Style}>Heading to Waves Coffee!</Text>
+        <Text style={styles.question1Style}>Heading to {this.props.selectedShop.name}</Text>
         </View>
         <Text style={styles.paragraph1Style}> Current Time: {this.state.curTime}</Text>
         <Text style={styles.paragraph2Style}> Until your bus arrives: {"\n"}{this.state.tillDepart} minutes</Text>

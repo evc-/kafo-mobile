@@ -16,6 +16,7 @@ class KafoModal extends Component {
         };
         
             this.changeModal = this.changeModal.bind(this);
+        this.selectShop = this.selectShop.bind(this);
     }
     
     changeModal(page){
@@ -35,9 +36,10 @@ class KafoModal extends Component {
            });
     }
     selectShop(i){
+        this.props.selectShop(i);
         this.setState({
             selectedShop:this.props.shopWithStatus[i]
-        });
+        })
     }
 
   render() {
@@ -99,7 +101,7 @@ class KafoModal extends Component {
                 <CoffeeResultsModal 
                     changeModal={this.changeModal}
                     shopWithStatus = {this.props.shopWithStatus}
-              selectShop = {this.props.selectShop}
+              selectShop = {this.selectShop}
                 />
           </View>
           )
@@ -120,6 +122,7 @@ class KafoModal extends Component {
                           <ArrivalModal 
                             changeModal={this.changeModal}
                             minsTillDepart={currentValue.Schedules[0].ExpectedCountdown}
+                            selectedShop = {this.state.selectedShop}
                           />
                               )
                       );

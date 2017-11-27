@@ -19,7 +19,7 @@ export default class App extends React.Component {
             busStopCoords: {lat: null, lng: null},
             busStopNum: null,
             selectedBus: "",
-            selectedIndex:"",
+            selectedShop:[],
             shopWithStatus: null,
             toggle: false,
             errorMsg: "What bus are you going to?",
@@ -88,10 +88,10 @@ selectedBus(busIndex){
     });
 }
 selectedShop(shopIndex){
-    this.setState({
+  this.setState({
         selectedShop: this.state.shopWithStatus[shopIndex]
-    });
-    console.log("App.js Line 93: "+this.state.shopWithStatus[shopIndex]);
+      });
+   console.log("App.js Line 93: "+this.state.shopWithStatus[shopIndex].name);
 }
 //modalState(data){
 //    this.setState({
@@ -314,7 +314,7 @@ getAllShopDirections(){
                         changeModalState = {this.changeModalState}
                         modalState = {this.state.modalState}
                         selectedBus = {this.selectedBus}
-                        selectedShop= {this.selectedShop}
+                        selectShop= {this.selectedShop}
                         getCoffeeShops = {this.getCoffeeShops}
                         coffeeShopData = {this.state.coffeeShopData}
                         shopWithStatus = {this.state.shopWithStatus}

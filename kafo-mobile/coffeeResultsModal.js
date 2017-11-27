@@ -21,6 +21,7 @@ export default class CoffeeResultsModal extends React.Component {
     startTimer(i){
         this.props.changeModal(3);
         this.props.selectShop(i);
+        console.log(i);
     }
 
 render() {
