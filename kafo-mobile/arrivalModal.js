@@ -28,8 +28,9 @@ export default class ArrivalModal extends React.Component {
 render() {
     return (
     <View style={{flex: 1}}>
-        <Text style={styles.question1Style}>Heading to Waves Coffee!</Text>
-        
+        <View style={styles.headerContainer}>
+        <Text style={styles.question1Style}>Heading to {this.props.selectedShop.name}</Text>
+        </View>
         <Text style={styles.paragraph1Style}> Current Time: {this.state.curTime}</Text>
         <Text style={styles.paragraph2Style}> Until your bus arrives: {"\n"}{this.state.tillDepart} minutes</Text>
         
@@ -49,6 +50,10 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: 'white',
         backgroundColor:'#76ABAC',
+        overflow: 'hidden',
+        borderTopLeftRadius: 15, 
+        borderTopRightRadius: 15,
+        
       },
     paragraph1Style:{
         flex: 1,
@@ -68,5 +73,11 @@ const styles = StyleSheet.create({
         width: '100%',
         fontSize: 15,
         color: '#303C45',
-      }
+      },
+    
+     headerContainer:{
+        borderTopLeftRadius: 15, 
+        borderTopRightRadius: 15, 
+        overflow: 'hidden'
+    }
 });

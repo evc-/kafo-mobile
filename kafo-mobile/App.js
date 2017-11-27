@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Image, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView,  Text, View, ScrollView, Button } from 'react-native';
+import { AppRegistry, Image, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView,  Text, View, ScrollView, Button, ActivityIndicator } from 'react-native';
 import KafoTextInput from './kafo-textinput';
 import KafoMapCombined from './map/kafomap-combined';
 import ArrivalModal from './arrivalModal';    
@@ -19,11 +19,15 @@ export default class App extends React.Component {
             busStopCoords: {lat: null, lng: null},
             busStopNum: null,
             selectedBus: "",
+            selectedShop:[],
             shopWithStatus: null,
             toggle: false,
             shopIndex:"",
             errorMsg: "What bus are you going to?",
-            modalState: 0
+            modalState: 0,
+            busStopCoords: '',
+            busStopNum: "",
+            toggle: false
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
@@ -34,6 +38,7 @@ export default class App extends React.Component {
         this.apiWaypoints = this.apiWaypoints.bind(this);
         this.getAllShopDirections = this.getAllShopDirections.bind(this);
         this.selectedBus = this.selectedBus.bind(this);
+        this.selectedShop = this.selectedShop.bind(this);
         this.animateEnd = this.animateEnd.bind(this);
      }
 
@@ -92,7 +97,12 @@ selectedBus(busIndex){
         selectedBus: this.state.translinkData[busIndex]
     });
 }
-
+selectedShop(shopIndex){
+  this.setState({
+        selectedShop: this.state.shopWithStatus[shopIndex]
+      });
+   console.log("App.js Line 93: "+this.state.shopWithStatus[shopIndex].name);
+}
 //modalState(data){
 //    this.setState({
 //        modalState:data
@@ -265,7 +275,7 @@ getAllShopDirections(){
                  var shopStatus = this.checkShopStatus(walkingtimeValue/60, this.state.selectedBus.Schedules[0].ExpectedCountdown);
                  //currently only getting first bus - we may want to include the second bus as well for high traffic location 
                  
-                 var polyline= currentValue.routes[0].legs[0].steps[0].polyline.points;
+                 var polyline= currentValue.routes[0].legs[0].steps[0].polyline.points;       
 
                  var shopWithStatus = {
                         name:this.state.coffeeShopData[index].name,
@@ -304,6 +314,34 @@ getAllShopDirections(){
           
           return display;
       } else if (this.state.toggle === true){
+    }  
+    
+    
+    animateEnd(data){
+        
+       
+        this.setState({
+            toggle: data
+        });
+        console.log("toggle changed");
+    }
+    
+  render() {
+       var display = null;
+
+//add a selectedbusIndex prop so we have the index of which button they clicked on 
+//add a selectRouteProp so we can call have the selectRoute function from the button component 
+//if the state exists, map the object (in the state) to create the buttons
+     if(this.state.toggle === false){
+        display = (
+             <Loading 
+            animateEnd = {this.animateEnd}
+            />
+         )
+        
+        return display;
+         
+     } else if (this.state.toggle === true){
         var modal = null;
                 modal = (
                     <KafoModal
@@ -314,6 +352,7 @@ getAllShopDirections(){
                         changeModalState = {this.changeModalState}
                         modalState = {this.state.modalState}
                         selectedBus = {this.selectedBus}
+                        selectShop= {this.selectedShop}
                         getCoffeeShops = {this.getCoffeeShops}
                         coffeeShopData = {this.state.coffeeShopData}
                         shopWithStatus = {this.state.shopWithStatus}
@@ -356,9 +395,11 @@ const styles = StyleSheet.create({
 
     modalStyle: {
         borderRadius: 15,
-        width: '100%',
+        width: '90%',
         backgroundColor:'rgba(255, 255, 255, 0.9)',
         height: Dimensions.get('window').height * .5,
+       
+        
       },
     
     container: {

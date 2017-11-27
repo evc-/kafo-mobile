@@ -11,10 +11,12 @@ class KafoModal extends Component {
         
         this.state={
             modalState: this.props.modalState,
-            selectedBus:''
+            selectedBus:'',
+            selectedShop:''
         };
         
             this.changeModal = this.changeModal.bind(this);
+        this.selectShop = this.selectShop.bind(this);
     }
     
     changeModal(page){
@@ -32,6 +34,12 @@ class KafoModal extends Component {
             this.setState({
                 selectedBus:this.props.tdata[i]
            });
+    }
+    selectShop(i){
+        this.props.selectShop(i);
+        this.setState({
+            selectedShop:this.props.shopWithStatus[i]
+        })
     }
 
   render() {
@@ -68,7 +76,6 @@ class KafoModal extends Component {
                             selectedBus={this.props.selectedBus}
                             changeModal={this.changeModal}
                             getCoffeeShops = {this.props.getCoffeeShops}
-                            
                         />
                     );
                 }, this);
@@ -78,7 +85,9 @@ class KafoModal extends Component {
           modal =(
 
                 <View style={{flex: 1}}>
-                    <Text style={styles.question1Style}> Select your route </Text>
+                    <View style={styles.headerContainer}>
+                        <Text style={styles.question1Style}> Select your route </Text>
+                    </View>
                     <ScrollView style={{flex: 1}}>
                         {busResponses}
                     </ScrollView>
@@ -93,6 +102,7 @@ class KafoModal extends Component {
                     changeModal={this.changeModal}
                     shopWithStatus = {this.props.shopWithStatus}
                     getShopIndex = {this.props.getShopIndex}
+                    selectShop = {this.selectShop}
                 />
           </View>
           )
@@ -104,9 +114,7 @@ class KafoModal extends Component {
                       var minsTillDepart = 0;
                       for(var i = 0; i < currentValue.Schedules.length; i++){
                           if(currentValue.Schedules[i].ExpectedCountdown > 0){
-                              
                               minsTillDepart = currentValue.Schedules[i].ExpectedCountdown;
-                              
                               break;
                           }
                       }
@@ -115,6 +123,7 @@ class KafoModal extends Component {
                           <ArrivalModal 
                             changeModal={this.changeModal}
                             minsTillDepart={currentValue.Schedules[0].ExpectedCountdown}
+                            selectedShop = {this.state.selectedShop}
                           />
                               )
                       );
@@ -134,13 +143,15 @@ class KafoModal extends Component {
 const styles = StyleSheet.create({
     
     question1Style:{
-        borderRadius: 0,
         textAlign: 'center',
         padding:20,
         width: '100%',
         fontSize: 20,
         color: 'white',
         backgroundColor:'#76ABAC',
+        overflow: 'hidden',
+        borderTopLeftRadius: 15, 
+        borderTopRightRadius: 15,
       },
     
     question2Style:{
@@ -155,6 +166,12 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'red',
         fontSize: 12
+    },
+    
+    headerContainer:{
+        borderTopLeftRadius: 15, 
+        borderTopRightRadius: 15, 
+        overflow: 'hidden'
     }
 
     
