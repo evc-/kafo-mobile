@@ -12,7 +12,6 @@ export default class App extends React.Component {
         super(props);
          
         this.state = {
-            appState: 0,
             translinkData: "",
             coffeeShopData: "",
             userLocation: {lat: 49.24943966121919, lng:-123.00086935603458 },
@@ -22,12 +21,14 @@ export default class App extends React.Component {
             selectedBus: "",
             shopWithStatus: null,
             toggle: false,
-            errorMsg: "What bus are you going to?"
+            errorMsg: "What bus are you going to?",
+            modalState: 0
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
         this.tsStopCall = this.tsStopCall.bind(this);
-        this.modalState = this.modalState.bind(this);
+        //this.modalState = this.modalState.bind(this);
+         this.changeModalState = this.changeModalState.bind(this);
         this.getCoffeeShops = this.getCoffeeShops.bind(this);
         this.apiWaypoints = this.apiWaypoints.bind(this);
         this.getAllShopDirections = this.getAllShopDirections.bind(this);
@@ -85,9 +86,15 @@ selectedBus(busIndex){
     });
 }
 
-modalState(data){
+//modalState(data){
+//    this.setState({
+//        modalState:data
+//    });
+//}
+
+changeModalState(page){
     this.setState({
-        modalState:data
+        modalState: page
     });
 }
 
@@ -106,7 +113,7 @@ tsRouteCall(stopNum) {
           }})
     .then(response => response.json())
     .then((responseJson) => {
-        console.log(responseJson);
+        //console.log(responseJson);
         if (responseJson.Code){
             switch (responseJson.Code) {
                 case "3001":
@@ -119,12 +126,13 @@ tsRouteCall(stopNum) {
                     this.setState({errorMsg: "We had a problem getting the estimates for this stop. Try re-entering the ID."})
                 break;
                 case "3005":
-                    this.setState({errorMsg: "Sorry, there are no routes serving this stop right now"})
+                    this.setState({errorMsg: "Sorry, there are no routes serving this stop right now."})
                 break;
             }
         } else {
         this.setState({translinkData:responseJson}); 
-        this.modalState(1);
+        this.setState({modalState: 1});
+            console.log("setting?");
         }
     },
         (reason) => { //this happens if we can't communicate to translink 
@@ -155,7 +163,7 @@ tsStopCall(stopNum){
 
 //get  coffee shops within a 500m radius
 getCoffeeShops(){
-    console.log("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500");
+    //console.log("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500");
     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500").then((CSresp)=>{
         return CSresp.json();
     }, (reason)=>{
@@ -179,7 +187,7 @@ apiWaypoints(coffeeShop, busStop){
                 return directionsResp.json();
           }).then((directionsRespJson)=>{
               return directionsRespJson;
-        console.log(directionsRespJson);
+        //console.log(directionsRespJson);
           });
         
 }
@@ -223,7 +231,7 @@ getAllShopDirections(){
             var shopDirections = this.shopDirections(shopCoords, busStopCoords);
             
             return shopDirections; //return array of promises 
-            console.log(shopDirections);
+            //console.log(shopDirections);
         },this);
         
         //loop over all coffee shop data to get directions to each of them 
@@ -235,7 +243,7 @@ getAllShopDirections(){
 
         var promisedDirection = Promise.all(promisedDirectionsArr);
         promisedDirection.then((Directions)=>{ 
-            console.log(Directions);
+            //console.log(Directions);
              var Statuses = Directions.map(function getStatuses(currentValue, index, array){
                  
                  //from house to shop 
@@ -296,7 +304,8 @@ getAllShopDirections(){
                         tsStopCall = {this.tsStopCall}
                         tsRouteCall ={this.tsRouteCall}
                         setBusStopNum ={this.setBusStopNum}
-                        modalState = {this.modalState}
+                        changeModalState = {this.changeModalState}
+                        modalState = {this.state.modalState}
                         selectedBus = {this.selectedBus}
                         getCoffeeShops = {this.getCoffeeShops}
                         coffeeShopData = {this.state.coffeeShopData}
@@ -311,6 +320,7 @@ getAllShopDirections(){
                     
                 
                     <KafoMapCombined
+                        changeModalState = {this.changeModalState}
                         modalState = {this.state.modalState}
                         getBusStopCoords = {this.tsStopCall}
                         coffeeShopData = {this.state.coffeeShopData} 
