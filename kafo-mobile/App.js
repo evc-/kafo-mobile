@@ -304,32 +304,6 @@ getAllShopDirections(){
   render() {
       
       var display = null;
-      
-      if(this.state.toggle === false){
-          display = (
-              <Loading 
-                animateEnd = {this.animateEnd}
-              />
-          )
-          
-          return display;
-      } else if (this.state.toggle === true){
-    }  
-    
-    
-    animateEnd(data){
-        this.setState({
-            toggle: data
-        })
-        console.log("toggle changed");
-    }
-    
-  render() {
-       var display = null;
-
-//add a selectedbusIndex prop so we have the index of which button they clicked on 
-//add a selectRouteProp so we can call have the selectRoute function from the button component 
-//if the state exists, map the object (in the state) to create the buttons
      if(this.state.toggle === false){
         display = (
              <Loading 
@@ -354,7 +328,6 @@ getAllShopDirections(){
                         getCoffeeShops = {this.getCoffeeShops}
                         coffeeShopData = {this.state.coffeeShopData}
                         shopWithStatus = {this.state.shopWithStatus}
-                        getShopIndex = {this.selectedShop}
                         errorMsg = {this.state.errorMsg}
 
                     />    
@@ -373,7 +346,7 @@ getAllShopDirections(){
                         userLat = {this.state.userLocation.lat}
                         userLng = {this.state.userLocation.lng}
                         busStopCoords = {this.state.busStopCoords}
-                        sendShopIndex = {this.state.shopIndex}
+                        sendShopIndex = {this.state.selectedShop}
                     />
                 
                 <Text style={[styles.header]}> kafo </Text> 
