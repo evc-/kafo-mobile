@@ -379,7 +379,7 @@ getAllShopDirections(){
                 <Text style={[styles.header]}> kafo </Text> 
                 
                     <View 
-                        style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .3 + 20 + this.state.positionBump} ]}>
+                        style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .5 + 20 + this.state.positionBump} ]}>
                         {modal}
             
                     </View>
@@ -395,9 +395,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         width: '90%',
         backgroundColor:'rgba(255, 255, 255, 0.9)',
-        height: Dimensions.get('window').height * .5,
-       
-        
+        height: Dimensions.get('window').height * .5
       },
     
     container: {
@@ -411,7 +409,7 @@ const styles = StyleSheet.create({
         textAlign:'center',
         color: '#42565E',
         fontWeight: 'bold',
-        fontSize: 27,
+        fontSize: 15,
         backgroundColor:'rgba(255, 255, 255, 0.7)',
         position: 'absolute',
         top: 0,
