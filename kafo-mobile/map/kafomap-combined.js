@@ -2,12 +2,36 @@ import React, { Component } from 'react';
 import { Dimensions, AppRegistry, StyleSheet, Text, View, Button, Image } from 'react-native';
 import CoffeeResultsModal from '../coffeeResultsModal';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import Polyline from 'react-native-maps';
+
 class KafoMapCombined extends Component {
     constructor(props){
         super(props);
         
         this.state={
             error: null,
+        }
+    }
+
+componentDidMount(){
+     this.getDirections({this.props.userLat}, {this.props.userLng}, {this.props.sendShopIndex.lat},{this.props.sendShopIndex.lng})
+}    
+async getDirections(startLoc, destinationLoc) {
+        try {
+            let resp = Myroute fetch('https://maps.googleapis.com/maps/api/directions/json?origin=${this.props.userLat}, {this.props.userLng}&destination=${this.props.sendShopIndex.lat},{this.props.sendShopIndex.lng}')
+            let respJson = Myroute resp.json();
+            let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
+            let coords = points.map((point, index) => {
+                return  {
+                    latitude : point[0],
+                    longitude : point[1]
+                }
+            })
+            this.setState({coords: coords})
+            return coords
+        } catch(error) {
+            alert(error)
+            return error
         }
     }
     
@@ -20,6 +44,9 @@ busStop(){
         console.log("kafomapcombined bus stop coordinates are: "+this.state.busLat + this.state.busLng);
     }
 }
+
+    
+    
   render(){
 
 var coffeeResp = null;

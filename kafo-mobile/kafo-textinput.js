@@ -10,19 +10,12 @@ export default class KafoTextInput extends Component {
     this.updateText = this.updateText.bind(this);
   }
     
-//a function to update the text with with whatever is entered 
-//then we check the length of the entry and if its 5 characters then we set the "state" of the component to be 1"
-    
-//the translink call function was passed as a prop. it takes an argument of bus number. we're giving it what was entered into the text input.
-
-//TODO: show error for if stop number is invalid 
     
     updateText(text){
         this.setState({text});
-        
-        if (text.length == 5){
+        if (text.length === 5){
             this.props.tsRouteCall(text);
-            this.props.changeModal(1);
+//            this.props.changeModal(1);
             this.props.tsStopCall(text);
         }
     }
@@ -33,7 +26,7 @@ export default class KafoTextInput extends Component {
         style={styles.textInputStyle}
         onChangeText={(text) => this.updateText(text)}
         value={this.state.text}
-        maxLength={6}
+        maxLength={5}
         placeholder={"Enter Stop ID"}
         keyboardType={'numeric'}
         underlineColorAndroid={'transparent'}

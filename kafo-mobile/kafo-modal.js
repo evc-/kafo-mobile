@@ -10,18 +10,23 @@ class KafoModal extends Component {
         super(props);
         
         this.state={
-            modalState: 0,
+            modalState: this.props.modalState,
             selectedBus:''
         };
         
             this.changeModal = this.changeModal.bind(this);
     }
     
-      changeModal(mstatenum){
-            this.setState({modalState: mstatenum});
-            this.props.modalState(this.state.modalState);
-            Keyboard.dismiss();
-        }
+    changeModal(page){
+        this.props.changeModalState(page);
+        Keyboard.dismiss();
+    }
+    
+//      changeModal(mstatenum){
+//            this.setState({modalState: mstatenum});
+//            this.props.modalState(this.state.modalState);
+//            
+//}
     
         selectRoute(i){
             this.setState({
@@ -32,23 +37,23 @@ class KafoModal extends Component {
   render() {
       var modal = null; 
           
-        if(this.state.modalState === 0){
+        if(this.props.modalState === 0){
             modal =(
                 <View >
                     <Text style={styles.question1Style}> Got enough time for coffee?</Text>
-                    <Text style={styles.question2Style}> Which bus stop are you going to?</Text>
+                    <Text style={styles.question2Style}>{this.props.errorMsg}</Text>
                     
                         <KafoTextInput 
                             tsRouteCall={this.props.tsRouteCall} 
                             tsStopCall={this.props.tsStopCall} 
-                            changeModal={(mstatenum) => this.changeModal(mstatenum)}
+                            changeModal={this.changeModal}
                             setBusStopNum={this.props.setBusStopNum}
                         />
                     
                 </View>
                 )
                 
-      } else if (this.state.modalState === 1){
+      } else if (this.props.modalState === 1){
           var busResponses = null;
           if (this.props.tdata){
                 busResponses = this.props.tdata.map(function callback(currentValue, index, array) {
@@ -63,6 +68,7 @@ class KafoModal extends Component {
                             selectedBus={this.props.selectedBus}
                             changeModal={this.changeModal}
                             getCoffeeShops = {this.props.getCoffeeShops}
+                            
                         />
                     );
                 }, this);
@@ -79,7 +85,7 @@ class KafoModal extends Component {
                 </View>
 
           )
-      } else if (this.state.modalState===2){
+      } else if (this.props.modalState===2){
           modal = (
         
           <View style={{flex: 1}}>
@@ -90,7 +96,7 @@ class KafoModal extends Component {
                 />
           </View>
           )
-      } else if (this.state.modalState ===3){
+      } else if (this.props.modalState ===3){
           var estimateResponse = null;
           
           if(this.props.tdata){
