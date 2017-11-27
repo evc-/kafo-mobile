@@ -90,13 +90,13 @@ var coffeeResp = null;
       
  
     var lines ="null";
-    if(this.props.sendShopIndex !== null){ 
+ /*   if(this.props.sendShopIndex !== null){ 
         lines = (     
             <MapView.Polyline 
             coordinates={this.state.coords}
             strokeWidth={2}
             strokeColor="blue"/>)
-    }
+    }*/
 /*var busStop = null;
 if(this.state.busStop){
                 busStop = (
