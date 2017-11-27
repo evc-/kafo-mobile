@@ -301,28 +301,28 @@ getAllShopDirections(){
     }
     
 
-  render() {
-      
-      var display = null;
-      
-      if(this.state.toggle === false){
-          display = (
-              <Loading 
-                animateEnd = {this.animateEnd}
-              />
-          )
-          
-          return display;
-      } else if (this.state.toggle === true){
-    }  
+//  render() {
+//      
+//      var display = null;
+//      
+//      if(this.state.toggle === false){
+//          display = (
+//              <Loading 
+//                animateEnd = {this.animateEnd}
+//              />
+//          )
+//          
+//          return display;
+//      } else if (this.state.toggle === true){
+//    }  
     
     
-    animateEnd(data){
-        this.setState({
-            toggle: data
-        })
-        console.log("toggle changed");
-    }
+//    animateEnd(data){
+//        this.setState({
+//            toggle: data
+//        })
+//        console.log("toggle changed");
+//    }
     
   render() {
        var display = null;
@@ -360,7 +360,7 @@ getAllShopDirections(){
                     />    
                 );
 
-            return (
+    return (
                 <KeyboardAvoidingView  style={styles.container}           
                     behaviour="padding">
                     
