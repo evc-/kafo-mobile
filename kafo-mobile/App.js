@@ -27,11 +27,13 @@ export default class App extends React.Component {
             modalState: 0,
             busStopCoords: '',
             busStopNum: "",
-            toggle: false
+            toggle: false,
+            allBusStops:[]
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
         this.tsStopCall = this.tsStopCall.bind(this);
+        this.tsAllStops = this.tsAllStops.bind(this);
         //this.modalState = this.modalState.bind(this);
          this.changeModalState = this.changeModalState.bind(this);
         this.getCoffeeShops = this.getCoffeeShops.bind(this);
@@ -67,7 +69,9 @@ componentWillMount () {
                     error: null
                 })
             }
-    
+    if(this.state.userLocation !== null){
+        this.tsAllStops(this.state.userLocation);
+    }
     this.keyboardWillShowSub = Keyboard.addListener('keyboardDidShow', this.keyboardWillShow);
     this.keyboardWillHideSub = Keyboard.addListener('keyboardDidHide', this.keyboardWillHide);
   }
@@ -122,6 +126,23 @@ animateEnd(data){
 }
 
 /*API CALLS*/
+
+//get all bus stops
+tsAllStops(userLocation){
+    fetch('https://kafo-all-stops.herokuapp.com/translink/'+userLocation, {
+        method: 'GET',
+        headers:{
+            "Content-Type": "application/json"
+        }})
+    .then(response=>response.json())
+    .then((response) => {
+        //console.log(response);
+        this.setState({allBusStops:response});
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
 
 //get transit information 
 tsRouteCall(stopNum) {
@@ -181,7 +202,7 @@ tsStopCall(stopNum){
 //get  coffee shops within a 500m radius
 getCoffeeShops(){
     //console.log("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500");
-    fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=1000").then((CSresp)=>{
+    fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500").then((CSresp)=>{
         return CSresp.json();
     }, (reason)=>{
         console.log("get coffee shops fetch failed");
@@ -344,6 +365,8 @@ getAllShopDirections(){
                         userLng = {this.state.userLocation.lng}
                         busStopCoords = {this.state.busStopCoords}
                         sendShopIndex = {this.state.selectedShop}
+                        shopWithStatus = {this.state.shopWithStatus}
+                        allBusStops = {this.state.allBusStops}
                     />
                 
                 <Text style={[styles.header]}> kafo </Text> 
