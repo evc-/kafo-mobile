@@ -109,7 +109,6 @@ class KafoModal extends Component {
                     shopWithStatus = {this.props.shopWithStatus}
                     getShopIndex = {this.props.getShopIndex}
                     selectShop = {this.selectShop}
-                    //buttonColor = {(index % 2 == 1)} 
                 />
               
           </View>

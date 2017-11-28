@@ -5,34 +5,33 @@ export default class CoffeeResultsModal extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            coffeeShops:null
+
         }
        
         this.startTimer = this.startTimer.bind(this);
     }
-    componentWillMount(){
-        if(this.props.shopWithStatus !== undefined){
-            this.setState({
-               coffeeShops:this.props.shopWithStatus
-            });
-            console.log(this.state.coffeeShops);
-            console.log(this.props.shopWithStatus);
-        }
-    }
+    
+//    componentWillMount(){
+//        if(this.props.shopWithStatus !== undefined){
+//            this.setState({
+//               coffeeShops:this.props.shopWithStatus
+//            });
+//        }
+//    }
     
     startTimer(i){
         this.props.changeModal(3);
         this.props.selectShop(i);
     }
+    
 
 render() {    
-    
     if(this.props.shopWithStatus){
         var shopInfo = this.props.shopWithStatus.map(function callback(obj, i) {
         return(
             
     <View key={i}>
-      <TouchableOpacity style={i%2==1 ? styles.touchableStyle1 : styles.touchableStyle2}> 
+      <TouchableOpacity onPress={this.startTimer.bind(this, i)} style={i%2==1 ? styles.touchableStyle1 : styles.touchableStyle2}> 
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
                     <View style={{backgroundColor: 'orange', alignSelf:'flex-start', height: '100%', paddingLeft: 10, paddingRight: 10, justifyContent: 'center'}}>
@@ -90,26 +89,6 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 15, 
         borderTopRightRadius: 15,
       },
-    
-   shopText: {
-       color:'#303C45',
-       fontSize: 30,
-       alignSelf: 'flex-start'
-       
-       
-   },
-    goBtnStyle:{
-        backgroundColor: '#303C45',
-        borderRadius: 20,
-        width:"10%",
-        padding: 5,
-        alignSelf: 'flex-end'
-    },
-    
-    goBtnText:{
-        fontSize: 15,
-        color: 'white',
-    },
     
      headerContainer:{
         borderTopLeftRadius: 15, 

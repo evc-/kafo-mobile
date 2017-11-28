@@ -105,13 +105,8 @@ selectedShop(shopIndex){
   this.setState({
         selectedShop: this.state.shopWithStatus[shopIndex]
       });
-   console.log("App.js Line 93: "+this.state.shopWithStatus[shopIndex].name);
+   //console.log("App.js Line 93: "+this.state.shopWithStatus[shopIndex].name);
 }
-//modalState(data){
-//    this.setState({
-//        modalState:data
-//    });
-//}
 
 changeModalState(page){
     this.setState({
@@ -170,11 +165,9 @@ tsRouteCall(stopNum) {
         } else {
         this.setState({translinkData:responseJson}); 
         this.setState({modalState: 1});
-            console.log("setting?");
         }
     },
         (reason) => { //this happens if we can't communicate to translink 
-        console.log("error handling");
         console.log(reason);
     })
     
@@ -201,11 +194,10 @@ tsStopCall(stopNum){
 
 //get  coffee shops within a 500m radius
 getCoffeeShops(){
-    //console.log("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500");
     fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500").then((CSresp)=>{
         return CSresp.json();
     }, (reason)=>{
-        console.log("get coffee shops fetch failed");
+        console.log("Get coffee shops fetch failed");
         console.log(reason);
     }
     ).then((CSjson)=>{
@@ -225,7 +217,6 @@ apiWaypoints(coffeeShop, busStop){
                 return directionsResp.json();
           }).then((directionsRespJson)=>{
               return directionsRespJson;
-        //console.log(directionsRespJson);
           });
         
 }
@@ -269,19 +260,10 @@ getAllShopDirections(){
             var shopDirections = this.shopDirections(shopCoords, busStopCoords);
             
             return shopDirections; //return array of promises 
-            //console.log(shopDirections);
         },this);
-        
-        //loop over all coffee shop data to get directions to each of them 
-        //but will only get an array of promises, because apiWaypoints returns a promise
-        //(shopDirections runs apiWaypoints inside it)
-        //must resolve promises 
-        //would usually use .then but you cant do .then on an array
-        //so do promise.all
 
         var promisedDirection = Promise.all(promisedDirectionsArr);
         promisedDirection.then((Directions)=>{ 
-            //console.log(Directions);
              var Statuses = Directions.map(function getStatuses(currentValue, index, array){
                  
                  //from house to shop 
@@ -316,7 +298,7 @@ getAllShopDirections(){
                  shopWithStatus: Statuses
              });
             
-            console.log(Statuses);
+            //console.log(Statuses);
             
         });
     }
@@ -372,7 +354,7 @@ getAllShopDirections(){
                 <Text style={[styles.header]}> kafo </Text> 
                 
                     <View 
-                        style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .5 + 20 + this.state.positionBump} ]}>
+                        style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .4 + 20 + this.state.positionBump} ]}>
                         {modal}
             
                     </View>
@@ -388,7 +370,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         width: '90%',
         backgroundColor:'rgba(255, 255, 255, 0.9)',
-        height: Dimensions.get('window').height * .5
+        height: Dimensions.get('window').height * .4
       },
     
     container: {
