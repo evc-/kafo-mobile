@@ -40,7 +40,7 @@ export default class KafoButton extends React.Component {
                         />
                     </View>
                     <View style={{height: '100%'}}>
-                        <Text style={{fontSize: 50, color: '#42565E', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>{this.props.routeNumber}</Text>
+                        <Text style={{fontSize: 28, color: '#42565E', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>{this.props.routeNumber}</Text>
                         <Text style={{fontSize: 15, color: '#42565E', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>{this.props.routeName}{"\n"}</Text>
                         <Text style={{fontSize: 15, color: '#42565E', textAlign: 'left', paddingLeft: 10, paddingBottom: 5}}>Departs in {this.props.minsTillDepart} minutes</Text>
                     </View>
@@ -65,15 +65,19 @@ const styles = StyleSheet.create({
      touchableStyle1: {
         flex: 1,
         width: '100%',
-        backgroundColor: '#e6e6e6',
+        backgroundColor: '#F7F7F7',
         justifyContent: 'center',
+        //borderBottomColor: '#E7E9E9',
+       // borderBottomWidth: 2
     },
     
     touchableStyle2: {
         flex: 1,
         width: '100%',
-        backgroundColor: '#F7F7F7',
+        backgroundColor: '#EEEEEE',
         justifyContent: 'center',
+       // borderBottomColor: '#E7E9E9',
+       // borderBottomWidth: 2
     }
     
 });
