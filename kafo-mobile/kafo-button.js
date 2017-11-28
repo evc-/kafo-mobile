@@ -19,15 +19,10 @@ export default class KafoButton extends React.Component {
       
       if (this.props.buttonColor){
            var style = styles.touchableStyle1;
-          //var sidebarColor = '#42565E';
       } else {
           var style = styles.touchableStyle2;
-          //var sidebarColor = '#6fa7a8';
       }
       
-      console.log(this.props.minsTillDepart);
-      
-
     return (
 
         <TouchableOpacity style={style} onPress={() => this.selectRoute()}>
@@ -67,8 +62,6 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: '#F7F7F7',
         justifyContent: 'center',
-        //borderBottomColor: '#E7E9E9',
-       // borderBottomWidth: 2
     },
     
     touchableStyle2: {
@@ -76,8 +69,7 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: '#EEEEEE',
         justifyContent: 'center',
-       // borderBottomColor: '#E7E9E9',
-       // borderBottomWidth: 2
+
     }
     
 });

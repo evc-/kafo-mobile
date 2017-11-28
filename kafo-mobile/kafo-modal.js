@@ -16,7 +16,8 @@ class KafoModal extends Component {
         };
         
             this.changeModal = this.changeModal.bind(this);
-        this.selectShop = this.selectShop.bind(this);
+            this.selectShop = this.selectShop.bind(this);
+            
     }
     
     changeModal(page){
@@ -24,23 +25,19 @@ class KafoModal extends Component {
         Keyboard.dismiss();
     }
     
-//      changeModal(mstatenum){
-//            this.setState({modalState: mstatenum});
-//            this.props.modalState(this.state.modalState);
-//            
-//}
-    
-        selectRoute(i){
+    selectRoute(i){
             this.setState({
                 selectedBus:this.props.tdata[i]
            });
     }
+    
     selectShop(i){
         this.props.selectShop(i);
         this.setState({
             selectedShop:this.props.shopWithStatus[i]
         })
     }
+    
 
   render() {
       var modal = null; 
@@ -87,6 +84,7 @@ class KafoModal extends Component {
                     <View style={styles.headerContainer}>
                         <Text style={styles.headerStyle}> Select your route </Text>
                     </View>
+                
                     <ScrollView style={{flex: 1}}>
                         {busResponses}
                         <Text style={styles.question2Style}>Not the right busses?</Text>
@@ -109,6 +107,9 @@ class KafoModal extends Component {
                     shopWithStatus = {this.props.shopWithStatus}
                     getShopIndex = {this.props.getShopIndex}
                     selectShop = {this.selectShop}
+                    selectedBus = {this.props.SelectedBus}
+                    selectedBusState = {this.props.selectedBusState}
+                    getCoffeeShops = {this.props.getCoffeeShops}
                 />
               
           </View>
@@ -157,9 +158,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#f4efe3',
         backgroundColor:'#6fa7a8',
-        overflow: 'hidden',
-        borderTopLeftRadius: 15, 
-        borderTopRightRadius: 15,
+        //overflow: 'hidden',
+        //borderTopLeftRadius: 15, 
+        //borderTopRightRadius: 15,
       },
     
     question2Style:{
