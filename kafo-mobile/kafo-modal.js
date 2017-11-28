@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         width: '100%',
         fontSize: 20,
         color: 'white',
-        backgroundColor:'#76ABAC',
+        backgroundColor:'#462f23',
         overflow: 'hidden',
         borderTopLeftRadius: 15, 
         borderTopRightRadius: 15,
