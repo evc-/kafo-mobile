@@ -24,27 +24,29 @@ componentDidMount() {
 render() {
     
     return (
-    <View style={{flex:3, flexDirection: 'column'}}>
+    <View style={{flex:1, flexDirection: 'column'}}>
         <View style={styles.headerContainer}>
-        <Text style={styles.headerStyle}>Heading to {this.props.selectedShop.name}</Text>
+            <Text style={styles.headerStyle}>Heading to {this.props.selectedShop.name}</Text>
         </View>
-        <View style={{flexDirection:'row', flex: 1}}>
-            <View>
+        <View style={{flexDirection:'row', flex: 1, justifyContent:'space-around'}}>
+            <View style={{flex: 1}}>
                 <Text style={styles.paragraph1Style}>Current Time{"\n"}
                 <Text style={styles.paragraph2Style}>{this.state.curTime}</Text>
                 </Text>
             </View>
-            <View>
+            <View style={{flex: 1}}>
                 <Text style={styles.paragraph1Style}>Until Your Bus Arrives{"\n"}
                 <Text style={styles.paragraph2Style}>{this.state.tillDepart} minutes</Text>
                 </Text>
             </View>
         </View>
         <View style={{flexDirection:'column', flex:1, alignItems: 'center', justifyContent: 'center'}}>
+        {
             <Image 
-                source={require('./img/bus-tracker-placeholder.png')} 
-                style={{width: '100%', height: '100%', alignSelf: 'center'}}
+              source={require('./img/bus-tracker-placeholder.png')} 
+                style={{alignSelf: 'center', flex: 1, width: '50%', height: '50%'}}
             />
+        }
         </View>
       </View>
     ); 
@@ -56,7 +58,6 @@ const styles = StyleSheet.create({
      headerStyle:{
         textAlign: 'center',
         padding:20,
-        width: '100%',
         fontSize: 20,
         fontWeight: 'bold',
         color: '#f4efe3',
@@ -67,20 +68,14 @@ const styles = StyleSheet.create({
       },
     
     paragraph1Style:{
-        flex: 1,
-        borderRadius: 0,
         textAlign: 'left',
-        padding:20,
-        width: '100%',
+        padding:5,
         fontSize: 20,
         color: '#303C45'
     },
     
     paragraph2Style:{
-        flex: 1,
-        borderRadius: 0,
-        padding:20,
-        width: '100%',
+        padding:5,
         fontSize: 15,
         color: '#303C45',
       },
