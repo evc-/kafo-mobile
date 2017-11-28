@@ -345,7 +345,6 @@ getAllShopDirections(){
                         userLat = {this.state.userLocation.lat}
                         userLng = {this.state.userLocation.lng}
                         busStopCoords = {this.state.busStopCoords}
-                        sendShopIndex = {this.selectedShop}
                         sendShopIndex = {this.state.selectedShop}
                     />
                 

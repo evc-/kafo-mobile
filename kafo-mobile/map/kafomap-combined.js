@@ -15,16 +15,16 @@ class KafoMapCombined extends Component {
         }
     }
 
-componentDidMount(){
-    if(true){
-        this.getDirections(this.props.userLat, this.props.userLng,this.props.sendShopIndex.lat,this.props.sendShopIndex.lng)
-        }    
-    }
+//componentDidMount(){
+//    if(true){
+//        this.getDirections(this.props.userLat, this.props.userLng,this.props.sendShopIndex.coords.lat,this.props.sendShopIndex.coords.lng)
+//        }    
+//    }
     
 //async sends a request without witing for a reply
-async getDirections(startLoc, destinationLoc) {
+async getDirections() {
         try {
-            let resp = await fetch("https://maps.googleapis.com/maps/api/directions/json?origin=${ startLoc }&destination=${ destinationLoc }")
+            let resp = await fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.props.userLat+","+this.props.userLng+"&destination="+this.props.sendShopIndex.coords.lat+","+this.props.sendShopIndex.coords.lng)
             let respJson = await resp.json();
             let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
             let coords = points.map((point, index) => {
@@ -41,6 +41,8 @@ async getDirections(startLoc, destinationLoc) {
         }
     }
     
+
+    
 busStop(){
     if(this.props.busStopCoords){
         this.setState({
@@ -50,7 +52,6 @@ busStop(){
         console.log("kafomapcombined bus stop coordinates are: "+this.state.busLat + this.state.busLng);
     }
 }
-=======
 //async getDirections(startLoc, destinationLoc) {
 //        try {
 //            let resp = await fetch("https://maps.googleapis.com/maps/api/directions/json?origin=${ startLoc }&destination=${ destinationLoc }")
@@ -73,6 +74,17 @@ busStop(){
     
     
   render(){
+var walkingLine = null;
+      if(this.props.sendShopIndex){
+          walkingLine = (
+            <MapView.Polyline 
+            coordinates={this.state.coords}
+            strokeWidth={2}
+            strokeColor="blue"
+            />
+          )
+      }
+      
       
 var busStop = null;
 if(this.props.busStopCoords){
@@ -80,7 +92,7 @@ if(this.props.busStopCoords){
         <MapView.Marker 
                 coordinate={{
                      latitude:this.props.busStopCoords.lat,
-                    longitude: this.props.busStopCoords.lng}} 
+                    longitude: this.props.busStopCoords.lng}}
                     />  
     )
 }
@@ -114,14 +126,7 @@ var coffeeResp = null;
           }
       
 
-//    var lines ="null";
-//    if(this.props.sendShopIndex !== null){ 
-//        lines = (     
-//            <MapView.Polyline 
-//            coordinates={this.state.coords}
-//            strokeWidth={2}
-//            strokeColor="blue"/>)
-//    }
+
       }
     return (
 
@@ -147,7 +152,7 @@ var coffeeResp = null;
         />
         {busStop}
         {coffeeResp}
-
+        {walkingLine}
         </MapView>
         </View>  
 
