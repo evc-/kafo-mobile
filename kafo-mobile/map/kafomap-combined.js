@@ -89,7 +89,6 @@ var walkingLine = null;
 var allStops = null;
       if(this.props.modalState === 0 ){
           if(this.props.allBusStops){
-              console.log("bus stops props!");
               allStops = this.props.allBusStops.map((currentValue, index, array)=>{
                   return(
                         <MapView.Marker 

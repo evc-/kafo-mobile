@@ -15,7 +15,6 @@ export default class KafoTextInput extends Component {
         this.setState({text});
         if (text.length === 5){
             this.props.tsRouteCall(text);
-//            this.props.changeModal(1);
             this.props.tsStopCall(text);
         }
     }
@@ -30,7 +29,7 @@ export default class KafoTextInput extends Component {
         placeholder={"Enter Stop ID"}
         keyboardType={'numeric'}
         underlineColorAndroid={'transparent'}
-        autoFocus={true}
+        autoFocus={false}
       />
     );
   }

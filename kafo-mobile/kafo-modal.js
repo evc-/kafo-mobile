@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Dimensions, Keyboard, AppRegistry, StyleSheet, ScrollView, Text, View, Button } from 'react-native';
+import { Modal, Dimensions, Keyboard, AppRegistry, StyleSheet, ScrollView, Text, View, Button, TouchableOpacity } from 'react-native';
 import KafoTextInput from './kafo-textinput';
 import KafoButton from './kafo-button';
 import ArrivalModal from './arrivalModal';
@@ -48,7 +48,7 @@ class KafoModal extends Component {
         if(this.props.modalState === 0){
             modal =(
                 <View >
-                    <Text style={styles.question1Style}> Got enough time for coffee?</Text>
+                    <Text style={styles.headerStyle}> Got enough time for coffee?</Text>
                     <Text style={styles.question2Style}>{this.props.errorMsg}</Text>
                     
                         <KafoTextInput 
@@ -63,6 +63,7 @@ class KafoModal extends Component {
                 
       } else if (this.props.modalState === 1){
           var busResponses = null;
+          
           if (this.props.tdata){
                 busResponses = this.props.tdata.map(function callback(currentValue, index, array) {
                     return(
@@ -79,31 +80,37 @@ class KafoModal extends Component {
                         />
                     );
                 }, this);
-        } else {
-//            busResponses = <Text style={styles.errorStyle}>Not a Valid route </Text>
         }
-          modal =(
-
+          
+        modal =(
                 <View style={{flex: 1}}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.question1Style}> Select your route </Text>
+                        <Text style={styles.headerStyle}> Select your route </Text>
                     </View>
                     <ScrollView style={{flex: 1}}>
                         {busResponses}
+                        <Text style={styles.question2Style}>Not the right busses?</Text>
+                        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
+                            <TouchableOpacity style={{width: '40%', borderColor: '#6fa7a8', borderWidth: 2, borderRadius: 15,  width: '40%'}} onPress={()=> this.changeModal(0)}>
+                            <Text style={{textAlign: 'center', color: '#6fa7a8'}}>Go Back</Text>
+                            </TouchableOpacity> 
+                        </View>
                     </ScrollView>
                 </View>
-
           )
+      
       } else if (this.props.modalState===2){
           modal = (
         
           <View style={{flex: 1}}>
+              
                 <CoffeeResultsModal 
                     changeModal={this.changeModal}
                     shopWithStatus = {this.props.shopWithStatus}
                     getShopIndex = {this.props.getShopIndex}
                     selectShop = {this.selectShop}
                 />
+              
           </View>
           )
       } else if (this.props.modalState ===3){
@@ -142,12 +149,13 @@ class KafoModal extends Component {
 
 const styles = StyleSheet.create({
     
-    question1Style:{
+    headerStyle:{
         textAlign: 'center',
         padding:20,
         width: '100%',
         fontSize: 20,
-        color: 'white',
+        fontWeight: 'bold',
+        color: '#f4efe3',
         backgroundColor:'#462f23',
         overflow: 'hidden',
         borderTopLeftRadius: 15, 
@@ -159,7 +167,7 @@ const styles = StyleSheet.create({
         padding:15,
         fontSize: 15,
         color: 'grey',
-        fontStyle: 'italic'
+        //fontStyle: 'italic'
       },
     
     errorStyle:{
