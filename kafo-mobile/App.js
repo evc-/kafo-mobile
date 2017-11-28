@@ -202,9 +202,10 @@ tsStopCall(stopNum){
 }
 
 //get  coffee shops within a 500m radius
+// I change the radius cause my house is in the middle of no where, feel free to change it back -tiff
 getCoffeeShops(){
     //console.log("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500");
-    fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500").then((CSresp)=>{
+    fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=1000").then((CSresp)=>{
         return CSresp.json();
     }, (reason)=>{
         console.log("get coffee shops fetch failed");
@@ -366,7 +367,7 @@ getAllShopDirections(){
                         userLat = {this.state.userLocation.lat}
                         userLng = {this.state.userLocation.lng}
                         busStopCoords = {this.state.busStopCoords}
-                        sendShopIndex = {this.state.selectedShop}
+                        sendShopIndex = {this.state.selectedShop} 
                         shopWithStatus = {this.state.shopWithStatus}
                         allBusStops = {this.state.allBusStops}
                     />

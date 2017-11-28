@@ -21,10 +21,11 @@ class KafoMapCombined extends Component {
 //        }    
 //    }
     
+    
 //async sends a request without witing for a reply
 async getDirections() {
         try {
-            let resp = await fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.props.userLat+","+this.props.userLng+"&destination="+this.props.sendShopIndex.coords.lat+","+this.props.sendShopIndex.coords.lng)
+            let resp = await fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.props.userLat+","+this.props.userLng+"&destination="+this.props.busStopCoords.lat+","+this.props.busStopCoords.lng+"&waypoints="+this.props.sendShopIndex.lat+","+this.props.sendShopIndex.lng+"&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI")
             let respJson = await resp.json();
             let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
             let coords = points.map((point, index) => {
@@ -41,7 +42,6 @@ async getDirections() {
         }
     }
     
-
     
 busStop(){
     if(this.props.busStopCoords){
