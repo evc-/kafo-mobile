@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, AppRegistry, StyleSheet, Text, View, Button, Image } from 'react-native';
 import CoffeeResultsModal from '../coffeeResultsModal';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import Polyline from '@mapbox/polyline';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';             
 
 class KafoMapCombined extends Component {
     constructor(props){
@@ -20,27 +19,6 @@ class KafoMapCombined extends Component {
 //        this.getDirections(this.props.userLat, this.props.userLng,this.props.sendShopIndex.coords.lat,this.props.sendShopIndex.coords.lng)
 //        }    
 //    }
-    
-    
-//async sends a request without witing for a reply
-async getDirections() {
-        try {
-            let resp = await fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.props.userLat+","+this.props.userLng+"&destination="+this.props.busStopCoords.lat+","+this.props.busStopCoords.lng+"&waypoints="+this.props.sendShopIndex.lat+","+this.props.sendShopIndex.lng+"&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI")
-            let respJson = await resp.json();
-            let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
-            let coords = points.map((point, index) => {
-                return  {
-                    latitude : point[0],
-                    longitude : point[1]
-                }
-            })
-            this.setState({coords: coords})
-            return coords
-        } catch(error) {
-            alert(error)
-            return error
-        }
-    }
     
     
 busStop(){
@@ -72,15 +50,18 @@ busStop(){
 //    }
 
     
-    
+    decode(t,e){for(var n,o,u=0,l=0,r=0,d= [],h=0,i=0,a=null,c=Math.pow(10,e||5);u<t.length;){a=null,h=0,i=0;do a=t.charCodeAt(u++)-63,i|=(31&a)<<h,h+=5;while(a>=32);n=1&i?~(i>>1):i>>1,h=i=0;do a=t.charCodeAt(u++)-63,i|=(31&a)<<h,h+=5;while(a>=32);o=1&i?~(i>>1):i>>1,l+=n,r+=o,d.push([l/c,r/c])}return d=d.map(function(t){return{latitude:t[0],longitude:t[1]}})}
+// transforms something like this geocFltrhVvDsEtA}ApSsVrDaEvAcBSYOS_@... to an array of coordinates
+
   render(){
 var walkingLine = null;
-      if(this.props.sendShopIndex){
+      if(this.props.coords){ 
+//          console.log(this.decode(this.props.coords))
           walkingLine = (
             <MapView.Polyline 
-            coordinates={this.state.coords}
-            strokeWidth={2}
-            strokeColor="blue"
+            coordinates={this.decode(this.props.coords)}
+            strokeWidth={5}
+            strokeColor="#6fa7a8"
             />
           )
       }
@@ -117,29 +98,34 @@ if(this.props.busStopCoords){
                     />  
     )
 }
+
 var comp=null;
 var coffeeResp = null;
+//console.log(this.props.shopWithStatus);
  if (this.props.modalState >= 1){
-          if (this.props.coffeeShopData){
-            coffeeResp = this.props.coffeeShopData.map((currentValue, index, array)=>{
-//                    if(this.props.coffeeShopData[index].currentValue.status === "statusGreen"){
-//                    comp=(image={require('../img/Green.png')})
-//                    } 
-//                    else if(this.props.coffeeShopData[index].currentValue.status === "statusOrange"){
-//                       comp=(image={require('../img/Orange.png')})
-//                    }
-//                    else if(this.props.coffeeShopData[index].currentValue.status === "statusRed"){
-//                      comp=(image={require('../img/Red.png')})
-//                    }
+          if (this.props.shopWithStatus){
+            coffeeResp = this.props.shopWithStatus.map((currentValue, index, array)=>{
+                console.log(currentValue)
+                var statusimg = null;
+                    if(currentValue.status === "statusGreen"){
+                        statusimg=require('../img/Green.png')
+                    } 
+                    else if(currentValue.status === "statusOrange"){
+                        statusimg=require('../img/Orange.png')
+                    }
+                    else if(currentValue.status === "statusRed"){
+                        statusimg=require('../img/Red.png')
+                    }
+                console.log("status", statusimg);
                 return(
                         <MapView.Marker 
                         key={index}
                         id={index}
                         coordinate={{
-                            latitude: currentValue.geometry.location.lat,
-                            longitude: currentValue.geometry.location.lng}} 
+                            latitude: currentValue.coords.lat,
+                            longitude: currentValue.coords.lng}} 
                         title={currentValue.name}
-                        image={require('../img/storeLocator.png')}
+                        image={statusimg}
                     />  
                     
                     )                                      
