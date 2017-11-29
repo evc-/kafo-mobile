@@ -28,25 +28,28 @@ export default class App extends React.Component {
             busStopCoords: '',
             busStopNum: "",
             toggle: false,
-            allBusStops:[]
+            allBusStops:[],
+            busArrivalChoice: null
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
         this.tsStopCall = this.tsStopCall.bind(this);
         this.tsAllStops = this.tsAllStops.bind(this);
         //this.modalState = this.modalState.bind(this);
-         this.changeModalState = this.changeModalState.bind(this);
+        this.changeModalState = this.changeModalState.bind(this);
         this.getCoffeeShops = this.getCoffeeShops.bind(this);
         this.apiWaypoints = this.apiWaypoints.bind(this);
         this.getAllShopDirections = this.getAllShopDirections.bind(this);
         this.selectedBus = this.selectedBus.bind(this);
         this.selectedShop = this.selectedShop.bind(this);
         this.animateEnd = this.animateEnd.bind(this);
+        this.changeBusArrival = this.changeBusArrival.bind(this);
      }
 
 /*SIMPLE FUNCTIONS*/
     
-componentWillMount () {
+    
+componentWillMount() {
     if (true){
             this.watchId = navigator.geolocation.getCurrentPosition(
                 (position) => {
@@ -75,7 +78,16 @@ componentWillMount () {
     this.keyboardWillShowSub = Keyboard.addListener('keyboardDidShow', this.keyboardWillShow);
     this.keyboardWillHideSub = Keyboard.addListener('keyboardDidHide', this.keyboardWillHide);
   }
-
+    
+componentWillUpdate(nextProps, nextState){
+    if(this.state.busArrivalChoice != nextState.busArrivalChoice){
+        console.log("beep boop");
+        console.log(this.state.busArrivalChoice);
+        console.log(nextState.busArrivalChoice);
+       this.getAllShopDirections(nextState.busArrivalChoice);
+    }
+}
+    
 selectedShop(data){
     this.setState({
         shopIndex:data
@@ -119,6 +131,13 @@ animateEnd(data){
         toggle: data
     });
 }
+
+changeBusArrival(choice){
+    this.setState({
+        busArrivalChoice: choice
+    });
+}
+
 
 /*API CALLS*/
 
@@ -191,21 +210,126 @@ tsStopCall(stopNum){
     });
 }
 
-//get  coffee shops within a 500m radius
 getCoffeeShops(){
-    fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500").then((CSresp)=>{
-        return CSresp.json();
-    }, (reason)=>{
-        console.log("Get coffee shops fetch failed");
-        console.log(reason);
-    }
-    ).then((CSjson)=>{
+    var debugging = false; //Set this to true to put fake shop data in for debugging porpoises
+    var debugShops =[
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 49.2356307,
+               "lng" : -123.1855271
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 49.2369876802915,
+                  "lng" : -123.1840735197085
+               },
+               "southwest" : {
+                  "lat" : 49.2342897197085,
+                  "lng" : -123.1867714802915
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "dbfed865a8c8ad4d2240699b894df42129e6b244",
+         "name" : "The Q Coffee",
+         "opening_hours" : {
+            "open_now" : false,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 612,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/105384840234948122622/photos\"\u003eThe Q Coffee\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAAPJVyc2FeW6P3QK-AEXHNegl16TX5zgMyPQajP-Ju4sQiRYmUHgSvKh2sMSenXFKppdgh2ORV2_q8mfJYCfpqkt9BeivmyVwH4MxFHaMyuUXPP5XrUiLbpgZ_bPXkyvKEhAere1Qyp5Ta7hx4APsbBXmGhSPrSQ_1lxHUig2dNMUZpAqsGvwmA",
+               "width" : 612
+            }
+         ],
+         "place_id" : "ChIJZXbyw0FzhlQRNH_XBTsAAtY",
+         "rating" : 3.7,
+         "reference" : "CmRSAAAAldt-FzcV3kyblcShGWotzO-COlUqdm-JEGpxwtsIm33vq3zWJx-9OvkF3wHYhLoca7CEwSR1ZmtlVJAtGF0Mfte4O-47NQhALHr_dRQ0ulrz1zsayy0C8_ubO2CntBz0EhAjt5X0FvUSn_pcSLVJAOw_GhRZfR4jUoClcUVTIjKhdGga2KIvOw",
+         "scope" : "GOOGLE",
+         "types" : [
+            "bakery",
+            "cafe",
+            "restaurant",
+            "food",
+            "store",
+            "point_of_interest",
+            "establishment"
+         ],
+         "vicinity" : "5607 Dunbar Street, Vancouver"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 49.2346202,
+               "lng" : -123.1822015
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 49.2360409302915,
+                  "lng" : -123.1808526197085
+               },
+               "southwest" : {
+                  "lat" : 49.2333429697085,
+                  "lng" : -123.1835505802915
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+         "id" : "5e778d1d99264323903aad02fc30f04d61070aed",
+         "name" : "Crepe & Cafe",
+         "opening_hours" : {
+            "open_now" : false,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 1152,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/109784026534613288658/photos\"\u003eGoogle Guide\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAALDeAmDidqDNXuMSROvGMlGPkRuWZmwlv8XnVGPth-kA8QBDV1bcju99fV-seSgwZWbmVu-MN_j408EBEb3Yf_SndxkvgiL1g2uixqQD492lASKTODM5TcfZbGTUdmo7_EhBRZTigOJcLf70SaQPA43JCGhQy0f39X24oMuYwRKLHDV4OJ7dJAw",
+               "width" : 2048
+            }
+         ],
+         "place_id" : "ChIJMVvu_mlzhlQRrQ0J-GSY6aw",
+         "rating" : 3.1,
+         "reference" : "CmRSAAAAZl4YdHjEbr-GIB2fX7nJo4Q2YtQWF6Rp9IoDgGbGTQnYj37LYPQkdsQW_M-rdbf2DnXR_PgSbpL14NjEu4IupTxobF925aCP_GrfALG3YulEfne97cHjnxFJPhYovTbIEhAZlXWkJ6S-daWxjwVJmyZTGhRCeRRhAXsOoRTJIh572pp4qWR4Hw",
+         "scope" : "GOOGLE",
+         "types" : [ "restaurant", "cafe", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "3500 West 41st Avenue, Vancouver"
+      }
+   ];
+    if(debugging){
         this.setState({
-            coffeeShopData:CSjson.results
-        }, 
-            this.getAllShopDirections //run get walking directions to each shop 
-        ); 
-    });
+                coffeeShopData: debugShops
+            }, 
+                () => {this.getAllShopDirections(0)} //run get walking directions to each shop 
+            );
+    }
+    else {
+        console.log("getting the shops");
+        console.log("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500");
+        fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500").then((CSresp)=>{
+            return CSresp.json();
+        }, (reason)=>{
+            console.log("Get coffee shops fetch failed");
+            console.log(reason);
+        }
+        ).then((CSjson)=>{
+            console.log("got the shops");
+            console.log(CSjson.results);
+            this.setState({
+                coffeeShopData:CSjson.results
+            }, 
+                () => {this.getAllShopDirections(0)} //run get walking directions to each shop 
+            ); 
+        });
+    }
 }
 
 //send directions request to google maps for 'from user location to bus stop with coffee shop on the way' 
@@ -252,7 +376,11 @@ checkShopStatus(walkingTimeValue, nextBusTimeValue){
 }
     
 //get walking directions for all shops 
-getAllShopDirections(){
+getAllShopDirections(busChoice){
+    console.log("beep");
+    console.log(busChoice);
+    console.log(this.state.selectedBus.Schedules[busChoice]);
+    if(this.state.coffeeShopData){
         var promisedDirectionsArr = this.state.coffeeShopData.map(function getDirections(currentShopObj, index, array) {
             var shopCoords = this.getShopCoords(currentShopObj);
             var busStopCoords = this.state.busStopCoords;
@@ -267,7 +395,7 @@ getAllShopDirections(){
                  
                  var walkingtimeValue = currentValue.routes[0].legs[0].duration.value + currentValue.routes[0].legs[1].duration.value;
             
-                 var shopStatus = this.checkShopStatus(walkingtimeValue/60, this.state.selectedBus.Schedules[0].ExpectedCountdown);
+                 var shopStatus = this.checkShopStatus(walkingtimeValue/60, this.state.selectedBus.Schedules[busChoice].ExpectedCountdown);
                  //currently only getting first bus - we may want to include the second bus as well for high traffic location 
                  
                  var polyline= currentValue.routes[0].legs[0].steps[0].polyline.points;       
@@ -275,9 +403,9 @@ getAllShopDirections(){
                  var shopWithStatus = {
                         name:this.state.coffeeShopData[index].name,
                         status:shopStatus,
-                        nextBus: this.state.selectedBus.Schedules[0].ExpectedCountdown,
+                        nextBus: this.state.selectedBus.Schedules[busChoice].ExpectedCountdown,
                         journeyTime:Number((walkingtimeValue/60).toFixed()),
-                        orderTime:this.state.selectedBus.Schedules[0].ExpectedCountdown - (walkingtimeValue/60) ,
+                        orderTime:this.state.selectedBus.Schedules[busChoice].ExpectedCountdown - (walkingtimeValue/60) ,
                         coords: this.state.coffeeShopData[index].geometry.location,
                         polyline: polyline
                    }
@@ -290,10 +418,11 @@ getAllShopDirections(){
                  shopWithStatus: Statuses
              });
             
-            //console.log(Statuses);
+            console.log(Statuses);
             
         });
     }
+}
   render() {
        var display = null;
      if(this.state.toggle === false){
@@ -322,6 +451,7 @@ getAllShopDirections(){
                         shopWithStatus = {this.state.shopWithStatus}
                         errorMsg = {this.state.errorMsg}
                         selectedBusState = {this.state.selectedBus}
+                        changeBusArrival = {this.changeBusArrival}
                     />    
                 );
 

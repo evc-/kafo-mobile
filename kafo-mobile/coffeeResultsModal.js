@@ -17,12 +17,13 @@ export default class CoffeeResultsModal extends React.Component {
         this.props.selectShop(i);
     }
     
-    changeBusTime(){
-        this.props.getCoffeeShops();
+    changeBusTime(choice){
+        this.props.changeBusArrival(choice);
     }
     
 
 render() {
+//    console.log(this.props.shopWithStatus);
     
     if(this.props.shopWithStatus){
         var shopInfo = this.props.shopWithStatus.map(function callback(obj, i) {
@@ -73,21 +74,21 @@ render() {
                                 <Text style={{color: 'white', fontWeight: 'bold'}}>Bus {this.props.selectedBusState.RouteNo}</Text>
                             </View>
                             <View style={{flex: 4}}>
-                                <TouchableOpacity onPress={() => this.changeBusTime()}> 
+                                <TouchableOpacity onPress={() => this.changeBusTime(0)}> 
                                     <Text style={{color: 'white'}}>
                                         {this.props.selectedBusState.Schedules[0].ExpectedLeaveTime}
                                     </Text> 
                                 </TouchableOpacity>
                             </View>
                             <View style={{flex: 4}}>
-                                <TouchableOpacity onPress={() => this.changeBusTime()}> 
+                                <TouchableOpacity onPress={() => this.changeBusTime(1)}> 
                                     <Text style={{color: 'white'}}>
                                         {this.props.selectedBusState.Schedules[1].ExpectedLeaveTime}
                                     </Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={{flex: 4}}>
-                                <TouchableOpacity onPress={() => this.changeBusTime()}>
+                                <TouchableOpacity onPress={() => this.changeBusTime(2)}>
                                     <Text style={{color: 'white'}}>
                                         {this.props.selectedBusState.Schedules[2].ExpectedLeaveTime}
                                     </Text>

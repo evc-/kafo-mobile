@@ -74,6 +74,7 @@ class KafoModal extends Component {
                             selectedBus={this.props.selectedBus}
                             changeModal={this.changeModal}
                             getCoffeeShops = {this.props.getCoffeeShops}
+                            changeBusArrival = {this.props.changeBusArrival}
                         />
                     );
                 }, this);
@@ -110,6 +111,8 @@ class KafoModal extends Component {
                     selectedBus = {this.props.SelectedBus}
                     selectedBusState = {this.props.selectedBusState}
                     getCoffeeShops = {this.props.getCoffeeShops}
+                    changeBusArrival = {this.props.changeBusArrival}
+
                 />
               
           </View>
