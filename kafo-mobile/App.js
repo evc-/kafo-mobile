@@ -29,7 +29,8 @@ export default class App extends React.Component {
             busStopNum: "",
             toggle: false,
             allBusStops:[],
-            busArrivalChoice: null
+            busArrivalChoice: null,
+            coords:[]
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
@@ -78,12 +79,10 @@ componentWillMount() {
     this.keyboardWillShowSub = Keyboard.addListener('keyboardDidShow', this.keyboardWillShow);
     this.keyboardWillHideSub = Keyboard.addListener('keyboardDidHide', this.keyboardWillHide);
   }
+
     
 componentWillUpdate(nextProps, nextState){
     if(this.state.busArrivalChoice != nextState.busArrivalChoice){
-        console.log("beep boop");
-        console.log(this.state.busArrivalChoice);
-        console.log(nextState.busArrivalChoice);
        this.getAllShopDirections(nextState.busArrivalChoice);
     }
 }
@@ -114,11 +113,6 @@ selectedBus(busIndex){
     });
 }
 
-selectedShop(shopIndex){
-  this.setState({
-        selectedShop: this.state.shopWithStatus[shopIndex]
-      });
-}
 
 changeModalState(page){
     this.setState({
@@ -141,6 +135,22 @@ changeBusArrival(choice){
 
 /*API CALLS*/
 
+//sets the coords for the polyline
+selectedShop(data){
+    
+    console.log("data", this.state.shopWithStatus[data], this.state.busStopCoords);
+    var shop = this.state.shopWithStatus[data];
+
+    fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&destination="+this.state.busStopCoords.lat+","+this.state.busStopCoords.lng+"&waypoints="+shop.coords.lat+","+shop.coords.lng+"&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI").then((resp)=>{
+                return resp.json();
+            }).then((json)=>{
+                console.log("OVER HERE!", json);
+                this.setState({coords: json.routes[0].overview_polyline.points})
+            })
+   
+}    
+    
+    
 //get all bus stops
 tsAllStops(userLocation){
     fetch('https://kafo-all-stops.herokuapp.com/translink/'+userLocation, {
@@ -312,8 +322,6 @@ getCoffeeShops(){
             );
     }
     else {
-        console.log("getting the shops");
-        console.log("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500");
         fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500").then((CSresp)=>{
             return CSresp.json();
         }, (reason)=>{
@@ -377,9 +385,6 @@ checkShopStatus(walkingTimeValue, nextBusTimeValue){
     
 //get walking directions for all shops 
 getAllShopDirections(busChoice){
-    console.log("beep");
-    console.log(busChoice);
-    console.log(this.state.selectedBus.Schedules[busChoice]);
     if(this.state.coffeeShopData){
         var promisedDirectionsArr = this.state.coffeeShopData.map(function getDirections(currentShopObj, index, array) {
             var shopCoords = this.getShopCoords(currentShopObj);
@@ -399,7 +404,8 @@ getAllShopDirections(busChoice){
                  //currently only getting first bus - we may want to include the second bus as well for high traffic location 
                  
                  var polyline= currentValue.routes[0].legs[0].steps[0].polyline.points;       
-
+                 //console.log(currentValue);
+                 
                  var shopWithStatus = {
                         name:this.state.coffeeShopData[index].name,
                         status:shopStatus,
@@ -407,7 +413,8 @@ getAllShopDirections(busChoice){
                         journeyTime:Number((walkingtimeValue/60).toFixed()),
                         orderTime:this.state.selectedBus.Schedules[busChoice].ExpectedCountdown - (walkingtimeValue/60) ,
                         coords: this.state.coffeeShopData[index].geometry.location,
-                        polyline: polyline
+                        polyline: polyline,
+                        
                    }
 
                  return shopWithStatus;
@@ -467,8 +474,8 @@ getAllShopDirections(busChoice){
                         coffeeShopData = {this.state.coffeeShopData} 
                         userLat = {this.state.userLocation.lat}
                         userLng = {this.state.userLocation.lng}
-                        busStopCoords = {this.state.busStopCoords}
-                        sendShopIndex = {this.state.selectedShop}
+                        busStopCoords = {this.state.busStopCoords} 
+                        coords = {this.state.coords}
                         shopWithStatus = {this.state.shopWithStatus}
                         allBusStops = {this.state.allBusStops}
                     />

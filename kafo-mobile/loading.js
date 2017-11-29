@@ -1,5 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import Animation from 'lottie-react-native';
+import anim from './img/kafo2.json';
+import Lottieloader from './lottie';
 
 export default class Loading extends React.Component {
     
@@ -17,10 +20,12 @@ export default class Loading extends React.Component {
         var toggle = true;
         
         this.props.animateEnd(toggle);
-    }, 3000)
+    }, 4000)
     
     componentDidMount = () =>
     this.closeActivityIndicator()
+    
+    
     
     
     //import this file into kafo
@@ -32,19 +37,9 @@ export default class Loading extends React.Component {
       const isLoading = this.state.isLoading
       
       
-    return (
-        
-        
+    return ( 
       <View style={styles.container}>
-        {isLoading && (
-            <ActivityIndicator 
-                animating = {animating}
-                color = '#c65156'
-                size = 'large'
-                style = {styles.activityIndicator}
-            />
-    )}
-    
+             <Lottieloader />
       </View>
     );
   }
@@ -53,16 +48,17 @@ export default class Loading extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#E6DAD2',
     alignItems: 'center',
     justifyContent: 'center',
   },
     
     activityIndicator: {
-        flex: 0,
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        height: 80,
-        width: 100,
-    },
+        height: 600,
+        width: 500,
+        overflow: 'hidden',
+    }
 });
