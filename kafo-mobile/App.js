@@ -105,13 +105,9 @@ selectedShop(shopIndex){
   this.setState({
         selectedShop: this.state.shopWithStatus[shopIndex]
       });
-<<<<<<< HEAD
    console.log("App.js Line 93: "+this.state.shopWithStatus[shopIndex].name);
    console.log("App.js Line 93: "+this.state.shopWithStatus[shopIndex].coords.lat);
    console.log("App.js Line 93: "+this.state.shopWithStatus[shopIndex].coords.lng);
-=======
-   //console.log("App.js Line 93: "+this.state.shopWithStatus[shopIndex].name);
->>>>>>> a561073800129146700fca3b8d1f7e91e150dff5
 }
 
 changeModalState(page){
