@@ -63,12 +63,19 @@ class KafoModal extends Component {
           
           if (this.props.tdata){
                 busResponses = this.props.tdata.map(function callback(currentValue, index, array) {
+                    var minsTillDepart = 0;
+                      for(var i = 0; i < currentValue.Schedules.length; i++){
+                          if(currentValue.Schedules[i].ExpectedCountdown > 0){
+                              minsTillDepart = currentValue.Schedules[i].ExpectedCountdown;
+                              break;
+                          }
+                      }
                     return(
                         <KafoButton 
                             key={index} 
                             routeName={currentValue.RouteName} 
                             routeNumber={currentValue.RouteNo} 
-                            minsTillDepart={currentValue.Schedules[index].ExpectedCountdown} 
+                            minsTillDepart={minsTillDepart} 
                             buttonColor ={(index % 2 == 1)} 
                             busIndex={index}
                             selectedBus={this.props.selectedBus}
@@ -130,7 +137,7 @@ class KafoModal extends Component {
                           modal = (
                           <ArrivalModal 
                             changeModal={this.changeModal}
-                            minsTillDepart={currentValue.Schedules[0].ExpectedCountdown}
+                            minsTillDepart={minsTillDepart}
                             selectedShop = {this.state.selectedShop}
                           />
                               )
