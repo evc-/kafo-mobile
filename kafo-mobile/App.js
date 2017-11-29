@@ -77,52 +77,7 @@ componentWillMount () {
     this.keyboardWillHideSub = Keyboard.addListener('keyboardDidHide', this.keyboardWillHide);
   }
 
-selectedShop(data){
-    /*this.setState({
-        shopIndex:data
-    })*/
-    console.log("data", this.state.shopWithStatus[data], this.state.busStopCoords);
-    var shop = this.state.shopWithStatus[data];
-//    try {
-//            fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&destination="+this.state.busStopCoords.lat+","+this.state.busStopCoords.lng+"&waypoints="+shop.lat+","+shop.lng+"&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI").then((resp)=>{
-//                return resp.json();
-//            }).then((json)=>{
-//                console.log("OVER HERE!", json);
-//                let points = Polyline.decode(json.routes[0].overview_polyline.points);
-//                let coords = points.map((point, index) => {
-//                    return  {
-//                        latitude : point[0],
-//                        longitude : point[1]
-//                    }
-//                })
-//                this.setState({coords: coords})
- //           })
-            //let respJson = await resp.json();
-            
-            //return coords
-  //      } catch(error) {
-            //alert(error)
-            //return error
- //       }
-    
-    fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&destination="+this.state.busStopCoords.lat+","+this.state.busStopCoords.lng+"&waypoints="+shop.coords.lat+","+shop.coords.lng+"&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI").then((resp)=>{
-                return resp.json();
-            }).then((json)=>{
-                console.log("OVER HERE!", json);
-                this.setState({coords: json.routes[0].overview_polyline.points})
-            })
-    /*console.log("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&destination="+this.state.busStopCoords.lat+","+this.state.busStopCoords.lng+"&waypoints="+shop.coords.lat+","+shop.coords.lng+"&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI");
-    
-    this.setState({
-        coords:this.state.shopWithStatus[data].polyline
-    })*/
-}
 
-    //async sends a request without witing for a reply
-async getDirections() {
-        
-    }
-    
 componentWillUnmount() {
     this.keyboardWillShowSub.remove();
     this.keyboardWillHideSub.remove();
@@ -142,7 +97,7 @@ selectedBus(busIndex){
         selectedBus: this.state.translinkData[busIndex]
     });
 }
-
+//not sure if you need this nicola! -tiff
 /*selectedShop(shopIndex){
   this.setState({
         selectedShop: this.state.shopWithStatus[shopIndex]
@@ -167,6 +122,22 @@ animateEnd(data){
 
 /*API CALLS*/
 
+//sets the coords for the polyline
+selectedShop(data){
+    
+    console.log("data", this.state.shopWithStatus[data], this.state.busStopCoords);
+    var shop = this.state.shopWithStatus[data];
+
+    fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&destination="+this.state.busStopCoords.lat+","+this.state.busStopCoords.lng+"&waypoints="+shop.coords.lat+","+shop.coords.lng+"&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI").then((resp)=>{
+                return resp.json();
+            }).then((json)=>{
+                console.log("OVER HERE!", json);
+                this.setState({coords: json.routes[0].overview_polyline.points})
+            })
+   
+}    
+    
+    
 //get all bus stops
 tsAllStops(userLocation){
     fetch('https://kafo-all-stops.herokuapp.com/translink/'+userLocation, {
