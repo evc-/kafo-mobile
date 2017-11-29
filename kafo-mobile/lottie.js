@@ -18,8 +18,8 @@ export default class Lottieloader extends Component {
               this.animation = animation;
             }}
             style={{
-              width: 600,
-              height: 500
+              width: 700,
+              height: 400
             }}
             loop={true}
             source={anim}
