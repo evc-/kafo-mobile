@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 import Animation from 'lottie-react-native';
 
-import anim from './img/kafo.json';
+import anim from './img/kafo2.json';
 
 export default class Lottieloader extends Component {
   componentDidMount() {
@@ -18,8 +18,8 @@ export default class Lottieloader extends Component {
               this.animation = animation;
             }}
             style={{
-              width: 300,
-              height: 300
+              width: 600,
+              height: 500
             }}
             loop={true}
             source={anim}
