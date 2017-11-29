@@ -18,7 +18,7 @@ export default class App extends React.Component {
             positionBump: 0,
             busStopCoords: {lat: null, lng: null},
             busStopNum: null,
-            selectedBus: "",
+            selectedBus: null,
             selectedShop:[],
             shopWithStatus: null,
             toggle: false,
@@ -101,6 +101,7 @@ selectedBus(busIndex){
         selectedBus: this.state.translinkData[busIndex]
     });
 }
+
 selectedShop(shopIndex){
   this.setState({
         selectedShop: this.state.shopWithStatus[shopIndex]
@@ -108,6 +109,7 @@ selectedShop(shopIndex){
    console.log("App.js Line 93: "+this.state.shopWithStatus[shopIndex].name);
    console.log("App.js Line 93: "+this.state.shopWithStatus[shopIndex].coords.lat);
    console.log("App.js Line 93: "+this.state.shopWithStatus[shopIndex].coords.lng);
+
 }
 
 changeModalState(page){
@@ -133,7 +135,6 @@ tsAllStops(userLocation){
         }})
     .then(response=>response.json())
     .then((response) => {
-        //console.log(response);
         this.setState({allBusStops:response});
     })
     .catch((error) => {
@@ -270,13 +271,6 @@ getAllShopDirections(){
         promisedDirection.then((Directions)=>{ 
              var Statuses = Directions.map(function getStatuses(currentValue, index, array){
                  
-                 //from house to shop 
-                 //console.log(currentValue.routes[0].legs[0].duration.value);
-                 //from shop to bus stop  
-                 //console.log(currentValue.routes[0].legs[1].duration.value);
-                 
-                 //get total walking time in seconds 
-                 
                  var walkingtimeValue = currentValue.routes[0].legs[0].duration.value + currentValue.routes[0].legs[1].duration.value;
             
                  var shopStatus = this.checkShopStatus(walkingtimeValue/60, this.state.selectedBus.Schedules[0].ExpectedCountdown);
@@ -333,7 +327,7 @@ getAllShopDirections(){
                         coffeeShopData = {this.state.coffeeShopData}
                         shopWithStatus = {this.state.shopWithStatus}
                         errorMsg = {this.state.errorMsg}
-
+                        selectedBusState = {this.state.selectedBus}
                     />    
                 );
 
@@ -358,7 +352,7 @@ getAllShopDirections(){
                 <Text style={[styles.header]}> kafo </Text> 
                 
                     <View 
-                        style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .4 + 20 + this.state.positionBump} ]}>
+                        style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .4  + this.state.positionBump} ]}>
                         {modal}
             
                     </View>
@@ -371,8 +365,8 @@ getAllShopDirections(){
 const styles = StyleSheet.create({
 
     modalStyle: {
-        borderRadius: 15,
-        width: '90%',
+        //borderRadius: 15,
+        width: '100%',
         backgroundColor:'rgba(255, 255, 255, 0.9)',
         height: Dimensions.get('window').height * .4
       },
@@ -393,7 +387,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         width: '100%',
-        padding: 15
+        paddingTop: 30,
+        paddingBottom: 5
         
     }
     

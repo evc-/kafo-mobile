@@ -6,28 +6,27 @@ export default class CoffeeResultsModal extends React.Component {
         super(props);
         this.state={
 
-        }
-       
+
+        }    
         this.startTimer = this.startTimer.bind(this);
+        this.changeBusTime = this.changeBusTime.bind(this);
     }
-    
-//    componentWillMount(){
-//        if(this.props.shopWithStatus !== undefined){
-//            this.setState({
-//               coffeeShops:this.props.shopWithStatus
-//            });
-//        }
-//    }
-    
+  
     startTimer(i){
         this.props.changeModal(3);
         this.props.selectShop(i);
     }
     
+    changeBusTime(){
+        this.props.getCoffeeShops();
+    }
+    
 
-render() {    
+render() {
+    
     if(this.props.shopWithStatus){
         var shopInfo = this.props.shopWithStatus.map(function callback(obj, i) {
+            
         return(
             
     <View key={i}>
@@ -60,15 +59,48 @@ render() {
     );
 }, this)
 };
+
     return (
        
         <View style={{flex:1}} >
+        
             <View style={styles.headerContainer}>
                 <Text style={styles.headerStyle}> Here are the shops!</Text>
             </View>
+        
+                    <View style={{backgroundColor:'#42565E', flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <View style={{flex: 4}}>
+                                <Text style={{color: 'white', fontWeight: 'bold'}}>Bus {this.props.selectedBusState.RouteNo}</Text>
+                            </View>
+                            <View style={{flex: 4}}>
+                                <TouchableOpacity onPress={() => this.changeBusTime()}> 
+                                    <Text style={{color: 'white'}}>
+                                        {this.props.selectedBusState.Schedules[0].ExpectedLeaveTime}
+                                    </Text> 
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{flex: 4}}>
+                                <TouchableOpacity onPress={() => this.changeBusTime()}> 
+                                    <Text style={{color: 'white'}}>
+                                        {this.props.selectedBusState.Schedules[1].ExpectedLeaveTime}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{flex: 4}}>
+                                <TouchableOpacity onPress={() => this.changeBusTime()}>
+                                    <Text style={{color: 'white'}}>
+                                        {this.props.selectedBusState.Schedules[2].ExpectedLeaveTime}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+
+                    </View>
+        
+        
             <ScrollView style={{flex:1}}>
                 {shopInfo}
             </ScrollView>
+        
         </View>
     
     )
@@ -84,16 +116,16 @@ const styles = StyleSheet.create({
         padding: 25,
         textAlign: 'center',
         color: '#f4efe3',
-        backgroundColor:'#462f23',
-        overflow: 'hidden',
-        borderTopLeftRadius: 15, 
-        borderTopRightRadius: 15,
+        backgroundColor:'#6fa7a8',
+        //overflow: 'hidden',
+        //borderTopLeftRadius: 15, 
+        //borderTopRightRadius: 15,
       },
     
      headerContainer:{
-        borderTopLeftRadius: 15, 
-        borderTopRightRadius: 15, 
-        overflow: 'hidden'
+        //borderTopLeftRadius: 15, 
+        //borderTopRightRadius: 15, 
+        //overflow: 'hidden'
     },
     
     statusRedStyle:{

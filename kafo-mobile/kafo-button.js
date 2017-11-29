@@ -19,15 +19,10 @@ export default class KafoButton extends React.Component {
       
       if (this.props.buttonColor){
            var style = styles.touchableStyle1;
-          //var sidebarColor = '#42565E';
       } else {
           var style = styles.touchableStyle2;
-          //var sidebarColor = '#6fa7a8';
       }
       
-      console.log(this.props.minsTillDepart);
-      
-
     return (
 
         <TouchableOpacity style={style} onPress={() => this.selectRoute()}>
@@ -40,7 +35,7 @@ export default class KafoButton extends React.Component {
                         />
                     </View>
                     <View style={{height: '100%'}}>
-                        <Text style={{fontSize: 50, color: '#42565E', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>{this.props.routeNumber}</Text>
+                        <Text style={{fontSize: 28, color: '#42565E', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>{this.props.routeNumber}</Text>
                         <Text style={{fontSize: 15, color: '#42565E', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>{this.props.routeName}{"\n"}</Text>
                         <Text style={{fontSize: 15, color: '#42565E', textAlign: 'left', paddingLeft: 10, paddingBottom: 5}}>Departs in {this.props.minsTillDepart} minutes</Text>
                     </View>
@@ -65,15 +60,16 @@ const styles = StyleSheet.create({
      touchableStyle1: {
         flex: 1,
         width: '100%',
-        backgroundColor: '#e6e6e6',
+        backgroundColor: '#F7F7F7',
         justifyContent: 'center',
     },
     
     touchableStyle2: {
         flex: 1,
         width: '100%',
-        backgroundColor: '#F7F7F7',
+        backgroundColor: '#EEEEEE',
         justifyContent: 'center',
+
     }
     
 });
