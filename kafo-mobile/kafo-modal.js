@@ -147,6 +147,14 @@ class KafoModal extends Component {
                       );
                   }, this);
           }
+      } else if (this.props.modalState === 4){
+          return (
+              modal = (
+                <View>
+                  <Text>You did it!</Text>
+                  </View>
+              )
+          )
       }
       
     return (

@@ -8,19 +8,67 @@ export default class ArrivalModal extends React.Component {
         
         this.state = {
             curTime:null,
-            tillDepart: this.props.minsTillDepart
+            tillDepart: this.props.minsTillDepart, 
+            seconds: Math.floor(this.props.minsTillDepart * 60),
+            time: {}
         };
+    this.timer = 0;
+    this.startTimer = this.startTimer.bind(this);
+    this.countDown = this.countDown.bind(this);
+    this.endCountdown = this.endCountdown.bind(this);
     }
+    
+secondsToTime(secs){
+
+    let divisor_for_minutes = secs % (60 * 60);
+    let minutes = Math.floor(divisor_for_minutes / 60);
+
+    let divisor_for_seconds = divisor_for_minutes % 60;
+    let seconds = Math.ceil(divisor_for_seconds);
+
+    let obj = {
+      "m": minutes,
+      "s": seconds
+    };
+    return obj;
+  }
     
 componentDidMount() {
     setInterval( () => {
       this.setState({
         curTime : new Date().toLocaleString('en-US', {hour: 'numeric', minute:'numeric', hour12:true, second: 'numeric'})
       })
-    },1000)
+    },1000);
+    
+    let timeLeftVar = this.secondsToTime(this.state.seconds);
+    this.setState({ time: timeLeftVar });
+    this.startTimer();
   }
     
-
+ startTimer() {
+    if (this.timer == 0) {
+      this.timer = setInterval(this.countDown, 1000);
+    }
+  }
+    
+countDown() {
+    // Remove one second, set state so a re-render happens.
+    let seconds = this.state.seconds - 1;
+    this.setState({
+      time: this.secondsToTime(seconds),
+      seconds: seconds,
+    });
+    
+    // Check if we're at zero.
+    if (seconds == 0) { 
+      clearInterval(this.timer);
+      this.props.changeModal(4);
+    }
+  }
+endCountdown(){
+    clearInterval(this.timer);
+    this.props.changeModal(4);
+}
 render() {
     
     return (
@@ -36,7 +84,7 @@ render() {
             </View>
             <View style={{flex: 1}}>
                 <Text style={styles.paragraph1Style}>Until Your Bus Arrives{"\n"}
-                <Text style={styles.paragraph2Style}>{this.state.tillDepart} minutes</Text>
+                <Text style={styles.paragraph2Style}>{this.state.time.m}:{this.state.time.s}</Text>
                 </Text>
             </View>
         </View>
@@ -47,6 +95,7 @@ render() {
                 style={{alignSelf: 'center', flex: 1, width: '50%', height: '50%'}}
             />
         }
+        <Button onPress={this.endCountdown} title="Done" />
         </View>
       </View>
     ); 
