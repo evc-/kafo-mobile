@@ -91,13 +91,13 @@ var coffeeResp = null;
                 console.log(currentValue)
                 var statusimg = null;
                     if(currentValue.status === "statusGreen"){
-                        statusimg=require('../img/Green.png')
+                        statusimg=require('../img/Green04.png')
                     } 
                     else if(currentValue.status === "statusOrange"){
-                        statusimg=require('../img/Orange.png')
+                        statusimg=require('../img/Orange04.png')
                     }
                     else if(currentValue.status === "statusRed"){
-                        statusimg=require('../img/Red.png')
+                        statusimg=require('../img/Red04.png')
                     }
                 console.log("status", statusimg);
                 return(
