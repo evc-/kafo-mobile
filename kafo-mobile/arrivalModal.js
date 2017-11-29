@@ -15,6 +15,7 @@ export default class ArrivalModal extends React.Component {
     this.timer = 0;
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
+    this.endCountdown = this.endCountdown.bind(this);
     }
     
 secondsToTime(secs){
@@ -61,9 +62,13 @@ countDown() {
     // Check if we're at zero.
     if (seconds == 0) { 
       clearInterval(this.timer);
+      this.props.changeModal(4);
     }
   }
-
+endCountdown(){
+    clearInterval(this.timer);
+    this.props.changeModal(4);
+}
 render() {
     
     return (
@@ -90,6 +95,7 @@ render() {
                 style={{alignSelf: 'center', flex: 1, width: '50%', height: '50%'}}
             />
         }
+        <Button onPress={this.endCountdown} title="Done" />
         </View>
       </View>
     ); 
