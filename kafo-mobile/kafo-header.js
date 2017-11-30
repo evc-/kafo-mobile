@@ -8,16 +8,13 @@ export default class KafoHeader extends React.Component {
             
         }    
         
-        
     }
   
 
 render() {
  
-
     return (
-       
-        
+            <Text style={styles.headerStyle}>{this.props.innerText}</Text>
     );
   }
 }
@@ -27,11 +24,12 @@ const styles = StyleSheet.create({
     headerStyle:{
         width: '100%',
         fontSize: 20,
-        fontWeight: 'bold',
+        fontWeight: '500',
         padding: 10,
         textAlign: 'center',
         color: '#f4efe3',
         backgroundColor:'#6fa7a8'
       },
+    
     
 });

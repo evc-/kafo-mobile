@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
+import KafoHeader from './kafo-header';
 
 export default class CoffeeResultsModal extends React.Component {
     constructor(props){
@@ -73,7 +74,7 @@ render() {
         <View style={{flex:1}} >
         
             <View>
-                <Text style={styles.headerStyle}> Here are the shops!</Text>
+                <KafoHeader innerText={"Time for coffee at these shops"}/>
             </View>
         
                     <View style={{backgroundColor:'#42565E', flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -116,16 +117,6 @@ render() {
 }
 
 const styles = StyleSheet.create({
-    
-    headerStyle:{
-        width: '100%',
-        fontSize: 20,
-        fontWeight: 'bold',
-        padding: 10,
-        textAlign: 'center',
-        color: '#f4efe3',
-        backgroundColor:'#6fa7a8'
-      },
     
     statusRedStyle:{
         backgroundColor: 'red'
