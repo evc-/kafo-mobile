@@ -82,6 +82,7 @@ if(this.props.busStopCoords){
                 coordinate={{
                      latitude:this.props.busStopCoords.lat,
                     longitude: this.props.busStopCoords.lng}}
+                 image={require('../img/bus03.png')}
                     />  
     )
 }
