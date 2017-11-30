@@ -61,7 +61,7 @@ var allStops = null;
 
 if(this.props.modalState === 0 ){
     console.log(this.props.bs);
-    allStops = this.props.bs.map((stop) => {
+    /*allStops = this.props.bs.map((stop) => {
             return (
             <MapView.Marker
                 title={stop.Name}
@@ -72,7 +72,7 @@ if(this.props.modalState === 0 ){
               }}
             />
                    )
-        }) 
+        }) */
       }  else if (this.props.modalState > 0) {
         allStops = null;
     }

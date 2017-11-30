@@ -4,6 +4,7 @@ import KafoTextInput from './kafo-textinput';
 import KafoButton from './kafo-button';
 import ArrivalModal from './arrivalModal';
 import CoffeeResultsModal from './coffeeResultsModal';
+import EndPageModal from './EndPageModal';
 
 class KafoModal extends Component {
     constructor(props){
@@ -150,8 +151,10 @@ class KafoModal extends Component {
       } else if (this.props.modalState === 4){
               modal = (
                 <View>
-                  <Text>You did it!</Text>
-                  </View>
+                   
+                  <EndPageModal/>
+                    
+                </View>
           )
       }
       
