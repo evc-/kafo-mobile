@@ -89,7 +89,7 @@ class KafoModal extends Component {
           
         modal =(
                 <View style={{flex: 1}}>
-                    <View style={styles.headerContainer}>
+                    <View>
                         <Text style={styles.headerStyle}> Select your route </Text>
                     </View>
                 
@@ -148,18 +148,17 @@ class KafoModal extends Component {
                   }, this);
           }
       } else if (this.props.modalState === 4){
-          return (
               modal = (
                 <View>
                   <Text>You did it!</Text>
                   </View>
-              )
           )
       }
       
     return (
         <View style={{flex:1}}>
             {modal}
+            {this.props.children}
         </View>
 
     );
@@ -170,35 +169,25 @@ const styles = StyleSheet.create({
     
     headerStyle:{
         textAlign: 'center',
-        padding:20,
+        padding:10,
         width: '100%',
         fontSize: 20,
         fontWeight: 'bold',
         color: '#f4efe3',
-        backgroundColor:'#6fa7a8',
-        //overflow: 'hidden',
-        //borderTopLeftRadius: 15, 
-        //borderTopRightRadius: 15,
+        backgroundColor:'#6fa7a8'
       },
     
     question2Style:{
         textAlign: 'center',
         padding:15,
         fontSize: 15,
-        color: 'grey',
-        //fontStyle: 'italic'
+        color: 'grey'
       },
     
     errorStyle:{
         textAlign: 'center',
         color: 'red',
         fontSize: 12
-    },
-    
-    headerContainer:{
-        borderTopLeftRadius: 15, 
-        borderTopRightRadius: 15, 
-        overflow: 'hidden'
     }
 
     

@@ -37,8 +37,8 @@ export default class KafoButton extends React.Component {
                     </View>
                     <View style={{height: '100%'}}>
                         <Text style={{fontSize: 28, color: '#42565E', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>{this.props.routeNumber}</Text>
-                        <Text style={{fontSize: 15, color: '#42565E', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>{this.props.routeName}{"\n"}</Text>
-                        <Text style={{fontSize: 15, color: '#42565E', textAlign: 'left', paddingLeft: 10, paddingBottom: 5}}>Departs in {this.props.minsTillDepart} minutes</Text>
+                        <Text style={{fontSize: 12, color: '#42565E', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>{this.props.routeName}{"\n"}</Text>
+                        <Text style={{fontSize: 12, color: '#42565E', textAlign: 'left', paddingLeft: 10, paddingBottom: 5}}>Departs in {this.props.minsTillDepart} minutes</Text>
                     </View>
                 </View>
                 <View>
