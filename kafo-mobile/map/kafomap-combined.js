@@ -10,7 +10,8 @@ class KafoMapCombined extends Component {
         this.state={
             error: null,
             coords: [],
-            busStopCoords: null
+            busStopCoords: null,
+            allBusStops:[]
         }
     }
 
@@ -27,7 +28,14 @@ busStop(){
             busLat:this.props.busStopCoords.lat,
             busLng:this.props.busStopCoords.lng
         });
-        console.log("kafomapcombined bus stop coordinates are: "+this.state.busLat + this.state.busLng);
+    }
+}
+componentDidMount(){
+    if(true){
+        this.setState({
+            bs:this.props.bs
+        });
+        this.props.tsAllStops();
     }
 }
 
@@ -48,26 +56,22 @@ var walkingLine = null;
             />
           )
       }
-      
-      
-var allStops = null;
-      if(this.props.modalState === 0 ){
-          if(this.props.allBusStops){
-              allStops = this.props.allBusStops.map((currentValue, index, array)=>{
-                  return(
-                        <MapView.Marker 
-                        key={index}
-                        coordinate={{
-                            latitude: currentValue.Latitude,
-                            longitude: currentValue.Longitude
-                      }} 
-                        title={currentValue.Name}
-                    />  
-                    
-                    )    
-          });
-      }
-    } else if (this.props.modalState > 0) {
+var allStops = null;    
+if(this.props.modalState === 0 ){
+    console.log(this.props.bs);
+    allStops = this.props.bs.map((stop) => {
+            return (
+                <MapView.Marker
+              title={stop.Name}
+              id={stop.stopNo}
+              coordinate={{
+                latitude: stop.Latitude,
+                longitude: stop.Longitude,
+              }}
+            />
+                   )
+        }) 
+      }  else if (this.props.modalState > 0) {
         allStops = null;
     }
       
@@ -88,7 +92,7 @@ var coffeeResp = null;
  if (this.props.modalState >= 1){
           if (this.props.shopWithStatus){
             coffeeResp = this.props.shopWithStatus.map((currentValue, index, array)=>{
-                console.log(currentValue)
+                console.log(currentValue);
                 var statusimg = null;
                     if(currentValue.status === "statusGreen"){
                         statusimg=require('../img/Green04.png')
