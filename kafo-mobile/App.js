@@ -14,7 +14,7 @@ export default class App extends React.Component {
         this.state = {
             translinkData: "",
             coffeeShopData: "",
-            userLocation: {lat: 49.24943966121919, lng:-123.00086935603458 },
+            userLocation: {lat: null, lng:null },
             positionBump: 0,
             busStopCoords: {lat: null, lng: null},
             busStopNum: null,
@@ -28,7 +28,7 @@ export default class App extends React.Component {
             busStopCoords: '',
             busStopNum: "",
             toggle: false,
-            allBusStops:[],
+            bs:[],
             busArrivalChoice: null,
             coords:[]
         };
@@ -73,9 +73,6 @@ componentWillMount() {
                     error: null
                 })
             }
-    if(this.state.userLocation !== null){
-        this.tsAllStops(this.state.userLocation);
-    }
     this.keyboardWillShowSub = Keyboard.addListener('keyboardDidShow', this.keyboardWillShow);
     this.keyboardWillHideSub = Keyboard.addListener('keyboardDidHide', this.keyboardWillHide);
   }
@@ -153,14 +150,16 @@ selectedShop(data){
     
 //get all bus stops
 tsAllStops(userLocation){
-    fetch('https://kafo-all-stops.herokuapp.com/translink/'+userLocation, {
+    fetch('https://kafo-all-stops.herokuapp.com/translink/latlng/'+this.state.userLocation.lat.toFixed(2)+'/'+this.state.userLocation.lng.toFixed(2), {
         method: 'GET',
         headers:{
             "Content-Type": "application/json"
         }})
     .then(response=>response.json())
     .then((response) => {
-        this.setState({allBusStops:response});
+        this.setState({
+            bs:response
+        });
     })
     .catch((error) => {
         console.log(error);
@@ -330,7 +329,7 @@ getCoffeeShops(){
         }
         ).then((CSjson)=>{
             console.log("got the shops");
-            console.log(CSjson.results);
+            //console.log(CSjson.results);
             this.setState({
                 coffeeShopData:CSjson.results
             }, 
@@ -425,7 +424,7 @@ getAllShopDirections(busChoice){
                  shopWithStatus: Statuses
              });
             
-            console.log(Statuses);
+            //console.log(Statuses);
             
         });
     }
@@ -496,7 +495,10 @@ getAllShopDirections(busChoice){
                         busStopCoords = {this.state.busStopCoords} 
                         coords = {this.state.coords}
                         shopWithStatus = {this.state.shopWithStatus}
+                        bs = {this.state.bs}
+                        tsAllStops = {this.tsAllStops}
                         allBusStops = {this.state.allBusStops}
+                        
                         />
                 </View>
 

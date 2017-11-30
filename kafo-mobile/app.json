@@ -4,7 +4,7 @@
       "name": "kafo-mobile",
       "description": "A mobile app for determining if you have enough time to get a coffee before the next bus arrives. Developed for BCIT's D3 program.",
       "slug": "kafo",
-      "icon": "../img/kafo-icon.png",
+      "icon": "./img/cafe-icon.png",
   }
 }
 
