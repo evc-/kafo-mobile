@@ -7,6 +7,7 @@ import KafoModal from './kafo-modal';
 import CoffeeResultsModal from './coffeeResultsModal';
 import Loading from './loading';
 
+
 export default class App extends React.Component {
      constructor(props) {
         super(props);
@@ -498,7 +499,6 @@ getAllShopDirections(busChoice){
                         bs = {this.state.bs}
                         tsAllStops = {this.tsAllStops}
                         allBusStops = {this.state.allBusStops}
-                        
                         />
                 </View>
 

@@ -30,6 +30,7 @@ busStop(){
         });
     }
 }
+    
 componentDidMount(){
     if(true){
         this.setState({
@@ -57,14 +58,15 @@ var walkingLine = null;
           )
       }
 var allStops = null;    
+
 if(this.props.modalState === 0 ){
     console.log(this.props.bs);
     allStops = this.props.bs.map((stop) => {
             return (
-                <MapView.Marker
-              title={stop.Name}
-              id={stop.stopNo}
-              coordinate={{
+            <MapView.Marker
+                title={stop.Name}
+                id={stop.stopNo}
+                coordinate={{
                 latitude: stop.Latitude,
                 longitude: stop.Longitude,
               }}
