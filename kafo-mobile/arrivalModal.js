@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, Image} from 'react-native';
+import KafoHeader from './kafo-header';
 
 export default class ArrivalModal extends React.Component {
 
@@ -87,7 +88,7 @@ render() {
     return (
     <View style={{flex:1, flexDirection: 'column'}}>
         <View>
-            <Text style={styles.headerStyle}>Heading to {this.props.selectedShop.name}</Text>
+            <KafoHeader innerText={"heading to" + this.props.selectedShop.name}/>
         </View>
         <View style={{flexDirection:'row', flex: 1, justifyContent:'space-around'}}>
             <View style={{flex: 1}}>
@@ -116,15 +117,6 @@ render() {
 }
 
 const styles = StyleSheet.create({
-     
-     headerStyle:{
-        textAlign: 'center',
-        padding:10,
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#f4efe3',
-        backgroundColor:'#6fa7a8',
-      },
     
     paragraph1Style:{
         textAlign: 'left',

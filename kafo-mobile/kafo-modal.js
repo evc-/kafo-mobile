@@ -5,6 +5,7 @@ import KafoButton from './kafo-button';
 import ArrivalModal from './arrivalModal';
 import CoffeeResultsModal from './coffeeResultsModal';
 import EndPageModal from './EndPageModal';
+import KafoHeader from './kafo-header';
 
 class KafoModal extends Component {
     constructor(props){
@@ -46,7 +47,7 @@ class KafoModal extends Component {
         if(this.props.modalState === 0){
             modal =(
                 <View >
-                    <Text style={styles.headerStyle}> Got enough time for coffee?</Text>
+                    <KafoHeader innerText={"Got enough time for coffee?"}/>
                     <Text style={styles.question2Style}>{this.props.errorMsg}</Text>
                     
                         <KafoTextInput 
@@ -91,7 +92,7 @@ class KafoModal extends Component {
         modal =(
                 <View style={{flex: 1}}>
                     <View>
-                        <Text style={styles.headerStyle}> Select your route </Text>
+                        <KafoHeader innerText={"Select Your Route"}/>
                     </View>
                 
                     <ScrollView style={{flex: 1}}>
@@ -169,16 +170,6 @@ class KafoModal extends Component {
 }
 
 const styles = StyleSheet.create({
-    
-    headerStyle:{
-        textAlign: 'center',
-        padding:10,
-        width: '100%',
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#f4efe3',
-        backgroundColor:'#6fa7a8'
-      },
     
     question2Style:{
         textAlign: 'center',
