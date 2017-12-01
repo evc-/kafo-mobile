@@ -182,6 +182,7 @@ const styles = StyleSheet.create({
       
   },
  calloutHeader: {
+     fontWeight: "400",
      textAlign: "center"
  },
 calloutText: {
