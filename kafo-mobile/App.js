@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Image, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView,  TouchableOpacity, Text, View, ScrollView, Button, ActivityIndicator } from 'react-native';
+import { Modal, TouchableHighlight, AppRegistry, Image, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView,  TouchableOpacity, Text, View, ScrollView, Button, ActivityIndicator } from 'react-native';
 import KafoTextInput from './kafo-textinput';
 import KafoMapCombined from './map/kafomap-combined';
 import ArrivalModal from './arrivalModal';    
@@ -32,7 +32,8 @@ export default class App extends React.Component {
             bs:[],
             busArrivalChoice: 0,
             coords:[],
-            maxState: 0
+            maxState: 0,
+            modalVisible: false
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
@@ -50,6 +51,7 @@ export default class App extends React.Component {
         this.navBack = this.navBack.bind(this);
         this.navForward = this.navForward.bind(this);
         this.increaseMaxState = this.increaseMaxState.bind(this);
+        this.setModalVisible = this.setModalVisible.bind(this);
      }
 
 /*SIMPLE FUNCTIONS*/
@@ -141,7 +143,6 @@ increaseMaxState(maxState){
 
 navBack(){
     if (this.state.modalState == 0){
-        //this.changeModalState(0);
     } else {
         this.changeModalState(this.state.modalState -1);
     }
@@ -149,11 +150,15 @@ navBack(){
 
 navForward(){
     if (this.state.modalState == 4){
-        //this.changeModalState(4);
     } else if (this.state.maxState > this.state.modalState) {
         this.changeModalState(this.state.modalState +1);
     }
 }
+
+ setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+     console.log("click modal");
+  }
 
 /*API CALLS*/
 
@@ -503,11 +508,12 @@ getAllShopDirections(busChoice){
                 <View style={{flexDirection: 'column', alignItems: 'center'}}> 
         
                         <View style={{height: Dimensions.get('window').height * .1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor:'rgba(255, 255, 255, 0.7)', width: '100%', paddingTop: 30, paddingBottom: 5, paddingLeft: 10, paddingRight: 10}}>
-
-                            <Image 
-                                source={require('./img/top-icons-01.png')} 
-                                style={{width: 15, height: 15}}
-                            />
+                            <TouchableOpacity onPress={() => {this.setModalVisible(true)}}>
+                                <Image 
+                                    source={require('./img/top-icons-01.png')} 
+                                    style={{width: 15, height: 15}}
+                                />
+                            </TouchableOpacity>
 
                             <Text style={{textAlign:'center', color: '#42565E', fontWeight: 'bold', fontSize: 15}}> kafo </Text>
 
@@ -517,7 +523,30 @@ getAllShopDirections(busChoice){
                             />
     
                     </View>
-        
+
+                  <View>
+                    <Modal
+                      animationType="slide"
+                      transparent={false}
+                      visible={this.state.modalVisible}
+                      onRequestClose={() => {alert("Modal has been closed.")}}
+                      >
+                     <View style={{marginTop: 22}}>
+                      <View>
+                        <Text>Hello World!</Text>
+
+                        <TouchableHighlight onPress={() => {
+                          this.setModalVisible(!this.state.modalVisible)
+                        }}>
+                          <Text>Hide Modal</Text>
+                        </TouchableHighlight>
+
+                      </View>
+                     </View>
+                    </Modal>
+                  </View>
+
+
                     <KafoMapCombined
                         changeModalState = {this.changeModalState}
                         modalState = {this.state.modalState}
