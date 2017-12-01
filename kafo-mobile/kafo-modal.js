@@ -4,6 +4,7 @@ import KafoTextInput from './kafo-textinput';
 import KafoButton from './kafo-button';
 import ArrivalModal from './arrivalModal';
 import CoffeeResultsModal from './coffeeResultsModal';
+import EndPageModal from './EndPageModal';
 import KafoHeader from './kafo-header';
 
 class KafoModal extends Component {
@@ -148,8 +149,8 @@ class KafoModal extends Component {
               modal = (
                 <View>
                   <KafoHeader innerText={"Select Your Route"}/>
-                  <Text>You did it!</Text>
-                  </View>
+                  <EndPageModal/>
+                </View>
           )
       }
       

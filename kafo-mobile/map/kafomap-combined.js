@@ -60,6 +60,7 @@ var walkingLine = null;
 var allStops = null;    
 
 if(this.props.modalState === 0 ){
+
     //console.log(this.props.bs);
     allStops = this.props.bs.map((stop, index) => {
             return (
@@ -73,7 +74,7 @@ if(this.props.modalState === 0 ){
               }}
             />
                    )
-        }) 
+        })
       }  else if (this.props.modalState > 0) {
         allStops = null;
     }
