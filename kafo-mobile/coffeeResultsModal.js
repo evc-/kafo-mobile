@@ -28,13 +28,24 @@ render() {
     if(this.props.shopWithStatus){
         var shopInfo = this.props.shopWithStatus.map(function callback(obj, i) {
             
+            var statusColor=null;
+            if(currentValue.status === "statusGreen"){
+                statusColor=backgroundColor:"green"
+            }
+            else if(currentValue.status === "statusOrange"){
+                 statusColor=backgroundColor:"orange"
+            }
+            else if(currentValue.status === "statusRed"){
+                 statusColor=backgroundColor:"red"
+            }
+            
         return(
             
     <View key={i}>
       <TouchableOpacity onPress={this.startTimer.bind(this, i)} style={i%2==1 ? styles.touchableStyle1 : styles.touchableStyle2}> 
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
-                    <View style={{backgroundColor: 'orange', alignSelf:'flex-start', height: '100%', paddingLeft: 10, paddingRight: 10, justifyContent: 'center'}}>
+                    <View style={{{statusColor}, alignSelf:'flex-start', height: '100%', paddingLeft: 10, paddingRight: 10, justifyContent: 'center'}}>
                         <Image 
                             source={require('./img/cup-icon-02.png')} 
                             style={{width: 10, height: 10, alignSelf:'flex-start'}}
