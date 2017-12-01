@@ -148,7 +148,6 @@ class KafoModal extends Component {
       } else if (this.props.modalState === 4){
               modal = (
                 <View>
-                  <KafoHeader innerText={"Select Your Route"}/>
                   <EndPageModal/>
                 </View>
           )

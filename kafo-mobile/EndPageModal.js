@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Alert, Image, TouchableOpacity } from 'react-native';
+import KafoHeader from './kafo-header';
 
 export default class EndPageModal extends React.Component {
 
@@ -10,7 +11,7 @@ export default class EndPageModal extends React.Component {
 <View>
           
      <View>
-          <Text style={styles.headerStyle}> Thanks For Using Kafo! {"\n"} </Text>
+          <KafoHeader innerText="Thanks for using Kafo!"/>
             <Text style={{textAlign: 'center', fontSize: 18, color:'#42565E',fontWeight: 'bold', padding: 8}}> Enjoy Your Day! </Text>
         
             <Text style={{textAlign: 'center', fontSize: 16, color:'#42565E'}}> If youd like to leave us feeback on your experience, please leave us a rating. {"\n"} </Text>
@@ -31,16 +32,6 @@ export default class EndPageModal extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    
-   headerStyle:{
-        textAlign: 'center',
-        padding:10,
-        width: '100%',
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#f4efe3',
-        backgroundColor:'#6fa7a8'
-      },
     
     rateStyle:{
         padding:10,
