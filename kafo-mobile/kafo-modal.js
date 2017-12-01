@@ -4,6 +4,8 @@ import KafoTextInput from './kafo-textinput';
 import KafoButton from './kafo-button';
 import ArrivalModal from './arrivalModal';
 import CoffeeResultsModal from './coffeeResultsModal';
+import EndPageModal from './EndPageModal';
+import KafoHeader from './kafo-header';
 
 class KafoModal extends Component {
     constructor(props){
@@ -45,7 +47,7 @@ class KafoModal extends Component {
         if(this.props.modalState === 0){
             modal =(
                 <View >
-                    <Text style={styles.headerStyle}> Got enough time for coffee?</Text>
+                    <KafoHeader innerText={"Got enough time for coffee?"}/>
                     <Text style={styles.question2Style}>{this.props.errorMsg}</Text>
                     
                         <KafoTextInput 
@@ -89,8 +91,8 @@ class KafoModal extends Component {
           
         modal =(
                 <View style={{flex: 1}}>
-                    <View style={styles.headerContainer}>
-                        <Text style={styles.headerStyle}> Select your route </Text>
+                    <View>
+                        <KafoHeader innerText={"Select Your Route"}/>
                     </View>
                 
                     <ScrollView style={{flex: 1}}>
@@ -148,18 +150,19 @@ class KafoModal extends Component {
                   }, this);
           }
       } else if (this.props.modalState === 4){
-          return (
               modal = (
                 <View>
-                  <Text>You did it!</Text>
-                  </View>
-              )
+                   
+                  <EndPageModal/>
+                    
+                </View>
           )
       }
       
     return (
         <View style={{flex:1}}>
             {modal}
+            {this.props.children}
         </View>
 
     );
@@ -168,37 +171,17 @@ class KafoModal extends Component {
 
 const styles = StyleSheet.create({
     
-    headerStyle:{
-        textAlign: 'center',
-        padding:20,
-        width: '100%',
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#f4efe3',
-        backgroundColor:'#6fa7a8',
-        //overflow: 'hidden',
-        //borderTopLeftRadius: 15, 
-        //borderTopRightRadius: 15,
-      },
-    
     question2Style:{
         textAlign: 'center',
         padding:15,
         fontSize: 15,
-        color: 'grey',
-        //fontStyle: 'italic'
+        color: 'grey'
       },
     
     errorStyle:{
         textAlign: 'center',
         color: 'red',
         fontSize: 12
-    },
-    
-    headerContainer:{
-        borderTopLeftRadius: 15, 
-        borderTopRightRadius: 15, 
-        overflow: 'hidden'
     }
 
     

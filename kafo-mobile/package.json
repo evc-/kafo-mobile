@@ -19,7 +19,6 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@mapbox/polyline": "^0.2.0",
     "expo": "21.0.0",
     "react": "16.0.0-alpha.12",
     "react-native": "https://github.com/expo/react-native/archive/sdk-21.0.2.tar.gz",

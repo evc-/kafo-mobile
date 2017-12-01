@@ -7,6 +7,7 @@ import KafoModal from './kafo-modal';
 import CoffeeResultsModal from './coffeeResultsModal';
 import Loading from './loading';
 
+
 export default class App extends React.Component {
      constructor(props) {
         super(props);
@@ -14,7 +15,7 @@ export default class App extends React.Component {
         this.state = {
             translinkData: "",
             coffeeShopData: "",
-            userLocation: {lat: 49.24943966121919, lng:-123.00086935603458 },
+            userLocation: {lat: null, lng:null },
             positionBump: 0,
             busStopCoords: {lat: null, lng: null},
             busStopNum: null,
@@ -28,7 +29,7 @@ export default class App extends React.Component {
             busStopCoords: '',
             busStopNum: "",
             toggle: false,
-            allBusStops:[],
+            bs:[],
             busArrivalChoice: null,
             coords:[]
         };
@@ -73,9 +74,6 @@ componentWillMount() {
                     error: null
                 })
             }
-    if(this.state.userLocation !== null){
-        this.tsAllStops(this.state.userLocation);
-    }
     this.keyboardWillShowSub = Keyboard.addListener('keyboardDidShow', this.keyboardWillShow);
     this.keyboardWillHideSub = Keyboard.addListener('keyboardDidHide', this.keyboardWillHide);
   }
@@ -153,14 +151,16 @@ selectedShop(data){
     
 //get all bus stops
 tsAllStops(userLocation){
-    fetch('https://kafo-all-stops.herokuapp.com/translink/'+userLocation, {
+    fetch('https://kafo-all-stops.herokuapp.com/translink/latlng/'+this.state.userLocation.lat.toFixed(2)+'/'+this.state.userLocation.lng.toFixed(2), {
         method: 'GET',
         headers:{
             "Content-Type": "application/json"
         }})
     .then(response=>response.json())
     .then((response) => {
-        this.setState({allBusStops:response});
+        this.setState({
+            bs:response
+        });
     })
     .catch((error) => {
         console.log(error);
@@ -330,7 +330,7 @@ getCoffeeShops(){
         }
         ).then((CSjson)=>{
             console.log("got the shops");
-            console.log(CSjson.results);
+            //console.log(CSjson.results);
             this.setState({
                 coffeeShopData:CSjson.results
             }, 
@@ -425,12 +425,14 @@ getAllShopDirections(busChoice){
                  shopWithStatus: Statuses
              });
             
-            console.log(Statuses);
+            //console.log(Statuses);
             
         });
     }
 }
   render() {
+      
+      
        var display = null;
      if(this.state.toggle === false){
         display = (
@@ -459,14 +461,31 @@ getAllShopDirections(busChoice){
                         errorMsg = {this.state.errorMsg}
                         selectedBusState = {this.state.selectedBus}
                         changeBusArrival = {this.changeBusArrival}
-                    />    
+                        >
+                        </KafoModal>
                 );
 
     return (
-                <KeyboardAvoidingView  style={styles.container}           
-                    behaviour="padding">
-                    
-                
+            <View style={{flexDirection: 'column'}}>
+
+                <View style={{flexDirection: 'column', alignItems: 'center'}}> 
+        
+                        <View style={{height: Dimensions.get('window').height * .1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor:'rgba(255, 255, 255, 0.7)', width: '100%', paddingTop: 30, paddingBottom: 5, paddingLeft: 10, paddingRight: 10}}>
+
+                            <Image 
+                                source={require('./img/top-icons-01.png')} 
+                                style={{width: 15, height: 15}}
+                            />
+
+                            <Text style={{textAlign:'center', color: '#42565E', fontWeight: 'bold', fontSize: 15}}> kafo </Text>
+
+                            <Image 
+                                source={require('./img/top-icons-02.png')} 
+                                style={{width: 15, height: 15}}
+                            />
+    
+                    </View>
+        
                     <KafoMapCombined
                         changeModalState = {this.changeModalState}
                         modalState = {this.state.modalState}
@@ -477,17 +496,27 @@ getAllShopDirections(busChoice){
                         busStopCoords = {this.state.busStopCoords} 
                         coords = {this.state.coords}
                         shopWithStatus = {this.state.shopWithStatus}
+                        bs = {this.state.bs}
+                        tsAllStops = {this.tsAllStops}
                         allBusStops = {this.state.allBusStops}
-                    />
-                
-                <Text style={[styles.header]}> kafo </Text> 
-                
-                    <View 
-                        style={[styles.modalStyle,{bottom: Dimensions.get('window').height * .4  + this.state.positionBump} ]}>
-                        {modal}
-            
+                        />
+                </View>
+
+                <View style={[styles.modalStyle, {bottom: Dimensions.get('window').height * .4 + this.state.positionBump}]}>
+                    <View style={{flex:7}}>
+                        {modal} 
                     </View>
-                </KeyboardAvoidingView >
+                    <View style={{backgroundColor:'#42565E', flex:1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}> 
+                        <Text style={this.state.modalState == 0 ? styles.dotStyleBig : styles.dotStyleSmall}>&bull;</Text>
+                        <Text style={this.state.modalState == 1 ? styles.dotStyleBig : styles.dotStyleSmall}>&bull;</Text>
+                        <Text style={this.state.modalState == 2 ? styles.dotStyleBig : styles.dotStyleSmall}>&bull;</Text>
+                        <Text style={this.state.modalState == 3 ? styles.dotStyleBig : styles.dotStyleSmall}>&bull;</Text>
+                        <Text style={this.state.modalState == 4 ? styles.dotStyleBig : styles.dotStyleSmall}>&bull;</Text>
+                    </View>  
+                </View>
+        
+            </View>
+
             );
       } 
   }
@@ -495,32 +524,22 @@ getAllShopDirections(busChoice){
 
 const styles = StyleSheet.create({
 
-    modalStyle: {
-        //borderRadius: 15,
+    modalStyle: { 
         width: '100%',
         backgroundColor:'rgba(255, 255, 255, 0.9)',
         height: Dimensions.get('window').height * .4
       },
     
-    container: {
-        flex: 3,
-        flexDirection: 'column',
-        alignItems:'center',
-  },
+    dotStyleBig: {
+        color: 'white',
+        fontSize: 50,
+
+    },
     
-    header: {
-        flex: 1,
-        textAlign:'center',
-        color: '#42565E',
-        fontWeight: 'bold',
-        fontSize: 15,
-        backgroundColor:'rgba(255, 255, 255, 0.7)',
-        position: 'absolute',
-        top: 0,
-        width: '100%',
-        paddingTop: 30,
-        paddingBottom: 5
-        
+     dotStyleSmall: {
+        color: 'white',
+        fontSize: 30,
+
     }
     
 });
