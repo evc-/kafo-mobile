@@ -16,6 +16,7 @@ export default class CoffeeResultsModal extends React.Component {
     startTimer(i){
         this.props.changeModal(3);
         this.props.selectShop(i);
+        this.props.increaseMaxState(3);
     }
     
     changeBusTime(choice){
@@ -30,10 +31,8 @@ export default class CoffeeResultsModal extends React.Component {
 render() {
     var selectedColor;
     
-//    console.log(this.props.shopWithStatus);
-    
     if(this.props.shopWithStatus){
-        var shopInfo = this.props.shopWithStatus.map(function callback(obj, i) {
+        var shopInfo = this.props.shopWithStatus.map(function callback(currentValue, i) {
             
         return(
             
@@ -48,9 +47,9 @@ render() {
                         />
                     </View>
                     <View style={{height: '100%'}}>
-                        <Text style={{fontSize: 28, color: '#303C45', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>{obj.name}</Text>
-                        <Text style={{fontSize: 12, color: '#303C45', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>Bus arrives in {obj.nextBus} min{"\n"}</Text>
-                        <Text style={{fontSize: 12, color: '#303C45', textAlign: 'left', paddingLeft: 10, paddingBottom: 10}}>Trip time is {obj.journeyTime} min</Text>
+                        <Text style={{fontSize: 28, color: '#303C45', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>{currentValue.name}</Text>
+                        <Text style={{fontSize: 12, color: '#303C45', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>Bus arrives in {currentValue.nextBus} min{"\n"}</Text>
+                        <Text style={{fontSize: 12, color: '#303C45', textAlign: 'left', paddingLeft: 10, paddingBottom: 10}}>Trip time is {currentValue.journeyTime} min</Text>
                     </View>
     
                 </View>
@@ -69,15 +68,12 @@ render() {
 }, this)
 };
 
-    return (
-       
-        <View style={{flex:1}} >
-        
-            <View>
-                <KafoHeader innerText={"Time for coffee at these shops"}/>
-            </View>
-        
-                    <View style={{backgroundColor:'#42565E', flexDirection: 'row', justifyContent: 'space-between'}}>
+var arrivalChoices; 
+
+if (this.props.selectedBusState){
+    
+    arrivalChoices = 
+         <View style={{backgroundColor:'#42565E', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={{flex: 4}}>
                                 <Text style={{color: 'white', fontWeight: 'bold', paddingLeft: 5}}>Bus {this.props.selectedBusState.RouteNo}</Text>
                             </View>
@@ -102,10 +98,20 @@ render() {
                                     </Text>
                                 </TouchableOpacity>
                             </View>
-
                     </View>
+;
+}
+
+    return (
+       
+        <View style={{flex:1}} >
         
-        
+            <View>
+                <KafoHeader innerText={"Time for coffee at these shops"}/>
+            </View>
+            <View>
+                {arrivalChoices}
+            </View>
             <ScrollView style={{flex:1}}>
                 {shopInfo}
             </ScrollView>

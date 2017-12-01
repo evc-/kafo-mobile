@@ -8,11 +8,9 @@ export default class ArrivalModal extends React.Component {
         super(props);
         
         this.state = {
-            curTime:null,
             tillDepart: this.props.minsTillDepart, 
             seconds: Math.floor(this.props.minsTillDepart * 60),
-            time: {},
-            interval: null
+            time: {}
         };
         
     this.timer = 0;
@@ -21,7 +19,6 @@ export default class ArrivalModal extends React.Component {
     this.endCountdown = this.endCountdown.bind(this);
         
     }
-    //should use busarrivalchoice (a state in app) to index translink data again and get the mins from depart from there  
     
 secondsToTime(secs){
 
@@ -39,18 +36,8 @@ secondsToTime(secs){
   }
     
 componentDidMount() {
-    
-    var interval = setInterval( () => {
-      this.setState({
-        curTime : new Date().toLocaleString('en-US', {hour: 'numeric', minute:'numeric', hour12:true, second: 'numeric'})
-      })
-    },1000);
-    
     let timeLeftVar = this.secondsToTime(this.state.seconds);
-    this.setState({ 
-                    time: timeLeftVar,
-                    interval: interval 
-                  });
+    this.setState({ time: timeLeftVar});
     this.startTimer();
   }
     
@@ -74,13 +61,15 @@ countDown() {
       this.props.changeModal(4);
     }
   }
+    
 endCountdown(){
     clearInterval(this.timer);
     this.props.changeModal(4);
+    this.props.increaseMaxState(4);
 }
-    
+
 componentWillUnmount(){
-    clearInterval(this.state.interval);
+     clearInterval(this.timer);
 }
     
 render() {
@@ -92,9 +81,7 @@ render() {
         </View>
         <View style={{flexDirection:'row', flex: 1, justifyContent:'space-around'}}>
             <View style={{flex: 1}}>
-                <Text style={styles.paragraph1Style}>Current Time{"\n"}
-                <Text style={styles.paragraph2Style}>{this.state.curTime}</Text>
-                </Text>
+                
             </View>
             <View style={{flex: 1}}>
                 <Text style={styles.paragraph1Style}>Until Your Bus Arrives{"\n"}

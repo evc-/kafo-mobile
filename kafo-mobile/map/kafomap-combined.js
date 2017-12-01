@@ -60,10 +60,11 @@ var walkingLine = null;
 var allStops = null;    
 
 if(this.props.modalState === 0 ){
-    console.log(this.props.bs);
-    allStops = this.props.bs.map((stop) => {
+    //console.log(this.props.bs);
+    allStops = this.props.bs.map((stop, index) => {
             return (
             <MapView.Marker
+                key = {index}
                 title={stop.Name}
                 id={stop.stopNo}
                 coordinate={{
@@ -95,7 +96,7 @@ var coffeeResp = null;
  if (this.props.modalState >= 1){
           if (this.props.shopWithStatus){
             coffeeResp = this.props.shopWithStatus.map((currentValue, index, array)=>{
-                console.log(currentValue);
+                //console.log(currentValue);
                 var statusimg = null;
                     if(currentValue.status === "statusGreen"){
                         statusimg=require('../img/Green04.png')
@@ -106,7 +107,7 @@ var coffeeResp = null;
                     else if(currentValue.status === "statusRed"){
                         statusimg=require('../img/Red04.png')
                     }
-                console.log("status", statusimg);
+                //console.log("status", statusimg);
                 return(
                         <MapView.Marker 
                         key={index}

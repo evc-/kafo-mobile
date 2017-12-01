@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Image, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView,  Text, View, ScrollView, Button, ActivityIndicator } from 'react-native';
+import { AppRegistry, Image, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView,  TouchableOpacity, Text, View, ScrollView, Button, ActivityIndicator } from 'react-native';
 import KafoTextInput from './kafo-textinput';
 import KafoMapCombined from './map/kafomap-combined';
 import ArrivalModal from './arrivalModal';    
@@ -30,8 +30,9 @@ export default class App extends React.Component {
             busStopNum: "",
             toggle: false,
             bs:[],
-            busArrivalChoice: null,
-            coords:[]
+            busArrivalChoice: 0,
+            coords:[],
+            maxState: 0
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
@@ -46,6 +47,9 @@ export default class App extends React.Component {
         this.selectedShop = this.selectedShop.bind(this);
         this.animateEnd = this.animateEnd.bind(this);
         this.changeBusArrival = this.changeBusArrival.bind(this);
+        this.navBack = this.navBack.bind(this);
+        this.navForward = this.navForward.bind(this);
+        this.increaseMaxState = this.increaseMaxState.bind(this);
      }
 
 /*SIMPLE FUNCTIONS*/
@@ -98,7 +102,9 @@ componentWillUnmount() {
   }
          
 keyboardWillShow = (event) => {
-    this.setState({positionBump: event.endCoordinates.height});
+    this.setState({
+        positionBump: event.endCoordinates.height
+    });
 }
 
 keyboardWillHide = (event) => {
@@ -110,7 +116,6 @@ selectedBus(busIndex){
         selectedBus: this.state.translinkData[busIndex]
     });
 }
-
 
 changeModalState(page){
     this.setState({
@@ -130,19 +135,38 @@ changeBusArrival(choice){
     });
 }
 
+increaseMaxState(maxState){
+    this.state.maxState = maxState;
+}
+
+navBack(){
+    if (this.state.modalState == 0){
+        //this.changeModalState(0);
+    } else {
+        this.changeModalState(this.state.modalState -1);
+    }
+}
+
+navForward(){
+    if (this.state.modalState == 4){
+        //this.changeModalState(4);
+    } else if (this.state.maxState > this.state.modalState) {
+        this.changeModalState(this.state.modalState +1);
+    }
+}
 
 /*API CALLS*/
 
 //sets the coords for the polyline
 selectedShop(data){
     
-    console.log("data", this.state.shopWithStatus[data], this.state.busStopCoords);
+    //console.log("data", this.state.shopWithStatus[data], this.state.busStopCoords);
     var shop = this.state.shopWithStatus[data];
 
     fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&destination="+this.state.busStopCoords.lat+","+this.state.busStopCoords.lng+"&waypoints="+shop.coords.lat+","+shop.coords.lng+"&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI").then((resp)=>{
                 return resp.json();
             }).then((json)=>{
-                console.log("OVER HERE!", json);
+                //console.log("OVER HERE!", json);
                 this.setState({coords: json.routes[0].overview_polyline.points})
             })
    
@@ -163,7 +187,7 @@ tsAllStops(userLocation){
         });
     })
     .catch((error) => {
-        console.log(error);
+        //console.log(error);
     });
 }
 
@@ -174,7 +198,7 @@ tsRouteCall(stopNum) {
           }})
     .then(response => response.json())
     .then((responseJson) => {
-        //console.log(responseJson);
+        console.log(responseJson);
         if (responseJson.Code){
             switch (responseJson.Code) {
                 case "3001":
@@ -191,18 +215,27 @@ tsRouteCall(stopNum) {
                 break;
             }
         } else {
-        this.setState({translinkData:responseJson}); 
-        this.setState({modalState: 1});
+            for (var i=0; i < responseJson.length ; i++){ //splice out negative bus arrival times 
+                var currentRoute = responseJson[i].Schedules;
+                for(var j = 0; j < currentRoute.length; j++){
+                          if(currentRoute[j].ExpectedCountdown < 0){
+                              currentRoute.splice(j, 1);
+                              j--;
+                          }
+                      }
+            }
+            this.setState({translinkData:responseJson}); 
+            this.setState({modalState: 1});
+            () => {this.increaseMaxState(1)};
         }
     },
         (reason) => { //this happens if we can't communicate to translink 
-        console.log(reason);
+        //console.log(reason);
     })
     
     
 }
 
-//get bus stop long and lat from translink 
 tsStopCall(stopNum){
         fetch('https://kafo-stop-call.herokuapp.com/translink/' + stopNum , {method:'GET', headers:{
           "Content-Type": "application/json"
@@ -216,7 +249,7 @@ tsStopCall(stopNum){
         }});
     })
     .catch((error) => {
-        console.log(error);
+       // console.log(error);
     });
 }
 
@@ -318,15 +351,17 @@ getCoffeeShops(){
         this.setState({
                 coffeeShopData: debugShops
             }, 
-                () => {this.getAllShopDirections(0)} //run get walking directions to each shop 
+                () => {this.getAllShopDirections(0)}  
+                 
             );
     }
     else {
         fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500").then((CSresp)=>{
+            console.log("getting coffee shops..")
             return CSresp.json();
         }, (reason)=>{
             console.log("Get coffee shops fetch failed");
-            console.log(reason);
+           // console.log(reason);
         }
         ).then((CSjson)=>{
             console.log("got the shops");
@@ -401,10 +436,8 @@ getAllShopDirections(busChoice){
                  var walkingtimeValue = currentValue.routes[0].legs[0].duration.value + currentValue.routes[0].legs[1].duration.value;
             
                  var shopStatus = this.checkShopStatus(walkingtimeValue/60, this.state.selectedBus.Schedules[busChoice].ExpectedCountdown);
-                 //currently only getting first bus - we may want to include the second bus as well for high traffic location 
                  
                  var polyline= currentValue.routes[0].legs[0].steps[0].polyline.points;       
-                 //console.log(currentValue);
                  
                  var shopWithStatus = {
                         name:this.state.coffeeShopData[index].name,
@@ -425,13 +458,10 @@ getAllShopDirections(busChoice){
                  shopWithStatus: Statuses
              });
             
-            //console.log(Statuses);
-            
         });
     }
 }
   render() {
-      
       
        var display = null;
      if(this.state.toggle === false){
@@ -461,6 +491,8 @@ getAllShopDirections(busChoice){
                         errorMsg = {this.state.errorMsg}
                         selectedBusState = {this.state.selectedBus}
                         changeBusArrival = {this.changeBusArrival}
+                        busArrivalChoice ={this.state.busArrivalChoice}
+                        increaseMaxState = {this.increaseMaxState}
                         >
                         </KafoModal>
                 );
@@ -507,11 +539,27 @@ getAllShopDirections(busChoice){
                         {modal} 
                     </View>
                     <View style={{backgroundColor:'#42565E', flex:1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}> 
-                        <Text style={this.state.modalState == 0 ? styles.dotStyleBig : styles.dotStyleSmall}>&bull;</Text>
-                        <Text style={this.state.modalState == 1 ? styles.dotStyleBig : styles.dotStyleSmall}>&bull;</Text>
-                        <Text style={this.state.modalState == 2 ? styles.dotStyleBig : styles.dotStyleSmall}>&bull;</Text>
-                        <Text style={this.state.modalState == 3 ? styles.dotStyleBig : styles.dotStyleSmall}>&bull;</Text>
-                        <Text style={this.state.modalState == 4 ? styles.dotStyleBig : styles.dotStyleSmall}>&bull;</Text>
+                        
+                        <TouchableOpacity onPress={()=> {this.navBack()}}>
+                            <Image 
+                                source={require('./img/arrow-02.png')} 
+                                style={{width: 40, height: 40, alignSelf: 'flex-end'}}
+                            />
+                        </TouchableOpacity>
+
+                        <Text style={this.state.modalState == 0 ? styles.dotStyleBig : 0 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
+                        <Text style={this.state.modalState == 1 ? styles.dotStyleBig : 1 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
+                        <Text style={this.state.modalState == 2 ? styles.dotStyleBig : 2 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
+                        <Text style={this.state.modalState == 3 ? styles.dotStyleBig : 3 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
+                        <Text style={this.state.modalState == 4 ? styles.dotStyleBig : 4 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
+
+                        <TouchableOpacity onPress={()=> this.navForward()}>
+                            <Image 
+                                source={require('./img/arrow-01.png')} 
+                                style={{width: 40, height: 40, alignSelf: 'flex-end'}}
+                            />
+                        </TouchableOpacity>
+
                     </View>  
                 </View>
         
@@ -533,15 +581,16 @@ const styles = StyleSheet.create({
     dotStyleBig: {
         color: 'white',
         fontSize: 50,
-
     },
     
      dotStyleSmall: {
         color: 'white',
         fontSize: 30,
-
+    },
+    
+    dotStyleGrey:{
+        color: 'grey',
+        fontSize: 30
     }
     
 });
-
-

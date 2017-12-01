@@ -14,7 +14,10 @@ export default class KafoHeader extends React.Component {
 render() {
  
     return (
+        <View>
             <Text style={styles.headerStyle}>{this.props.innerText}</Text>
+            
+        </View>
     );
   }
 }
