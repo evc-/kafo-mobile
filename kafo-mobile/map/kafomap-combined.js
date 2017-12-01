@@ -13,6 +13,7 @@ class KafoMapCombined extends Component {
             busStopCoords: null,
             allBusStops:[]
         }
+    this.getStopId = this.getStopId.bind(this);
     }
 
 //componentDidMount(){
@@ -20,7 +21,10 @@ class KafoMapCombined extends Component {
 //        this.getDirections(this.props.userLat, this.props.userLng,this.props.sendShopIndex.coords.lat,this.props.sendShopIndex.coords.lng)
 //        }    
 //    }
-    
+getStopId(i){
+    console.log("Hello!");
+    console.log(this.props.bs[i]);
+    }
     
 busStop(){
     if(this.props.busStopCoords){
@@ -33,9 +37,6 @@ busStop(){
     
 componentDidMount(){
     if(true){
-        this.setState({
-            bs:this.props.bs
-        });
         this.props.tsAllStops();
     }
 }
@@ -60,24 +61,36 @@ var walkingLine = null;
 var allStops = null;    
 
 if(this.props.modalState === 0 ){
-
+if(this.props.bs){
     //console.log(this.props.bs);
     allStops = this.props.bs.map((stop, index) => {
             return (
             <MapView.Marker
                 key = {index}
-                title={stop.Name}
                 id={stop.stopNo}
                 coordinate={{
                 latitude: stop.Latitude,
                 longitude: stop.Longitude,
               }}
-            />
+            >
+                <MapView.Callout>
+                    <View>
+                <Text style={styles.calloutHeader}>{stop.Name}</Text>
+                <Text style={styles.calloutText}>Stop Number: {stop.StopNo}</Text>
+                <Button
+                    title="Go"
+                    onPress={this.getStopId.bind(this, index)}
+                />
+                </View>
+                </MapView.Callout>
+                
+                </MapView.Marker>
                    )
         })
       }  else if (this.props.modalState > 0) {
         allStops = null;
     }
+}
       
 var busStop = null;
 if(this.props.busStopCoords){
@@ -168,7 +181,13 @@ const styles = StyleSheet.create({
       zIndex: -6000
       
   },
-    
+ calloutHeader: {
+     fontWeight: 0.4,
+     textAlign: "center"
+ },
+calloutText: {
+    textAlign: "center"
+},
 });
 
 export default KafoMapCombined;
