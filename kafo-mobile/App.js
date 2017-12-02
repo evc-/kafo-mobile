@@ -529,7 +529,7 @@ getAllShopDirections(busChoice){
                       animationType="slide"
                       transparent={false}
                       visible={this.state.modalVisible}
-                      onRequestClose={() => {alert("Modal has been closed.")}}
+                      onRequestClose={() => {this.setModalVisible(false)}}
                       >
                      <View style={{marginTop: 22}}>
                       <View>
@@ -538,7 +538,8 @@ getAllShopDirections(busChoice){
                         <TouchableHighlight onPress={() => {
                           this.setModalVisible(!this.state.modalVisible)
                         }}>
-                          <Text>Hide Modal</Text>
+                            <TouchableOpacity style={styles.rateStyle}><Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 20, fontWeight: 'bold',}}>Got it!</Text>
+                            </TouchableOpacity> 
                         </TouchableHighlight>
 
                       </View>
