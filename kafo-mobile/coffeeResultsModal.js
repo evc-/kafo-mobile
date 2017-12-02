@@ -47,7 +47,7 @@ render() {
                         />
                     </View>
                     <View style={{height: '100%'}}>
-                        <Text style={{fontSize: 28, color: '#303C45', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>{currentValue.name}</Text>
+                        <Text style={{fontSize: 28, color: '#303C45', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}} numberOfLines={1} ellipsizeMode={'tail'}>{currentValue.name}</Text>
                         <Text style={{fontSize: 12, color: '#303C45', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>Bus arrives in {currentValue.nextBus} min{"\n"}</Text>
                         <Text style={{fontSize: 12, color: '#303C45', textAlign: 'left', paddingLeft: 10, paddingBottom: 10}}>Trip time is {currentValue.journeyTime} min</Text>
                     </View>

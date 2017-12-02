@@ -539,10 +539,7 @@ getAllShopDirections(busChoice){
                                 />
                             </TouchableOpacity>
                             <Text style={{textAlign:'center', color: '#42565E', fontWeight: 'bold', fontSize: 15}}> kafo </Text>
-                            <Image 
-                                source={require('./img/top-icons-02.png')} 
-                                style={{width: 15, height: 15}}
-                            />
+                            <Text></Text>
                         </View>
                     <Modal
                         animationType="fade"
