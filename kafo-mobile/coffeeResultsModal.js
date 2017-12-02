@@ -11,6 +11,7 @@ export default class CoffeeResultsModal extends React.Component {
         
         this.startTimer = this.startTimer.bind(this);
         this.changeBusTime = this.changeBusTime.bind(this);
+        this.compareTimesToSort = this.compareTimesToSort.bind(this);
     }
   
     startTimer(i){
@@ -27,13 +28,23 @@ export default class CoffeeResultsModal extends React.Component {
         
     }
     
+    compareTimesToSort(shop1, shop2){
+        return(
+            shop1.journeyTime - shop2.journeyTime
+        )
+    }
+    
 
 render() {
     var selectedColor;
     
     if(this.props.shopWithStatus){
+        console.log(this.props.shopWithStatus);
+        
+        this.props.shopWithStatus.sort(this.compareTimesToSort(this.props.shopWithStatus, this.props.shopWithStatus));
+        
         var shopInfo = this.props.shopWithStatus.map(function callback(currentValue, i) {
-            
+           
         return(
             
     <View key={i}>
@@ -65,6 +76,7 @@ render() {
         </TouchableOpacity>
     </View>
     );
+
 }, this)
 };
 
