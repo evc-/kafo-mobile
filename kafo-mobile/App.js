@@ -180,7 +180,7 @@ selectedShop(data){
     
 //get all bus stops
 tsAllStops(userLocation){
-    fetch('https://kafo-all-stops.herokuapp.com/translink/latlng/'+this.state.userLocation.lat.toFixed(2)+'/'+this.state.userLocation.lng.toFixed(2), {
+    fetch('https://kafo-all-stops.herokuapp.com/translink/latlng/'+this.state.userLocation.lat.toFixed(3)+'/'+this.state.userLocation.lng.toFixed(2), {
         method: 'GET',
         headers:{
             "Content-Type": "application/json"

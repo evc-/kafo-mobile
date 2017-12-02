@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Alert, Image, TouchableOpacity } from 'react-native';
 import KafoHeader from './kafo-header';
+import EndLottie from './endLottie';
 
 export default class EndPageModal extends React.Component {
 
@@ -12,9 +13,7 @@ export default class EndPageModal extends React.Component {
           
      <View>
           <KafoHeader innerText="Thanks for using Kafo!"/>
-            <Text style={{textAlign: 'center', fontSize: 18, color:'#42565E',fontWeight: 'bold', padding: 8}}> Enjoy Your Day! </Text>
-        
-            <Text style={{textAlign: 'center', fontSize: 16, color:'#42565E'}}> If youd like to leave us feeback on your experience, please leave us a rating. {"\n"} </Text>
+            <EndLottie />
     </View>
           
     <View style={{flex:3, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start'}}>
