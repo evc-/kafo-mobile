@@ -39,6 +39,7 @@ componentDidMount() {
     let timeLeftVar = this.secondsToTime(this.state.seconds);
     this.setState({ time: timeLeftVar});
     this.startTimer();
+    this.props.increaseMaxState(4);
   }
     
  startTimer() {
@@ -65,7 +66,7 @@ countDown() {
 endCountdown(){
     clearInterval(this.timer);
     this.props.changeModal(4);
-    this.props.increaseMaxState(4);
+    //this.props.increaseMaxState(4);
 }
 
 componentWillUnmount(){
@@ -77,27 +78,40 @@ render() {
     return (
     <View style={{flex:1, flexDirection: 'column'}}>
         <View>
-            <KafoHeader innerText={"heading to" + this.props.selectedShop.name}/>
+            <KafoHeader innerText={"Heading to " + this.props.selectedShop.name}/>
         </View>
         <View style={{flexDirection:'row', flex: 1, justifyContent:'space-around'}}>
             <View style={{flex: 1}}>
+                <Text style={styles.paragraph1Style}>Trip Breakdown{"\n"}</Text>
+                <Text style={styles.paragraph2Style}>Walk to Shop: {this.props.selectedShop.toShop} minutes</Text>
+                <Text style={styles.paragraph2Style}>Time for Coffee: {this.props.selectedShop.orderTime} minutes</Text>
+                <Text style={styles.paragraph2Style}>Walk to Stop: {this.props.selectedShop.toStop} minutes</Text>
+            </View>
+        
+             <View style={{flex: 1}}>
                 
+                <Text style={styles.paragraph2Style}>Bus arrives in {this.props.minsTillDepart} minutes</Text>
+
             </View>
-            <View style={{flex: 1}}>
-                <Text style={styles.paragraph1Style}>Until Your Bus Arrives{"\n"}
-                <Text style={styles.paragraph2Style}>{this.state.time.m}:{this.state.time.s}</Text>
-                </Text>
-            </View>
-        </View>
-        <View style={{flexDirection:'column', flex:1, alignItems: 'center', justifyContent: 'center'}}>
+        
         {
-            <Image 
-              source={require('./img/bus-tracker-placeholder.png')} 
-                style={{alignSelf: 'center', flex: 1, width: '50%', height: '50%'}}
-            />
+//            <View style={{flex: 1, backgroundColor: '#F7F7F7'}}>
+//                <Text style={styles.paragraph1Style}>Until Your Bus Arrives{"\n"}</Text>
+//                <Text style={styles.paragraph2Style}>{this.state.time.m}:{this.state.time.s}</Text>
+//                <Image 
+//                    source={require('./img/live-update-03.png')}
+//                    style={{width:15, height: 15}}
+//                />
+//            </View>
         }
-        <Button onPress={this.endCountdown} title="Done" />
         </View>
+        {
+//        <View style={{flexDirection:'column', flex:1, alignItems: 'center', justifyContent: 'center'}}>
+//         <TouchableOpacity onPress={() => {this.endCountdown()}} style={styles.rateStyle}>
+//                <Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 12, fontWeight: 'bold'}}>Skip Timer</Text>
+//        </TouchableOpacity> 
+//        </View>
+        }
       </View>
     ); 
   }
@@ -107,15 +121,22 @@ const styles = StyleSheet.create({
     
     paragraph1Style:{
         textAlign: 'left',
-        padding:5,
-        fontSize: 20,
+        paddingLeft:25,
+        fontSize: 16,
         color: '#303C45'
     },
     
     paragraph2Style:{
-        padding:5,
-        fontSize: 15,
+        paddingLeft:25,
+        fontSize: 12,
         color: '#303C45',
       },
+    
+     rateStyle:{
+        padding:10,
+        margin: 15,
+        borderRadius: 8,
+        backgroundColor:'#6fa7a8',
+    }
     
 });

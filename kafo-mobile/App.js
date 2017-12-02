@@ -466,10 +466,11 @@ getAllShopDirections(busChoice){
                         status:shopStatus,
                         nextBus: this.state.selectedBus.Schedules[busChoice].ExpectedCountdown,
                         journeyTime:Number((walkingtimeValue/60).toFixed()),
-                        orderTime:this.state.selectedBus.Schedules[busChoice].ExpectedCountdown - (walkingtimeValue/60) ,
                         coords: this.state.coffeeShopData[index].geometry.location,
                         polyline: polyline,
-                        
+                        toShop: (currentValue.routes[0].legs[0].duration.value/60).toFixed(),
+                        toStop: (currentValue.routes[0].legs[1].duration.value/60).toFixed(),
+                        orderTime:(this.state.selectedBus.Schedules[busChoice].ExpectedCountdown - (walkingtimeValue/60)).toFixed()
                    }
 
                  return shopWithStatus;
@@ -543,22 +544,29 @@ getAllShopDirections(busChoice){
                                 style={{width: 15, height: 15}}
                             />
                         </View>
-                <View> 
                     <Modal
-                        animationType="slide"
-                        transparent={false}
+                        animationType="fade"
+                        transparent={true}
                         visible={this.state.modalVisible}
                         onRequestClose={() => {this.setModalVisible(false)}}
+                        style={{marginTop: 50, marginLeft:50, marginRight: 50, marginBottom: 50, justifyContent: 'center', alignItems: 'center', height: '80%', borderRadius: 15, overflow: 'hidden'}}
+                        backdropOpacity = {0.5}
                     >
-                    <View style={{marginTop: 22}}>
+                    <View style={{marginLeft:10, marginRight: 10, justifyContent: 'center', alignItems: 'center',  backgroundColor:'#F7F7F7', borderRadius: 15, overflow: 'hidden', top:50, elevation: 4, shadowRadius: 4, shadowOpacity: 0.5, shadowOffset: {width: 4, height: 4}, shadowColor: '#42565E'}}>
                       <View>
-                        <Text></Text>
-                            <TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={styles.rateStyle}><Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 20, fontWeight: 'bold',}}>Got it!</Text>
+                        <Image 
+                            source={require('./img/kafo-logo.png')}
+                            style={{width: 70, height: 70}}
+                            />
+                            <Text style={{textAlign: 'center', paddingLeft: 10, paddingRight: 10}}>
+                                Wondering if you've got enough time to make it to a coffee shop and back before your bus comes? We've got you. Enter your bus stop ID, or find it on the map, then choose the bus you're catching.  Coffee shops marked green are good to go! We've factored in how long it'll take to walk to the shop from your location, order a coffee, and walk to your bus stop, and determined that you won't miss your bus. Orange shops are a close call, and red shops are too far away. Keep an eye on the live countdown, and we'll alert you when your bus is a minute away!
+                            </Text>
+                            <TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={styles.rateStyle}>
+                                <Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 20, fontWeight: 'bold'}}>Got it </Text>
                             </TouchableOpacity> 
                       </View>
                      </View>
                     </Modal>
-                </View>
                 <KafoMapCombined
                     changeModalState = {this.changeModalState}
                     modalState = {this.state.modalState}
@@ -622,6 +630,13 @@ const styles = StyleSheet.create({
     dotStyleGrey:{
         color: 'grey',
         fontSize: 30
+    },
+    
+    rateStyle:{
+        padding:10,
+        margin: 15,
+        borderRadius: 8,
+        backgroundColor:'#6fa7a8',
     }
     
 });
