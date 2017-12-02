@@ -6,6 +6,7 @@ import ArrivalModal from './arrivalModal';
 import KafoModal from './kafo-modal';
 import CoffeeResultsModal from './coffeeResultsModal';
 import Loading from './loading';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 
 export default class App extends React.Component {
@@ -33,7 +34,8 @@ export default class App extends React.Component {
             busArrivalChoice: 0,
             coords:[],
             maxState: 0,
-            modalVisible: false
+            modalVisible: false,
+            gestureName: 'none',
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
@@ -52,6 +54,8 @@ export default class App extends React.Component {
         this.navForward = this.navForward.bind(this);
         this.increaseMaxState = this.increaseMaxState.bind(this);
         this.setModalVisible = this.setModalVisible.bind(this);
+        this.onSwipeLeft = this.onSwipeLeft.bind(this);
+        this.onSwipeRight = this.onSwipeRight.bind(this);
      }
 
 /*SIMPLE FUNCTIONS*/
@@ -158,6 +162,19 @@ navForward(){
  setModalVisible(visible) {
     this.setState({modalVisible: visible});
      console.log("click modal");
+  }
+
+ onSwipeLeft(gestureState) {
+    //this.setState({myText: 'You swiped left!'});
+    console.log("swipe forward");
+    this.navForward();
+  }
+
+  onSwipeRight(gestureState) {
+    //this.setState({myText: 'You swiped right!'});
+      console.log("swipe back");
+      this.navBack();
+      
   }
 
 /*API CALLS*/
@@ -468,6 +485,13 @@ getAllShopDirections(busChoice){
 }
   render() {
       
+       const config = {
+            velocityThreshold: 0.3,
+            directionalOffsetThreshold: 80
+        };
+      
+      
+      
        var display = null;
      if(this.state.toggle === false){
         display = (
@@ -503,10 +527,9 @@ getAllShopDirections(busChoice){
                 );
 
     return (
+        <View>
             <View style={{flexDirection: 'column'}}>
-
                 <View style={{flexDirection: 'column', alignItems: 'center'}}> 
-        
                         <View style={{height: Dimensions.get('window').height * .1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor:'rgba(255, 255, 255, 0.7)', width: '100%', paddingTop: 30, paddingBottom: 5, paddingLeft: 10, paddingRight: 10}}>
                             <TouchableOpacity onPress={() => {this.setModalVisible(true)}}>
                                 <Image 
@@ -514,86 +537,64 @@ getAllShopDirections(busChoice){
                                     style={{width: 15, height: 15}}
                                 />
                             </TouchableOpacity>
-
                             <Text style={{textAlign:'center', color: '#42565E', fontWeight: 'bold', fontSize: 15}}> kafo </Text>
-
                             <Image 
                                 source={require('./img/top-icons-02.png')} 
                                 style={{width: 15, height: 15}}
                             />
-    
-                    </View>
-
-                  <View>
+                        </View>
+                <View> 
                     <Modal
-                      animationType="slide"
-                      transparent={false}
-                      visible={this.state.modalVisible}
-                      onRequestClose={() => {this.setModalVisible(false)}}
-                      >
-                     <View style={{marginTop: 22}}>
+                        animationType="slide"
+                        transparent={false}
+                        visible={this.state.modalVisible}
+                        onRequestClose={() => {this.setModalVisible(false)}}
+                    >
+                    <View style={{marginTop: 22}}>
                       <View>
-                        <Text>Hello World!</Text>
-
-                        <TouchableHighlight onPress={() => {
-                          this.setModalVisible(!this.state.modalVisible)
-                        }}>
-                            <TouchableOpacity style={styles.rateStyle}><Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 20, fontWeight: 'bold',}}>Got it!</Text>
+                        <Text></Text>
+                            <TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={styles.rateStyle}><Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 20, fontWeight: 'bold',}}>Got it!</Text>
                             </TouchableOpacity> 
-                        </TouchableHighlight>
-
                       </View>
                      </View>
                     </Modal>
-                  </View>
-
-
-                    <KafoMapCombined
-                        changeModalState = {this.changeModalState}
-                        modalState = {this.state.modalState}
-                        getBusStopCoords = {this.tsStopCall}
-                        coffeeShopData = {this.state.coffeeShopData} 
-                        userLat = {this.state.userLocation.lat}
-                        userLng = {this.state.userLocation.lng}
-                        busStopCoords = {this.state.busStopCoords} 
-                        coords = {this.state.coords}
-                        shopWithStatus = {this.state.shopWithStatus}
-                        bs = {this.state.bs}
-                        tsAllStops = {this.tsAllStops}
-                        allBusStops = {this.state.allBusStops}
-                        />
                 </View>
-
+                <KafoMapCombined
+                    changeModalState = {this.changeModalState}
+                    modalState = {this.state.modalState}
+                    getBusStopCoords = {this.tsStopCall}
+                    coffeeShopData = {this.state.coffeeShopData} 
+                    userLat = {this.state.userLocation.lat}
+                    userLng = {this.state.userLocation.lng}
+                    busStopCoords = {this.state.busStopCoords} 
+                    coords = {this.state.coords}
+                    shopWithStatus = {this.state.shopWithStatus}
+                    bs = {this.state.bs}
+                    tsAllStops = {this.tsAllStops}
+                    allBusStops = {this.state.allBusStops}
+                    />
+            </View>
+            <GestureRecognizer
+                onSwipeLeft={(state) => this.onSwipeLeft(state)}
+                onSwipeRight={(state) => this.onSwipeRight(state)}
+                config={config}
+                style={{flex: 1}}
+            >
                 <View style={[styles.modalStyle, {bottom: Dimensions.get('window').height * .4 + this.state.positionBump}]}>
                     <View style={{flex:7}}>
                         {modal} 
                     </View>
-                    <View style={{backgroundColor:'#42565E', flex:1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}> 
-                        
-                        <TouchableOpacity onPress={()=> {this.navBack()}}>
-                            <Image 
-                                source={require('./img/arrow-02.png')} 
-                                style={{width: 40, height: 40, alignSelf: 'flex-end'}}
-                            />
-                        </TouchableOpacity>
-
+                    <View style={{backgroundColor:'#42565E', flex:1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                         <Text style={this.state.modalState == 0 ? styles.dotStyleBig : 0 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
                         <Text style={this.state.modalState == 1 ? styles.dotStyleBig : 1 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
                         <Text style={this.state.modalState == 2 ? styles.dotStyleBig : 2 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
                         <Text style={this.state.modalState == 3 ? styles.dotStyleBig : 3 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
                         <Text style={this.state.modalState == 4 ? styles.dotStyleBig : 4 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
-
-                        <TouchableOpacity onPress={()=> this.navForward()}>
-                            <Image 
-                                source={require('./img/arrow-01.png')} 
-                                style={{width: 40, height: 40, alignSelf: 'flex-end'}}
-                            />
-                        </TouchableOpacity>
-
                     </View>  
                 </View>
-        
-            </View>
+            </GestureRecognizer>
+        </View> 
+    </View>  
 
             );
       } 

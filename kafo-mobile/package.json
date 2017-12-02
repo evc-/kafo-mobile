@@ -24,7 +24,8 @@
     "react": "16.0.0-alpha.12",
     "react-native": "https://github.com/expo/react-native/archive/sdk-21.0.2.tar.gz",
     "react-native-countdown-clock": "^2.0.2",
-    "react-native-maps": "^0.17.1"
+    "react-native-maps": "^0.17.1",
+    "react-native-swipe-gestures": "^1.0.2"
   },
   "description": "This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).",
   "author": "",
