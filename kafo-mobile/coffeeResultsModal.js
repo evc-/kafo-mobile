@@ -39,14 +39,11 @@ render() {
     var selectedColor;
     
     if(this.props.shopWithStatus){
-        console.log(this.props.shopWithStatus);
-        
-        this.props.shopWithStatus.sort(this.compareTimesToSort(this.props.shopWithStatus, this.props.shopWithStatus));
-        
-        var shopInfo = this.props.shopWithStatus.map(function callback(currentValue, i) {
-           
-        return(
-            
+        if (this.props.shopWithStatus.length > 1){
+            this.props.shopWithStatus.sort(this.compareTimesToSort(this.props.shopWithStatus, this.props.shopWithStatus));
+        }
+            var shopInfo = this.props.shopWithStatus.map(function callback(currentValue, i) {
+                return( 
     <View key={i}>
       <TouchableOpacity onPress={this.startTimer.bind(this, i)} style={i%2==1 ? styles.touchableStyle1 : styles.touchableStyle2}> 
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>

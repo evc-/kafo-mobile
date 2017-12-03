@@ -74,9 +74,6 @@ componentWillUnmount(){
      clearInterval(this.timer);
 }
     
-performLinearAnimation(toValue, duration){
-    this.refs.circularProgress.performLinearAnimation(100, 8000);
-  }
 
     
 render() {
@@ -100,14 +97,13 @@ render() {
                 <AnimatedCircularProgress
                   size={120}
                   width={15}
-                  fill={100}
+                  fill={this.state.seconds/(this.props.minsTillDepart*60)}
                   tintColor='#42565E'
                   onAnimationComplete={() => console.log('onAnimationComplete')}
                   backgroundColor="EEEEEE"
-                    ref='circularProgress'
-                    
-                />
-                
+
+                  />
+
                 <Text style={styles.paragraph2Style}>Bus arrives in {this.props.minsTillDepart} minutes</Text>
 
             </View>
