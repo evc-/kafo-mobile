@@ -54,6 +54,7 @@ class KafoModal extends Component {
                             tsStopCall={this.props.tsStopCall} 
                             changeModal={this.changeModal}
                             setBusStopNum={this.props.setBusStopNum}
+                            idFromMap = {this.props.idFromMap}
                         />
                     
                 </View>

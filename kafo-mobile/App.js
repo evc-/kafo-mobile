@@ -36,6 +36,7 @@ export default class App extends React.Component {
             maxState: 0,
             modalVisible: false,
             gestureName: 'none',
+            idFromMap: null
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
@@ -56,6 +57,7 @@ export default class App extends React.Component {
         this.setModalVisible = this.setModalVisible.bind(this);
         this.onSwipeLeft = this.onSwipeLeft.bind(this);
         this.onSwipeRight = this.onSwipeRight.bind(this);
+        this.loadStopid = this.loadStopid.bind(this);
      }
 
 /*SIMPLE FUNCTIONS*/
@@ -166,16 +168,23 @@ navForward(){
 
  onSwipeLeft(gestureState) {
     //this.setState({myText: 'You swiped left!'});
-    console.log("swipe forward");
+    //console.log("swipe forward");
     this.navForward();
   }
 
   onSwipeRight(gestureState) {
     //this.setState({myText: 'You swiped right!'});
-      console.log("swipe back");
+      //console.log("swipe back");
       this.navBack();
-      
   }
+
+loadStopid(id){
+    this.setState({
+        idFromMap: id
+    })
+    console.log("save state in app");
+    console.log(this.state.idFromMap);
+}
 
 /*API CALLS*/
 
@@ -207,6 +216,7 @@ tsAllStops(userLocation){
         this.setState({
             bs:response
         });
+        console.log(this.state.bs)
     })
     .catch((error) => {
         //console.log(error);
@@ -523,6 +533,7 @@ getAllShopDirections(busChoice){
                         changeBusArrival = {this.changeBusArrival}
                         busArrivalChoice ={this.state.busArrivalChoice}
                         increaseMaxState = {this.increaseMaxState}
+                        idFromMap = {this.state.idFromMap}
                         >
                         </KafoModal>
                 );
@@ -577,6 +588,7 @@ getAllShopDirections(busChoice){
                     bs = {this.state.bs}
                     tsAllStops = {this.tsAllStops}
                     allBusStops = {this.state.allBusStops}
+                    loadStopid = {this.loadStopid}
                     />
             </View>
             <GestureRecognizer

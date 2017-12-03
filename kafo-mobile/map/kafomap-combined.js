@@ -21,9 +21,9 @@ class KafoMapCombined extends Component {
 //        this.getDirections(this.props.userLat, this.props.userLng,this.props.sendShopIndex.coords.lat,this.props.sendShopIndex.coords.lng)
 //        }    
 //    }
+    
 getStopId(i){
-    console.log("Hello!");
-    console.log(this.props.bs[i]);
+    this.props.loadStopid(i);
     }
     
 busStop(){
@@ -36,9 +36,7 @@ busStop(){
 }
     
 componentDidMount(){
-    if(true){
-        this.props.tsAllStops();
-    }
+    this.props.tsAllStops();
 }
 
 
@@ -62,32 +60,28 @@ var allStops = null;
 
 if(this.props.modalState === 0 ){
 if(this.props.bs){
-    //console.log(this.props.bs);
+    console.log("loading markers");
     allStops = this.props.bs.map((stop, index) => {
             return (
-            <MapView.Marker
-                key = {index}
-                id={stop.stopNo}
-                coordinate={{
-                latitude: stop.Latitude,
-                longitude: stop.Longitude,
-              }}
-            >
-                <MapView.Callout>
-                    <View>
-                <Text style={styles.calloutHeader}>{stop.Name}</Text>
-                <Text style={styles.calloutText}>Stop Number: {stop.StopNo}</Text>
-                <Button
-                    title="Go"
-                    onPress={this.getStopId.bind(this, index)}
-                />
-                </View>
-                </MapView.Callout>
-                
+                <MapView.Marker
+                    key = {index}
+                    id={stop.stopNo}
+                    coordinate={{
+                    latitude: stop.Latitude,
+                    longitude: stop.Longitude,
+                  }}
+                    image={require('../img/bus2.png')}>
+                        <MapView.Callout
+                                 onPress={()=>this.getStopId(stop.StopNo)}>
+                            <View>
+                                <Text style={styles.calloutHeader}>{stop.Name}</Text>
+                                <Text style={styles.calloutText}>Stop Number: {stop.StopNo}</Text>
+                            </View>
+                        </MapView.Callout>
                 </MapView.Marker>
-                   )
-        })
-      }  else if (this.props.modalState > 0) {
+            )
+        }, this)
+      } else if (this.props.modalState > 0) {
         allStops = null;
     }
 }
