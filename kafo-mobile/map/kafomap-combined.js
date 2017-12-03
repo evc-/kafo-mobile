@@ -16,11 +16,6 @@ class KafoMapCombined extends Component {
     this.getStopId = this.getStopId.bind(this);
     }
 
-//componentDidMount(){
-//    if(true){
-//        this.getDirections(this.props.userLat, this.props.userLng,this.props.sendShopIndex.coords.lat,this.props.sendShopIndex.coords.lng)
-//        }    
-//    }
     
 getStopId(i){
     this.props.loadStopid(i);
@@ -47,7 +42,6 @@ componentDidMount(){
   render(){
 var walkingLine = null;
       if(this.props.coords){ 
-//          console.log(this.decode(this.props.coords))
           walkingLine = (
             <MapView.Polyline 
             coordinates={this.decode(this.props.coords)}
@@ -100,7 +94,6 @@ if(this.props.busStopCoords){
 
 var comp=null;
 var coffeeResp = null;
-//console.log(this.props.shopWithStatus);
  if (this.props.modalState >= 1){
           if (this.props.shopWithStatus){
             coffeeResp = this.props.shopWithStatus.map((currentValue, index, array)=>{
@@ -156,10 +149,10 @@ var coffeeResp = null;
          image={require('../img/user-location.png')}
              
         />
-        {allStops}
-        {busStop}
-        {coffeeResp}
-        {walkingLine}
+            {allStops}
+            {busStop}
+            {coffeeResp}
+            {walkingLine}
         </MapView>
         </View>  
 
