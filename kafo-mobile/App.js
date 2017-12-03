@@ -36,6 +36,7 @@ export default class App extends React.Component {
             maxState: 0,
             modalVisible: false,
             gestureName: 'none',
+            idFromMap: null
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
@@ -56,6 +57,7 @@ export default class App extends React.Component {
         this.setModalVisible = this.setModalVisible.bind(this);
         this.onSwipeLeft = this.onSwipeLeft.bind(this);
         this.onSwipeRight = this.onSwipeRight.bind(this);
+        this.loadStopid = this.loadStopid.bind(this);
      }
 
 /*SIMPLE FUNCTIONS*/
@@ -166,16 +168,23 @@ navForward(){
 
  onSwipeLeft(gestureState) {
     //this.setState({myText: 'You swiped left!'});
-    console.log("swipe forward");
+    //console.log("swipe forward");
     this.navForward();
   }
 
   onSwipeRight(gestureState) {
     //this.setState({myText: 'You swiped right!'});
-      console.log("swipe back");
+      //console.log("swipe back");
       this.navBack();
-      
   }
+
+loadStopid(id){
+    this.setState({
+        idFromMap: id
+    })
+    console.log("save state in app");
+    console.log(this.state.idFromMap);
+}
 
 /*API CALLS*/
 
@@ -207,6 +216,7 @@ tsAllStops(userLocation){
         this.setState({
             bs:response
         });
+        console.log(this.state.bs)
     })
     .catch((error) => {
         //console.log(error);
@@ -399,7 +409,6 @@ getCoffeeShops(){
 }
 
 //send directions request to google maps for 'from user location to bus stop with coffee shop on the way' 
-//returns a 'promise' which is sort of like an unfulfilled request 
 apiWaypoints(coffeeShop, busStop){    
     return fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&destination="+busStop.lat+","+busStop.lng+"&waypoints="+coffeeShop.lat+","+coffeeShop.lng+"&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI")
             .then((directionsResp)=>{
@@ -524,6 +533,7 @@ getAllShopDirections(busChoice){
                         changeBusArrival = {this.changeBusArrival}
                         busArrivalChoice ={this.state.busArrivalChoice}
                         increaseMaxState = {this.increaseMaxState}
+                        idFromMap = {this.state.idFromMap}
                         >
                         </KafoModal>
                 );
@@ -550,20 +560,21 @@ getAllShopDirections(busChoice){
                         style={{marginTop: 50, marginLeft:50, marginRight: 50, marginBottom: 50, justifyContent: 'center', alignItems: 'center', height: '80%', borderRadius: 15, overflow: 'hidden'}}
                         backdropOpacity = {0.5}
                     >
-                    <View style={{marginLeft:10, marginRight: 10, justifyContent: 'center', alignItems: 'center',  backgroundColor:'#F7F7F7', borderRadius: 15, overflow: 'hidden', top:50, elevation: 4, shadowRadius: 4, shadowOpacity: 0.5, shadowOffset: {width: 4, height: 4}, shadowColor: '#42565E'}}>
-                      <View>
-                        <Image 
-                            source={require('./img/kafo-logo.png')}
-                            style={{width: 70, height: 70}}
-                            />
-                            <Text style={{textAlign: 'center', paddingLeft: 10, paddingRight: 10}}>
-                                Wondering if you've got enough time to make it to a coffee shop and back before your bus comes? We've got you. Enter your bus stop ID, or find it on the map, then choose the bus you're catching.  Coffee shops marked green are good to go! We've factored in how long it'll take to walk to the shop from your location, order a coffee, and walk to your bus stop, and determined that you won't miss your bus. Orange shops are a close call, and red shops are too far away. Keep an eye on the live countdown, and we'll alert you when your bus is a minute away!
-                            </Text>
-                            <TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={styles.rateStyle}>
-                                <Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 20, fontWeight: 'bold'}}>Got it </Text>
-                            </TouchableOpacity> 
-                      </View>
-                     </View>
+                        <View style={{backgroundColor: 'rgba(255,255,255,0.5)', height: Dimensions.get('window').height, width: Dimensions.get('window').width}}>
+                            <View style={{marginLeft:10, marginRight: 10, justifyContent: 'center', alignItems: 'center',  backgroundColor:'#F7F7F7', borderRadius: 15, overflow: 'hidden', top:50, elevation: 4, shadowRadius: 4, shadowOpacity: 0.5, shadowOffset: {width: 4, height: 4}, shadowColor: '#42565E'}}>
+                              
+                                    <Image 
+                                        source={require('./img/kafo-logo.png')}
+                                        style={{width: 70, height: 70}}
+                                    />
+                                    <Text style={{textAlign: 'center', paddingLeft: 10, paddingRight: 10}}>
+                                        Wondering if you've got enough time to make it to a coffee shop and back before your bus comes? We've got you. Enter your bus stop ID, or find it on the map, then choose the bus you're catching.  Coffee shops marked green are good to go! We've factored in how long it'll take to walk to the shop from your location, order a coffee, and walk to your bus stop, and determined that you won't miss your bus. Orange shops are a close call, and red shops are too far away. Keep an eye on the live countdown, and we'll alert you when your bus is a minute away!
+                                    </Text>
+                                    <TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={styles.rateStyle}>
+                                        <Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 20, fontWeight: 'bold'}}>Got it </Text>
+                                    </TouchableOpacity> 
+                             </View>
+                        </View>
                     </Modal>
                 <KafoMapCombined
                     changeModalState = {this.changeModalState}
@@ -578,6 +589,7 @@ getAllShopDirections(busChoice){
                     bs = {this.state.bs}
                     tsAllStops = {this.tsAllStops}
                     allBusStops = {this.state.allBusStops}
+                    loadStopid = {this.loadStopid}
                     />
             </View>
             <GestureRecognizer

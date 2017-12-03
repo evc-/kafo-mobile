@@ -5,11 +5,12 @@ export default class KafoTextInput extends Component {
     
   constructor(props) {
     super(props);
-    this.state = { text: '' };
+    this.state = { 
+        text: '' 
+    };
       
     this.updateText = this.updateText.bind(this);
   }
-    
     
     updateText(text){
         this.setState({text});
@@ -18,7 +19,21 @@ export default class KafoTextInput extends Component {
             this.props.tsStopCall(text);
         }
     }
-
+    
+    componentWillReceiveProps(nextProps){
+        if (this.props.idFromMap != nextProps.idFromMap){
+            
+            this.updateText((nextProps.idFromMap).toString())
+            
+            this.setState({
+                text: (nextProps.idFromMap).toString()
+            })
+        }
+        console.log(this.props.idFromMap);
+        console.log(this.state.text);
+        console.log("component will update in text input");
+    }
+    
   render() {
     return (
       <TextInput

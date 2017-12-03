@@ -16,14 +16,9 @@ class KafoMapCombined extends Component {
     this.getStopId = this.getStopId.bind(this);
     }
 
-//componentDidMount(){
-//    if(true){
-//        this.getDirections(this.props.userLat, this.props.userLng,this.props.sendShopIndex.coords.lat,this.props.sendShopIndex.coords.lng)
-//        }    
-//    }
+    
 getStopId(i){
-    console.log("Hello!");
-    console.log(this.props.bs[i]);
+    this.props.loadStopid(i);
     }
     
 busStop(){
@@ -36,9 +31,7 @@ busStop(){
 }
     
 componentDidMount(){
-    if(true){
-        this.props.tsAllStops();
-    }
+    this.props.tsAllStops();
 }
 
 
@@ -49,7 +42,6 @@ componentDidMount(){
   render(){
 var walkingLine = null;
       if(this.props.coords){ 
-//          console.log(this.decode(this.props.coords))
           walkingLine = (
             <MapView.Polyline 
             coordinates={this.decode(this.props.coords)}
@@ -62,32 +54,28 @@ var allStops = null;
 
 if(this.props.modalState === 0 ){
 if(this.props.bs){
-    //console.log(this.props.bs);
+    console.log("loading markers");
     allStops = this.props.bs.map((stop, index) => {
             return (
-            <MapView.Marker
-                key = {index}
-                id={stop.stopNo}
-                coordinate={{
-                latitude: stop.Latitude,
-                longitude: stop.Longitude,
-              }}
-            >
-                <MapView.Callout>
-                    <View>
-                <Text style={styles.calloutHeader}>{stop.Name}</Text>
-                <Text style={styles.calloutText}>Stop Number: {stop.StopNo}</Text>
-                <Button
-                    title="Go"
-                    onPress={this.getStopId.bind(this, index)}
-                />
-                </View>
-                </MapView.Callout>
-                
+                <MapView.Marker
+                    key = {index}
+                    id={stop.stopNo}
+                    coordinate={{
+                    latitude: stop.Latitude,
+                    longitude: stop.Longitude,
+                  }}
+                    image={require('../img/default-bus.png')}>
+                        <MapView.Callout
+                                 onPress={()=>this.getStopId(stop.StopNo)}>
+                            <View>
+                                <Text style={styles.calloutHeader}>{stop.Name}</Text>
+                                <Text style={styles.calloutText}>Stop Number: {stop.StopNo}</Text>
+                            </View>
+                        </MapView.Callout>
                 </MapView.Marker>
-                   )
-        })
-      }  else if (this.props.modalState > 0) {
+            )
+        }, this)
+      } else if (this.props.modalState > 0) {
         allStops = null;
     }
 }
@@ -99,27 +87,26 @@ if(this.props.busStopCoords){
                 coordinate={{
                      latitude:this.props.busStopCoords.lat,
                     longitude: this.props.busStopCoords.lng}}
-                    image={require('../img/bus-marker.png')}
+                    image={require('../img/chosen-bus.png')}
                     />  
     )
 }
 
 var comp=null;
 var coffeeResp = null;
-//console.log(this.props.shopWithStatus);
  if (this.props.modalState >= 1){
           if (this.props.shopWithStatus){
             coffeeResp = this.props.shopWithStatus.map((currentValue, index, array)=>{
                 //console.log(currentValue);
                 var statusimg = null;
                     if(currentValue.status === "statusGreen"){
-                        statusimg=require('../img/Green04.png')
+                        statusimg=require('../img/shop-green.png')
                     } 
                     else if(currentValue.status === "statusOrange"){
-                        statusimg=require('../img/Orange04.png')
+                        statusimg=require('../img/shop-orange.png')
                     }
                     else if(currentValue.status === "statusRed"){
-                        statusimg=require('../img/Red04.png')
+                        statusimg=require('../img/shop-red.png')
                     }
                 //console.log("status", statusimg);
                 return(
@@ -159,13 +146,13 @@ var coffeeResp = null;
                 latitude: this.props.userLat,
                 longitude: this.props.userLng,
             }}
-         image={require('../img/user02.png')}
+         image={require('../img/user-location.png')}
              
         />
-        {allStops}
-        {busStop}
-        {coffeeResp}
-        {walkingLine}
+            {allStops}
+            {busStop}
+            {coffeeResp}
+            {walkingLine}
         </MapView>
         </View>  
 
