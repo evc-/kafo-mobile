@@ -561,13 +561,17 @@ getAllShopDirections(busChoice){
                     >
                         <View style={{backgroundColor: 'rgba(255,255,255,0.5)', height: Dimensions.get('window').height, width: Dimensions.get('window').width}}>
                             <View style={{marginLeft:10, marginRight: 10, justifyContent: 'center', alignItems: 'center',  backgroundColor:'#F7F7F7', borderRadius: 15, overflow: 'hidden', top:50, elevation: 4, shadowRadius: 4, shadowOpacity: 0.5, shadowOffset: {width: 4, height: 4}, shadowColor: '#42565E'}}>
-                              
-                                    <Image 
-                                        source={require('./img/kafo-logo.png')}
-                                        style={{width: 70, height: 70}}
-                                    />
+                                    <View style={{width: '90%', alignItems:'center'}}>
+                                        <Image 
+                                            source={require('./img/modal-static-01.png')}
+                                            style={{width: 200, height: 200}}
+                                        />
+                                    </View>
                                     <Text style={{textAlign: 'center', paddingLeft: 10, paddingRight: 10}}>
-                                        Wondering if you've got enough time to make it to a coffee shop and back before your bus comes? We've got you. Enter your bus stop ID, or find it on the map, then choose the bus you're catching.  Coffee shops marked green are good to go! We've factored in how long it'll take to walk to the shop from your location, order a coffee, and walk to your bus stop, and determined that you won't miss your bus. Orange shops are a close call, and red shops are too far away. Keep an eye on the live countdown, and we'll alert you when your bus is a minute away!
+                                        Kafo kafo kafo 
+                                        {
+//                                        Wondering if you've got enough time to make it to a coffee shop and back before your bus comes? We've got you. Enter your bus stop ID, or find it on the map, then choose the bus you're catching.  Coffee shops marked green are good to go! We've factored in how long it'll take to walk to the shop from your location, order a coffee, and walk to your bus stop, and determined that you won't miss your bus. Orange shops are a close call, and red shops are too far away. Keep an eye on the live countdown, and we'll alert you when your bus is a minute away!
+                                    }
                                     </Text>
                                     <TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={styles.rateStyle}>
                                         <Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 20, fontWeight: 'bold'}}>Got it </Text>
