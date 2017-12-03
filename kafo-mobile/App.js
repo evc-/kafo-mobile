@@ -163,7 +163,7 @@ navForward(){
 
  setModalVisible(visible) {
     this.setState({modalVisible: visible});
-     console.log("click modal");
+     //console.log("click modal");
   }
 
  onSwipeLeft(gestureState) {
@@ -182,8 +182,8 @@ loadStopid(id){
     this.setState({
         idFromMap: id
     })
-    console.log("save state in app");
-    console.log(this.state.idFromMap);
+    //console.log("save state in app");
+    //console.log(this.state.idFromMap);
 }
 
 /*API CALLS*/
@@ -216,7 +216,7 @@ tsAllStops(userLocation){
         this.setState({
             bs:response
         });
-        console.log(this.state.bs)
+        //console.log(this.state.bs)
     })
     .catch((error) => {
         //console.log(error);

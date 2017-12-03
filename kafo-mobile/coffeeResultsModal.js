@@ -46,18 +46,16 @@ render() {
                 return( 
     <View key={i}>
       <TouchableOpacity onPress={this.startTimer.bind(this, i)} style={i%2==1 ? styles.touchableStyle1 : styles.touchableStyle2}> 
-            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
-                                                     
-                                                     
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
+                <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', width: '100%'}}>
                     <View style={(currentValue.status == 'statusGreen') ? styles.statusGreenStyle : ((currentValue.status == 'statusRed') ? styles.statusRedStyle : styles.statusOrangeStyle)}>                      
                         <Image 
                             source={require('./img/cup-icon-02.png')} 
                             style={{width: 10, height: 10, alignSelf:'flex-start'}}
                         />
                     </View>
-                    <View style={{height: '100%'}}>
-                        <Text style={{fontSize: 28, color: '#303C45', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}} numberOfLines={1} ellipsizeMode={'tail'}>{currentValue.name}</Text>
+                    <View style={{height: '100%', width: '100%'}}>
+                        <Text style={{width: '85%', fontSize: 28, color: '#303C45', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}} numberOfLines={1} ellipsizeMode={'tail'}>{currentValue.name}</Text>
                         <Text style={{fontSize: 12, color: '#303C45', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>Bus arrives in {currentValue.nextBus} min{"\n"}</Text>
                         <Text style={{fontSize: 12, color: '#303C45', textAlign: 'left', paddingLeft: 10, paddingBottom: 10}}>Trip time is {currentValue.journeyTime} min</Text>
                     </View>

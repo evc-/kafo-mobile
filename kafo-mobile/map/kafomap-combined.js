@@ -68,7 +68,6 @@ if(this.props.bs){
                         <MapView.Callout
                                  onPress={()=>this.getStopId(stop.StopNo)}>
                             <View>
-                                <Text style={styles.calloutHeader}>{stop.Name}</Text>
                                 <Text style={styles.calloutText}>Stop Number: {stop.StopNo}</Text>
                             </View>
                         </MapView.Callout>
