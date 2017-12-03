@@ -38,22 +38,6 @@ export default class CoffeeResultsModal extends React.Component {
 render() {
     var selectedColor;
     
-    console.log(this.props.shopWithStatus);
-    
-    if(this.props.shopWithStatus){
-        var shopInfo = this.props.shopWithStatus.map(function callback(obj, i, currentValue) {
-            var staticStyles= "alignSelf:'flex-start', height: '100%', paddingLeft: 10, paddingRight: 10, justifyContent: 'center'";
-//            var statusColor='#c0d6e4';
-//            if(currentValue.status === "statusGreen"){
-//                statusColor=styles.statusGreenStyle;
-//            }
-//            else if(currentValue.status === "statusOrange"){
-//                 statusColor=styles.statusOrangeStyle;
-//            }
-//            else if(currentValue.status === "statusRed"){
-//                 statusColor=styles.statusRedStyle;
-//            }
-            
     if(this.props.shopWithStatus){
         console.log(this.props.shopWithStatus);
         
@@ -67,7 +51,6 @@ render() {
       <TouchableOpacity onPress={this.startTimer.bind(this, i)} style={i%2==1 ? styles.touchableStyle1 : styles.touchableStyle2}> 
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
-                    <View style={(currentValue.status == "statusGreen") ? styles.statusGreenStyle : (currentValue.status == "statusOrange") ? styles.statusOrangeStyle : styles.statusRedStyle}, {staticStyles}>
                                                      
                                                      
                     <View style={(currentValue.status == 'statusGreen') ? styles.statusGreenStyle : ((currentValue.status == 'statusRed') ? styles.statusRedStyle : styles.statusOrangeStyle)}>                      
@@ -95,7 +78,6 @@ render() {
         </TouchableOpacity>
     </View>
     );
-
 }, this)
 };
 

@@ -379,7 +379,7 @@ getCoffeeShops(){
     }
     else {
 
-        fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500").then((CSresp)=>{
+        fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=1000").then((CSresp)=>{
             console.log("getting coffee shops..")
             return CSresp.json();
         }, (reason)=>{
@@ -617,20 +617,14 @@ const styles = StyleSheet.create({
     
     dotStyleBig: {
         color: 'white',
-<<<<<<< HEAD
         fontSize: 31,
 
-=======
         fontSize: 50,
->>>>>>> cb5982aba2c95fdd7faf586e081e2d9f13967e7c
     },
     
      dotStyleSmall: {
         color: 'white',
-<<<<<<< HEAD
         fontSize: 20,
-
-=======
         fontSize: 30,
     },
     
@@ -644,7 +638,6 @@ const styles = StyleSheet.create({
         margin: 15,
         borderRadius: 8,
         backgroundColor:'#6fa7a8',
->>>>>>> cb5982aba2c95fdd7faf586e081e2d9f13967e7c
     }
     
 });
