@@ -94,16 +94,16 @@ render() {
             </View>
         
              <View style={{flex: 1}}>
+                <Text style={styles.paragraph1Style}>Minutes Until Bus Arrives{"\n"}</Text>
                 <AnimatedCircularProgress
                   size={120}
                   width={15}
-                  fill={this.state.seconds/(this.props.minsTillDepart*60)}
+                  fill={(this.state.seconds/(this.props.minsTillDepart*60)*100)}
                   tintColor='#42565E'
                   onAnimationComplete={() => console.log('onAnimationComplete')}
-                  backgroundColor="EEEEEE"
-
-                  />
-
+                  backgroundColor="EEEEEE">
+                 </AnimatedCircularProgress>
+                
                 <Text style={styles.paragraph2Style}>Bus arrives in {this.props.minsTillDepart} minutes</Text>
 
             </View>
