@@ -70,7 +70,7 @@ if(this.props.bs){
                     latitude: stop.Latitude,
                     longitude: stop.Longitude,
                   }}
-                    image={require('../img/bus2.png')}>
+                    image={require('../img/default-bus.png')}>
                         <MapView.Callout
                                  onPress={()=>this.getStopId(stop.StopNo)}>
                             <View>
@@ -93,7 +93,7 @@ if(this.props.busStopCoords){
                 coordinate={{
                      latitude:this.props.busStopCoords.lat,
                     longitude: this.props.busStopCoords.lng}}
-                    image={require('../img/bus-marker.png')}
+                    image={require('../img/chosen-bus.png')}
                     />  
     )
 }
@@ -107,13 +107,13 @@ var coffeeResp = null;
                 //console.log(currentValue);
                 var statusimg = null;
                     if(currentValue.status === "statusGreen"){
-                        statusimg=require('../img/Green04.png')
+                        statusimg=require('../img/shop-green.png')
                     } 
                     else if(currentValue.status === "statusOrange"){
-                        statusimg=require('../img/Orange04.png')
+                        statusimg=require('../img/shop-orange.png')
                     }
                     else if(currentValue.status === "statusRed"){
-                        statusimg=require('../img/Red04.png')
+                        statusimg=require('../img/shop-red.png')
                     }
                 //console.log("status", statusimg);
                 return(
@@ -153,7 +153,7 @@ var coffeeResp = null;
                 latitude: this.props.userLat,
                 longitude: this.props.userLng,
             }}
-         image={require('../img/user02.png')}
+         image={require('../img/user-location.png')}
              
         />
         {allStops}

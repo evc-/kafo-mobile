@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10, 
         paddingRight: 10, 
         justifyContent: 'center',
-        backgroundColor: '#1e7a29'
+        backgroundColor: '#199e5c'
     }, 
     
     touchableStyle1:{
