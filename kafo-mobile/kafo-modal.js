@@ -12,7 +12,6 @@ class KafoModal extends Component {
         super(props);
         
         this.state={
-            modalState: this.props.modalState,
             selectedBus:'',
             selectedShop:''
         };
@@ -65,13 +64,7 @@ class KafoModal extends Component {
           
           if (this.props.tdata){
                 busResponses = this.props.tdata.map(function callback(currentValue, index, array) {
-                    var minsTillDepart = 0;
-                      for(var i = 0; i < currentValue.Schedules.length; i++){
-                          if(currentValue.Schedules[i].ExpectedCountdown > 0){
-                              minsTillDepart = currentValue.Schedules[i].ExpectedCountdown;
-                              break;
-                          }
-                      }
+                    var minsTillDepart = currentValue.Schedules[this.props.busArrivalChoice].ExpectedCountdown;
                     return(
                         <KafoButton 
                             key={index} 
@@ -84,6 +77,7 @@ class KafoModal extends Component {
                             changeModal={this.changeModal}
                             getCoffeeShops = {this.props.getCoffeeShops}
                             changeBusArrival = {this.props.changeBusArrival}
+                            increaseMaxState = {this.props.increaseMaxState}
                         />
                     );
                 }, this);
@@ -97,11 +91,15 @@ class KafoModal extends Component {
                 
                     <ScrollView style={{flex: 1}}>
                         {busResponses}
-                        <Text style={styles.question2Style}>Not the right busses?</Text>
+            {
+                       // <Text style={styles.question2Style}>Not the right busses?</Text>
+            }
                         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
-                            <TouchableOpacity style={{width: '40%', borderColor: '#6fa7a8', borderWidth: 2, borderRadius: 15,  width: '40%'}} onPress={()=> this.changeModal(0)}>
-                            <Text style={{textAlign: 'center', color: '#6fa7a8'}}>Go Back</Text>
-                            </TouchableOpacity> 
+            {
+//                            <TouchableOpacity style={{width: '40%', borderColor: '#6fa7a8', borderWidth: 2, borderRadius: 15,                                 width: '40%'}} onPress={()=> this.changeModal(0)}>
+//                            <Text style={{textAlign: 'center', color: '#6fa7a8'}}>Go Back</Text>
+//                            </TouchableOpacity> 
+            }
                         </View>
                     </ScrollView>
                 </View>
@@ -121,7 +119,8 @@ class KafoModal extends Component {
                     selectedBusState = {this.props.selectedBusState}
                     getCoffeeShops = {this.props.getCoffeeShops}
                     changeBusArrival = {this.props.changeBusArrival}
-
+                    increaseMaxState = {this.props.increaseMaxState}
+                    
                 />
               
           </View>
@@ -131,19 +130,16 @@ class KafoModal extends Component {
           
           if(this.props.tdata){
                   estimateResponse = this.props.tdata.map(function callback(currentValue, index, array){
-                      var minsTillDepart = 0;
-                      for(var i = 0; i < currentValue.Schedules.length; i++){
-                          if(currentValue.Schedules[i].ExpectedCountdown > 0){
-                              minsTillDepart = currentValue.Schedules[i].ExpectedCountdown;
-                              break;
-                          }
-                      }
+
+                      var minsTillDepart = currentValue.Schedules[this.props.busArrivalChoice].ExpectedCountdown;
+                      
                       return (
                           modal = (
                           <ArrivalModal 
                             changeModal={this.changeModal}
                             minsTillDepart={minsTillDepart}
                             selectedShop = {this.state.selectedShop}
+                            increaseMaxState = {this.props.increaseMaxState}
                           />
                               )
                       );
@@ -152,9 +148,7 @@ class KafoModal extends Component {
       } else if (this.props.modalState === 4){
               modal = (
                 <View>
-                   
                   <EndPageModal/>
-                    
                 </View>
           )
       }

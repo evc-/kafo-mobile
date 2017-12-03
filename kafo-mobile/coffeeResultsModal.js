@@ -11,11 +11,13 @@ export default class CoffeeResultsModal extends React.Component {
         
         this.startTimer = this.startTimer.bind(this);
         this.changeBusTime = this.changeBusTime.bind(this);
+        this.compareTimesToSort = this.compareTimesToSort.bind(this);
     }
   
     startTimer(i){
         this.props.changeModal(3);
         this.props.selectShop(i);
+        this.props.increaseMaxState(3);
     }
     
     changeBusTime(choice){
@@ -24,6 +26,12 @@ export default class CoffeeResultsModal extends React.Component {
             selectedTrip: choice
         })
         
+    }
+    
+    compareTimesToSort(shop1, shop2){
+        return(
+            shop1.journeyTime - shop2.journeyTime
+        )
     }
     
 
@@ -46,6 +54,13 @@ render() {
 //                 statusColor=styles.statusRedStyle;
 //            }
             
+    if(this.props.shopWithStatus){
+        console.log(this.props.shopWithStatus);
+        
+        this.props.shopWithStatus.sort(this.compareTimesToSort(this.props.shopWithStatus, this.props.shopWithStatus));
+        
+        var shopInfo = this.props.shopWithStatus.map(function callback(currentValue, i) {
+           
         return(
             
     <View key={i}>
@@ -53,15 +68,18 @@ render() {
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
                     <View style={(currentValue.status == "statusGreen") ? styles.statusGreenStyle : (currentValue.status == "statusOrange") ? styles.statusOrangeStyle : styles.statusRedStyle}, {staticStyles}>
+                                                     
+                                                     
+                    <View style={(currentValue.status == 'statusGreen') ? styles.statusGreenStyle : ((currentValue.status == 'statusRed') ? styles.statusRedStyle : styles.statusOrangeStyle)}>                      
                         <Image 
                             source={require('./img/cup-icon-02.png')} 
                             style={{width: 10, height: 10, alignSelf:'flex-start'}}
                         />
                     </View>
                     <View style={{height: '100%'}}>
-                        <Text style={{fontSize: 28, color: '#303C45', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>{obj.name}</Text>
-                        <Text style={{fontSize: 12, color: '#303C45', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>Bus arrives in {obj.nextBus} min{"\n"}</Text>
-                        <Text style={{fontSize: 12, color: '#303C45', textAlign: 'left', paddingLeft: 10, paddingBottom: 10}}>Trip time is {obj.journeyTime} min</Text>
+                        <Text style={{fontSize: 28, color: '#303C45', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}} numberOfLines={1} ellipsizeMode={'tail'}>{currentValue.name}</Text>
+                        <Text style={{fontSize: 12, color: '#303C45', textAlign: 'left', fontWeight: 'bold', paddingLeft: 10}}>Bus arrives in {currentValue.nextBus} min{"\n"}</Text>
+                        <Text style={{fontSize: 12, color: '#303C45', textAlign: 'left', paddingLeft: 10, paddingBottom: 10}}>Trip time is {currentValue.journeyTime} min</Text>
                     </View>
     
                 </View>
@@ -77,18 +95,16 @@ render() {
         </TouchableOpacity>
     </View>
     );
+
 }, this)
 };
 
-    return (
-       
-        <View style={{flex:1}} >
-        
-            <View>
-                <KafoHeader innerText={"Time for coffee at these shops"}/>
-            </View>
-        
-                    <View style={{backgroundColor:'#42565E', flexDirection: 'row', justifyContent: 'space-between'}}>
+var arrivalChoices; 
+
+if (this.props.selectedBusState){
+    
+    arrivalChoices = 
+         <View style={{backgroundColor:'#42565E', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={{flex: 4}}>
                                 <Text style={{color: 'white', fontWeight: 'bold', paddingLeft: 5}}>Bus {this.props.selectedBusState.RouteNo}</Text>
                             </View>
@@ -113,10 +129,20 @@ render() {
                                     </Text>
                                 </TouchableOpacity>
                             </View>
-
                     </View>
+;
+}
+
+    return (
+       
+        <View style={{flex:1}} >
         
-        
+            <View>
+                <KafoHeader innerText={"Time for coffee at these shops"}/>
+            </View>
+            <View>
+                {arrivalChoices}
+            </View>
             <ScrollView style={{flex:1}}>
                 {shopInfo}
             </ScrollView>
@@ -130,15 +156,30 @@ render() {
 const styles = StyleSheet.create({
     
     statusRedStyle:{
-        backgroundColor: 'red'
+        alignSelf:'flex-start', 
+        height: '100%', 
+        paddingLeft: 10, 
+        paddingRight: 10, 
+        justifyContent: 'center',
+        backgroundColor: '#C65156'
     },
     
     statusOrangeStyle:{
-        backgroundColor: 'orange'
+        alignSelf:'flex-start', 
+        height: '100%', 
+        paddingLeft: 10, 
+        paddingRight: 10, 
+        justifyContent: 'center',
+        backgroundColor: '#fcd259'
     },
     
     statusGreenStyle:{
-        backgroundColor: 'green'
+        alignSelf:'flex-start', 
+        height: '100%', 
+        paddingLeft: 10, 
+        paddingRight: 10, 
+        justifyContent: 'center',
+        backgroundColor: '#1e7a29'
     }, 
     
     touchableStyle1:{

@@ -13,6 +13,7 @@ export default class KafoButton extends React.Component {
             this.props.selectedBus(this.props.busIndex);
             this.props.getCoffeeShops();
             this.props.changeModal(2);
+            this.props.increaseMaxState(2);
         }
     
 

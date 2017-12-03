@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { AppRegistry, Image, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView,  Text, View, ScrollView, Button, ActivityIndicator } from 'react-native';
+import { Modal, TouchableHighlight, AppRegistry, Image, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView,  TouchableOpacity, Text, View, ScrollView, Button, ActivityIndicator } from 'react-native';
 import KafoTextInput from './kafo-textinput';
 import KafoMapCombined from './map/kafomap-combined';
 import ArrivalModal from './arrivalModal';    
 import KafoModal from './kafo-modal';
 import CoffeeResultsModal from './coffeeResultsModal';
 import Loading from './loading';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 
 export default class App extends React.Component {
@@ -30,8 +31,11 @@ export default class App extends React.Component {
             busStopNum: "",
             toggle: false,
             bs:[],
-            busArrivalChoice: null,
-            coords:[]
+            busArrivalChoice: 0,
+            coords:[],
+            maxState: 0,
+            modalVisible: false,
+            gestureName: 'none',
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
@@ -46,6 +50,12 @@ export default class App extends React.Component {
         this.selectedShop = this.selectedShop.bind(this);
         this.animateEnd = this.animateEnd.bind(this);
         this.changeBusArrival = this.changeBusArrival.bind(this);
+        this.navBack = this.navBack.bind(this);
+        this.navForward = this.navForward.bind(this);
+        this.increaseMaxState = this.increaseMaxState.bind(this);
+        this.setModalVisible = this.setModalVisible.bind(this);
+        this.onSwipeLeft = this.onSwipeLeft.bind(this);
+        this.onSwipeRight = this.onSwipeRight.bind(this);
      }
 
 /*SIMPLE FUNCTIONS*/
@@ -98,7 +108,9 @@ componentWillUnmount() {
   }
          
 keyboardWillShow = (event) => {
-    this.setState({positionBump: event.endCoordinates.height});
+    this.setState({
+        positionBump: event.endCoordinates.height
+    });
 }
 
 keyboardWillHide = (event) => {
@@ -110,7 +122,6 @@ selectedBus(busIndex){
         selectedBus: this.state.translinkData[busIndex]
     });
 }
-
 
 changeModalState(page){
     this.setState({
@@ -130,19 +141,54 @@ changeBusArrival(choice){
     });
 }
 
+increaseMaxState(maxState){
+    this.state.maxState = maxState;
+}
+
+navBack(){
+    if (this.state.modalState == 0){
+    } else {
+        this.changeModalState(this.state.modalState -1);
+    }
+}
+
+navForward(){
+    if (this.state.modalState == 4){
+    } else if (this.state.maxState > this.state.modalState) {
+        this.changeModalState(this.state.modalState +1);
+    }
+}
+
+ setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+     console.log("click modal");
+  }
+
+ onSwipeLeft(gestureState) {
+    //this.setState({myText: 'You swiped left!'});
+    console.log("swipe forward");
+    this.navForward();
+  }
+
+  onSwipeRight(gestureState) {
+    //this.setState({myText: 'You swiped right!'});
+      console.log("swipe back");
+      this.navBack();
+      
+  }
 
 /*API CALLS*/
 
 //sets the coords for the polyline
 selectedShop(data){
     
-    console.log("data", this.state.shopWithStatus[data], this.state.busStopCoords);
+    //console.log("data", this.state.shopWithStatus[data], this.state.busStopCoords);
     var shop = this.state.shopWithStatus[data];
 
     fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&destination="+this.state.busStopCoords.lat+","+this.state.busStopCoords.lng+"&waypoints="+shop.coords.lat+","+shop.coords.lng+"&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI").then((resp)=>{
                 return resp.json();
             }).then((json)=>{
-                console.log("OVER HERE!", json);
+                //console.log("OVER HERE!", json);
                 this.setState({coords: json.routes[0].overview_polyline.points})
             })
    
@@ -151,7 +197,7 @@ selectedShop(data){
     
 //get all bus stops
 tsAllStops(userLocation){
-    fetch('https://kafo-all-stops.herokuapp.com/translink/latlng/'+this.state.userLocation.lat.toFixed(2)+'/'+this.state.userLocation.lng.toFixed(2), {
+    fetch('https://kafo-all-stops.herokuapp.com/translink/latlng/'+this.state.userLocation.lat.toFixed(3)+'/'+this.state.userLocation.lng.toFixed(2), {
         method: 'GET',
         headers:{
             "Content-Type": "application/json"
@@ -163,7 +209,7 @@ tsAllStops(userLocation){
         });
     })
     .catch((error) => {
-        console.log(error);
+        //console.log(error);
     });
 }
 
@@ -174,7 +220,7 @@ tsRouteCall(stopNum) {
           }})
     .then(response => response.json())
     .then((responseJson) => {
-        //console.log(responseJson);
+        console.log(responseJson);
         if (responseJson.Code){
             switch (responseJson.Code) {
                 case "3001":
@@ -191,18 +237,27 @@ tsRouteCall(stopNum) {
                 break;
             }
         } else {
-        this.setState({translinkData:responseJson}); 
-        this.setState({modalState: 1});
+            for (var i=0; i < responseJson.length ; i++){ //splice out negative bus arrival times 
+                var currentRoute = responseJson[i].Schedules;
+                for(var j = 0; j < currentRoute.length; j++){
+                          if(currentRoute[j].ExpectedCountdown < 0){
+                              currentRoute.splice(j, 1);
+                              j--;
+                          }
+                      }
+            }
+            this.setState({translinkData:responseJson}); 
+            this.setState({modalState: 1});
+            () => {this.increaseMaxState(1)};
         }
     },
         (reason) => { //this happens if we can't communicate to translink 
-        console.log(reason);
+        //console.log(reason);
     })
     
     
 }
 
-//get bus stop long and lat from translink 
 tsStopCall(stopNum){
         fetch('https://kafo-stop-call.herokuapp.com/translink/' + stopNum , {method:'GET', headers:{
           "Content-Type": "application/json"
@@ -216,7 +271,7 @@ tsStopCall(stopNum){
         }});
     })
     .catch((error) => {
-        console.log(error);
+       // console.log(error);
     });
 }
 
@@ -318,15 +373,18 @@ getCoffeeShops(){
         this.setState({
                 coffeeShopData: debugShops
             }, 
-                () => {this.getAllShopDirections(0)} //run get walking directions to each shop 
+                () => {this.getAllShopDirections(0)}  
+                 
             );
     }
     else {
-        fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=1000").then((CSresp)=>{
+
+        fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500").then((CSresp)=>{
+            console.log("getting coffee shops..")
             return CSresp.json();
         }, (reason)=>{
             console.log("Get coffee shops fetch failed");
-            console.log(reason);
+           // console.log(reason);
         }
         ).then((CSjson)=>{
             console.log("got the shops");
@@ -401,20 +459,19 @@ getAllShopDirections(busChoice){
                  var walkingtimeValue = currentValue.routes[0].legs[0].duration.value + currentValue.routes[0].legs[1].duration.value;
             
                  var shopStatus = this.checkShopStatus(walkingtimeValue/60, this.state.selectedBus.Schedules[busChoice].ExpectedCountdown);
-                 //currently only getting first bus - we may want to include the second bus as well for high traffic location 
                  
                  var polyline= currentValue.routes[0].legs[0].steps[0].polyline.points;       
-                 //console.log(currentValue);
                  
                  var shopWithStatus = {
                         name:this.state.coffeeShopData[index].name,
                         status:shopStatus,
                         nextBus: this.state.selectedBus.Schedules[busChoice].ExpectedCountdown,
                         journeyTime:Number((walkingtimeValue/60).toFixed()),
-                        orderTime:this.state.selectedBus.Schedules[busChoice].ExpectedCountdown - (walkingtimeValue/60) ,
                         coords: this.state.coffeeShopData[index].geometry.location,
                         polyline: polyline,
-                        
+                        toShop: (currentValue.routes[0].legs[0].duration.value/60).toFixed(),
+                        toStop: (currentValue.routes[0].legs[1].duration.value/60).toFixed(),
+                        orderTime:(this.state.selectedBus.Schedules[busChoice].ExpectedCountdown - (walkingtimeValue/60)).toFixed()
                    }
 
                  return shopWithStatus;
@@ -425,12 +482,16 @@ getAllShopDirections(busChoice){
                  shopWithStatus: Statuses
              });
             
-            //console.log(Statuses);
-            
         });
     }
 }
   render() {
+      
+       const config = {
+            velocityThreshold: 0.3,
+            directionalOffsetThreshold: 80
+        };
+      
       
       
        var display = null;
@@ -461,61 +522,85 @@ getAllShopDirections(busChoice){
                         errorMsg = {this.state.errorMsg}
                         selectedBusState = {this.state.selectedBus}
                         changeBusArrival = {this.changeBusArrival}
+                        busArrivalChoice ={this.state.busArrivalChoice}
+                        increaseMaxState = {this.increaseMaxState}
                         >
                         </KafoModal>
                 );
 
     return (
+        <View>
             <View style={{flexDirection: 'column'}}>
-
                 <View style={{flexDirection: 'column', alignItems: 'center'}}> 
-        
                         <View style={{height: Dimensions.get('window').height * .1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor:'rgba(255, 255, 255, 0.7)', width: '100%', paddingTop: 30, paddingBottom: 5, paddingLeft: 10, paddingRight: 10}}>
-
-                            <Image 
-                                source={require('./img/top-icons-01.png')} 
-                                style={{width: 15, height: 15}}
-                            />
-
+                            <TouchableOpacity onPress={() => {this.setModalVisible(true)}}>
+                                <Image 
+                                    source={require('./img/top-icons-01.png')} 
+                                    style={{width: 15, height: 15}}
+                                />
+                            </TouchableOpacity>
                             <Text style={{textAlign:'center', color: '#42565E', fontWeight: 'bold', fontSize: 15}}> kafo </Text>
-
-                            <Image 
-                                source={require('./img/top-icons-02.png')} 
-                                style={{width: 15, height: 15}}
+                            <Text></Text>
+                        </View>
+                    <Modal
+                        animationType="fade"
+                        transparent={true}
+                        visible={this.state.modalVisible}
+                        onRequestClose={() => {this.setModalVisible(false)}}
+                        style={{marginTop: 50, marginLeft:50, marginRight: 50, marginBottom: 50, justifyContent: 'center', alignItems: 'center', height: '80%', borderRadius: 15, overflow: 'hidden'}}
+                        backdropOpacity = {0.5}
+                    >
+                    <View style={{marginLeft:10, marginRight: 10, justifyContent: 'center', alignItems: 'center',  backgroundColor:'#F7F7F7', borderRadius: 15, overflow: 'hidden', top:50, elevation: 4, shadowRadius: 4, shadowOpacity: 0.5, shadowOffset: {width: 4, height: 4}, shadowColor: '#42565E'}}>
+                      <View>
+                        <Image 
+                            source={require('./img/kafo-logo.png')}
+                            style={{width: 70, height: 70}}
                             />
-    
-                    </View>
-        
-                    <KafoMapCombined
-                        changeModalState = {this.changeModalState}
-                        modalState = {this.state.modalState}
-                        getBusStopCoords = {this.tsStopCall}
-                        coffeeShopData = {this.state.coffeeShopData} 
-                        userLat = {this.state.userLocation.lat}
-                        userLng = {this.state.userLocation.lng}
-                        busStopCoords = {this.state.busStopCoords} 
-                        coords = {this.state.coords}
-                        shopWithStatus = {this.state.shopWithStatus}
-                        bs = {this.state.bs}
-                        tsAllStops = {this.tsAllStops}
-                        allBusStops = {this.state.allBusStops}
-                        />
-                </View>
-
+                            <Text style={{textAlign: 'center', paddingLeft: 10, paddingRight: 10}}>
+                                Wondering if you've got enough time to make it to a coffee shop and back before your bus comes? We've got you. Enter your bus stop ID, or find it on the map, then choose the bus you're catching.  Coffee shops marked green are good to go! We've factored in how long it'll take to walk to the shop from your location, order a coffee, and walk to your bus stop, and determined that you won't miss your bus. Orange shops are a close call, and red shops are too far away. Keep an eye on the live countdown, and we'll alert you when your bus is a minute away!
+                            </Text>
+                            <TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={styles.rateStyle}>
+                                <Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 20, fontWeight: 'bold'}}>Got it </Text>
+                            </TouchableOpacity> 
+                      </View>
+                     </View>
+                    </Modal>
+                <KafoMapCombined
+                    changeModalState = {this.changeModalState}
+                    modalState = {this.state.modalState}
+                    getBusStopCoords = {this.tsStopCall}
+                    coffeeShopData = {this.state.coffeeShopData} 
+                    userLat = {this.state.userLocation.lat}
+                    userLng = {this.state.userLocation.lng}
+                    busStopCoords = {this.state.busStopCoords} 
+                    coords = {this.state.coords}
+                    shopWithStatus = {this.state.shopWithStatus}
+                    bs = {this.state.bs}
+                    tsAllStops = {this.tsAllStops}
+                    allBusStops = {this.state.allBusStops}
+                    />
+            </View>
+            <GestureRecognizer
+                onSwipeLeft={(state) => this.onSwipeLeft(state)}
+                onSwipeRight={(state) => this.onSwipeRight(state)}
+                config={config}
+                style={{flex: 1}}
+            >
                 <View style={[styles.modalStyle, {bottom: Dimensions.get('window').height * .4 + this.state.positionBump}]}>
                     <View style={{flex:7}}>
                         {modal} 
                     </View>
-                    <View style={{backgroundColor:'#42565E', flex:1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}> 
-                        <Text style={this.state.modalState == 0 ? styles.dotStyleBig : styles.dotStyleSmall}>&bull;</Text>
-                        <Text style={this.state.modalState == 1 ? styles.dotStyleBig : styles.dotStyleSmall}>&bull;</Text>
-                        <Text style={this.state.modalState == 2 ? styles.dotStyleBig : styles.dotStyleSmall}>&bull;</Text>
-                        <Text style={this.state.modalState == 3 ? styles.dotStyleBig : styles.dotStyleSmall}>&bull;</Text>
-                        <Text style={this.state.modalState == 4 ? styles.dotStyleBig : styles.dotStyleSmall}>&bull;</Text>
+                    <View style={{backgroundColor:'#42565E', flex:1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                        <Text style={this.state.modalState == 0 ? styles.dotStyleBig : 0 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
+                        <Text style={this.state.modalState == 1 ? styles.dotStyleBig : 1 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
+                        <Text style={this.state.modalState == 2 ? styles.dotStyleBig : 2 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
+                        <Text style={this.state.modalState == 3 ? styles.dotStyleBig : 3 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
+                        <Text style={this.state.modalState == 4 ? styles.dotStyleBig : 4 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
                     </View>  
                 </View>
-        
-            </View>
+            </GestureRecognizer>
+        </View> 
+    </View>  
 
             );
       } 
@@ -532,16 +617,34 @@ const styles = StyleSheet.create({
     
     dotStyleBig: {
         color: 'white',
+<<<<<<< HEAD
         fontSize: 31,
 
+=======
+        fontSize: 50,
+>>>>>>> cb5982aba2c95fdd7faf586e081e2d9f13967e7c
     },
     
      dotStyleSmall: {
         color: 'white',
+<<<<<<< HEAD
         fontSize: 20,
 
+=======
+        fontSize: 30,
+    },
+    
+    dotStyleGrey:{
+        color: 'grey',
+        fontSize: 30
+    },
+    
+    rateStyle:{
+        padding:10,
+        margin: 15,
+        borderRadius: 8,
+        backgroundColor:'#6fa7a8',
+>>>>>>> cb5982aba2c95fdd7faf586e081e2d9f13967e7c
     }
     
 });
-
-
