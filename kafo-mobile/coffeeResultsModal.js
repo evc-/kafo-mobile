@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10, 
         paddingRight: 10, 
         justifyContent: 'center',
-        backgroundColor: 'red'
+        backgroundColor: '#C65156'
     },
     
     statusOrangeStyle:{
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10, 
         paddingRight: 10, 
         justifyContent: 'center',
-        backgroundColor: 'orange'
+        backgroundColor: '#fcd259'
     },
     
     statusGreenStyle:{
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10, 
         paddingRight: 10, 
         justifyContent: 'center',
-        backgroundColor: 'green'
+        backgroundColor: '#1e7a29'
     }, 
     
     touchableStyle1:{
