@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, Image} from 'react-native';
 import KafoHeader from './kafo-header';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 export default class ArrivalModal extends React.Component {
 
@@ -73,7 +74,14 @@ componentWillUnmount(){
      clearInterval(this.timer);
 }
     
+performLinearAnimation(toValue, duration){
+    this.refs.circularProgress.performLinearAnimation(100, 8000);
+  }
+
+    
 render() {
+    
+    
     
     return (
     <View style={{flex:1, flexDirection: 'column'}}>
@@ -89,6 +97,16 @@ render() {
             </View>
         
              <View style={{flex: 1}}>
+                <AnimatedCircularProgress
+                  size={120}
+                  width={15}
+                  fill={100}
+                  tintColor='#42565E'
+                  onAnimationComplete={() => console.log('onAnimationComplete')}
+                  backgroundColor="EEEEEE"
+                    ref='circularProgress'
+                    
+                />
                 
                 <Text style={styles.paragraph2Style}>Bus arrives in {this.props.minsTillDepart} minutes</Text>
 
