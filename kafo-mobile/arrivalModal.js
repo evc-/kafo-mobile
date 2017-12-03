@@ -9,77 +9,54 @@ export default class ArrivalModal extends React.Component {
         super(props);
         
         this.state = {
-            tillDepart: this.props.minsTillDepart, 
-            seconds: Math.floor(this.props.minsTillDepart * 60),
-            time: {}
-        };
+            secondsRemaining: 0
+        }
         
-    this.timer = 0;
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
     this.endCountdown = this.endCountdown.bind(this);
         
     }
     
-secondsToTime(secs){
 
-    let divisor_for_minutes = secs % (60 * 60);
-    let minutes = Math.floor(divisor_for_minutes / 60);
-
-    let divisor_for_seconds = divisor_for_minutes % 60;
-    let seconds = Math.ceil(divisor_for_seconds);
-
-    let obj = {
-      "m": minutes,
-      "s": seconds
-    };
-    return obj;
-  }
-    
 componentDidMount() {
-    let timeLeftVar = this.secondsToTime(this.state.seconds);
-    this.setState({ time: timeLeftVar});
     this.startTimer();
     this.props.increaseMaxState(4);
   }
     
- startTimer() {
-    if (this.timer == 0) {
-      this.timer = setInterval(this.countDown, 1000);
+startTimer() {
+    if (this.state.secondsRemaining == 0) {
+        var initalSeconds= this.props.minsTillDepart *60
+        this.setState({secondsRemaining: initalSeconds})
+        console.log(this.state.secondsRemaining);
+        this.countDown();
     }
   }
     
-countDown() {
-    // Remove one second, set state so a re-render happens.
-    let seconds = this.state.seconds - 1;
-    this.setState({
-      time: this.secondsToTime(seconds),
-      seconds: seconds,
-    });
-    
-    // Check if we're at zero.
-    if (seconds == 0) { 
-      clearInterval(this.timer);
-      this.props.changeModal(4);
-    }
-  }
-    
+countDown(){
+    var interval = setInterval(()=>{ 
+        var lessSeconds = this.state.secondsRemaining -1;
+        this.setState({
+            secondsRemaining: lessSeconds,
+            interval: interval
+       })
+        console.log(Math.round(this.state.secondsRemaining/(this.props.minsTillDepart *60)*100));
+        console.log(this.state.secondsRemaining);
+    }, 1000);
+
+}
+     
 endCountdown(){
     clearInterval(this.timer);
     this.props.changeModal(4);
-    //this.props.increaseMaxState(4);
 }
 
 componentWillUnmount(){
-     clearInterval(this.timer);
+     clearInterval(this.state.interval);
 }
     
-
     
 render() {
-    
-    
-    
     return (
     <View style={{flex:1, flexDirection: 'column'}}>
         <View>
@@ -98,34 +75,13 @@ render() {
                 <AnimatedCircularProgress
                   size={120}
                   width={15}
-                  fill={(this.state.seconds/(this.props.minsTillDepart*60)*100)}
+                  fill={Math.round((this.props.minsTillDepart *60 - this.state.secondsRemaining)/(this.props.minsTillDepart *60)*100)}
                   tintColor='#42565E'
-                  onAnimationComplete={() => console.log('onAnimationComplete')}
                   backgroundColor="EEEEEE">
                  </AnimatedCircularProgress>
-                
                 <Text style={styles.paragraph2Style}>Bus arrives in {this.props.minsTillDepart} minutes</Text>
-
             </View>
-        
-        {
-//            <View style={{flex: 1, backgroundColor: '#F7F7F7'}}>
-//                <Text style={styles.paragraph1Style}>Until Your Bus Arrives{"\n"}</Text>
-//                <Text style={styles.paragraph2Style}>{this.state.time.m}:{this.state.time.s}</Text>
-//                <Image 
-//                    source={require('./img/live-update-03.png')}
-//                    style={{width:15, height: 15}}
-//                />
-//            </View>
-        }
         </View>
-        {
-//        <View style={{flexDirection:'column', flex:1, alignItems: 'center', justifyContent: 'center'}}>
-//         <TouchableOpacity onPress={() => {this.endCountdown()}} style={styles.rateStyle}>
-//                <Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 12, fontWeight: 'bold'}}>Skip Timer</Text>
-//        </TouchableOpacity> 
-//        </View>
-        }
       </View>
     ); 
   }
