@@ -571,6 +571,11 @@ getAllShopDirections(busChoice){
                     3. Coffee shops that are green = good to go!
                        </Text>
                 <Text style={{textAlign: 'center', paddingLeft: 10, paddingRight: 10}}>Enjoy your coffee and catch your bus!</Text>
+                    <Text style={{color: 'grey', fontStyle: 'italic'}}>{"\n"}Swipe up for more</Text>
+                                        <Image 
+                     source={require('./img/arrow-03.png')}
+                     style={{width: 40, height:40}}
+                     />
       </View>
         )
     } else if (this.state.infoModalTab === 2){
@@ -584,11 +589,14 @@ getAllShopDirections(busChoice){
                                     </View>
                 <Text style={{textAlign: 'center', paddingLeft: 10, paddingRight: 10, fontWeight: 'bold'}}>HOW TO PICK A SHOP{"\n"}</Text>
                 <Text style={styles.infoText}>
-                    <Text style={{color: 'green'}}>GREEN</Text>: you have time to get a coffee.{"\n"}{"\n"}
-                    <Text style={{color:'yellow'}}>YELLOW</Text>: it's risky.{"\n"}{"\n"}
-                    <Text style={{color:'red'}}>RED</Text>: don't go to the shop or you will miss your bus!
+                    <Text style={{color: '#199E5C'}}>GREEN</Text>: you have time to get a coffee.{"\n"}{"\n"}
+                    <Text style={{color:'#FCD259'}}>YELLOW</Text>: it's risky.{"\n"}{"\n"}
+                    <Text style={{color:'#C55256'}}>RED</Text>: don't go to the shop or you'll miss your bus!
                        </Text>
                 <Text style={{textAlign: 'center', paddingLeft: 10, paddingRight: 10}}> We calculate the walking time, add ordering time, and track your bus in order to connect you to your caffeine!</Text>
+                <TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={styles.rateStyle}>
+                <Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 20, fontWeight: 'bold'}}>Got it </Text>
+                </TouchableOpacity> 
             </View>
         )
     }
@@ -624,9 +632,6 @@ getAllShopDirections(busChoice){
                         <View style={{backgroundColor: 'rgba(255,255,255,0.5)', height: Dimensions.get('window').height, width: Dimensions.get('window').width}}>
                             <View style={{marginLeft:10, marginRight: 10, justifyContent: 'center', alignItems: 'center',  backgroundColor:'#F7F7F7', borderRadius: 15, overflow: 'hidden', top:50, elevation: 4, shadowRadius: 4, shadowOpacity: 0.5, shadowOffset: {width: 4, height: 4}, shadowColor: '#42565E'}}>
                                     {infoModalText}
-                 <TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={styles.rateStyle}>
-                <Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 20, fontWeight: 'bold'}}>Got it </Text>
-                </TouchableOpacity> 
                              </View>
                         </View>
                     </Modal>
