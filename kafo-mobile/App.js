@@ -544,7 +544,7 @@ getAllShopDirections(busChoice){
         <View>
             <View style={{flexDirection: 'column'}}>
                 <View style={{flexDirection: 'column', alignItems: 'center'}}> 
-                        <View style={{height: Dimensions.get('window').height * .08, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor:'rgba(255, 255, 255, 0.7)', width: '100%', paddingTop: 10, paddingBottom: 0, paddingLeft: 10, paddingRight: 10}}>
+                        <View style={{height: Dimensions.get('window').height * .1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor:'rgba(255, 255, 255, 0.7)', width: '100%', paddingTop: 30, paddingBottom: 10, paddingLeft: 10, paddingRight: 10}}>
                             <TouchableOpacity onPress={() => {this.setModalVisible(true)}}>
                                 <Image 
                                     source={require('./img/top-icons-01.png')} 
@@ -609,7 +609,7 @@ getAllShopDirections(busChoice){
                     <View style={{flex:7}}>
                         {modal} 
                     </View>
-                    <View style={{backgroundColor:'#42565E', flex:1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', top:15}}>
+                    <View style={{backgroundColor:'#42565E', flex:1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                         <Text style={this.state.modalState == 0 ? styles.dotStyleBig : 0 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
                         <Text style={this.state.modalState == 1 ? styles.dotStyleBig : 1 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
                         <Text style={this.state.modalState == 2 ? styles.dotStyleBig : 2 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>

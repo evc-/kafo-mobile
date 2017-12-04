@@ -122,7 +122,7 @@ if (this.props.modalState >= 1){
       }
       
       
-if(this.props.modalState === 3){
+if(this.props.modalState  >= 3){
      var statusimg = null;
           if (this.props.shopWithStatus){
             coffeeResp = this.props.shopWithStatus.map((currentValue, index, array)=>{
