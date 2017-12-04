@@ -62,18 +62,18 @@ render() {
         <View>
             <KafoHeader innerText={"Heading to " + this.props.selectedShop.name}/>
         </View>
-        <View style={{flexDirection:'row', flex: 1, justifyContent:'space-around'}}>
-            <View style={{flex: 1}}>
-                <Text style={styles.paragraph1Style}>Trip Breakdown{"\n"}</Text>
+        <View style={{flexDirection:'row', flex: 1, justifyContent:'center'}}>
+            <View style={{flex: 1, backgroundColor: '#EEEEEE'}}>
+                <Text style={{width: '85%', fontSize: 20, color: '#303C45', textAlign: 'center', fontWeight: 'bold'}}>Trip Breakdown</Text>
                 <Text style={styles.paragraph2Style}>Walk to Shop: {this.props.selectedShop.toShop} minutes</Text>
                 <Text style={styles.paragraph2Style}>Time for Coffee: {this.props.selectedShop.orderTime} minutes</Text>
                 <Text style={styles.paragraph2Style}>Walk to Stop: {this.props.selectedShop.toStop} minutes</Text>
             </View>
         
-             <View style={{flex: 1}}>
-                <Text style={styles.paragraph1Style}>Minutes Until Bus Arrives{"\n"}</Text>
+             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <Text style={{width: '85%', fontSize: 20, color: '#303C45', textAlign: 'center', fontWeight: 'bold'}}>Until Bus Arrives</Text>
                 <AnimatedCircularProgress
-                  size={120}
+                  size={100}
                   width={15}
                   fill={Math.round((this.props.minsTillDepart *60 - this.state.secondsRemaining)/(this.props.minsTillDepart *60)*100)}
                   tintColor='#42565E'
@@ -97,8 +97,8 @@ const styles = StyleSheet.create({
     },
     
     paragraph2Style:{
-        paddingLeft:25,
         fontSize: 12,
+        paddingLeft: 10,
         color: '#303C45',
       },
     
