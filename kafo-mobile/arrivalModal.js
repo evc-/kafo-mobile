@@ -64,7 +64,7 @@ render() {
         </View>
         <View style={{flexDirection:'row', flex: 1, justifyContent:'center'}}>
             <View style={{flex: 1, backgroundColor: '#EEEEEE'}}>
-                <Text style={{width: '85%', fontSize: 20, color: '#303C45', textAlign: 'center', fontWeight: 'bold'}}>Trip Breakdown</Text>
+                <Text style={{width: '85%', fontSize: 20, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 41}}>Trip Breakdown</Text>
                 <Text style={styles.paragraph2Style}>Walk to Shop: {this.props.selectedShop.toShop} minutes</Text>
                 <Text style={styles.paragraph2Style}>Time for Coffee: {this.props.selectedShop.orderTime} minutes</Text>
                 <Text style={styles.paragraph2Style}>Walk to Stop: {this.props.selectedShop.toStop} minutes</Text>
@@ -79,7 +79,7 @@ render() {
                   tintColor='#42565E'
                   backgroundColor="EEEEEE">
                  </AnimatedCircularProgress>
-                <Text style={styles.paragraph2Style}>Bus arrives in {this.props.minsTillDepart} minutes</Text>
+                <Text style={styles.paragraph3Style}>{this.props.minsTillDepart} mins</Text>
             </View>
         </View>
       </View>
@@ -92,21 +92,24 @@ const styles = StyleSheet.create({
     paragraph1Style:{
         textAlign: 'left',
         paddingLeft:25,
-        fontSize: 16,
+        fontSize: 14,
         color: '#303C45'
     },
     
     paragraph2Style:{
-        fontSize: 12,
-        paddingLeft: 10,
+        fontSize: 14,
+        padding: 5,
         color: '#303C45',
       },
-    
-     rateStyle:{
-        padding:10,
-        margin: 15,
-        borderRadius: 8,
-        backgroundColor:'#6fa7a8',
+    paragraph3Style:{
+        fontSize: 14,
+        fontWeight: 'bold',
+        padding: 5,
+        top: '50%',
+        left: '38%',
+        position: 'absolute',
+        color: '#303C45',
     }
+    
     
 });

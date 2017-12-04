@@ -58,7 +58,7 @@ var allStops = null;
 if(this.props.modalState === 0 ){
 if(this.props.bs){
     console.log("loading markers");
-    allStops = this.props.bs.map((stop, index) => {
+    /*allStops = this.props.bs.map((stop, index) => {
             return (
                 <MapView.Marker
                     key = {index}
@@ -76,7 +76,7 @@ if(this.props.bs){
                         </MapView.Callout>
                 </MapView.Marker>
             )
-        }, this)
+        },this)*/
       } else if (this.props.modalState > 0) {
         allStops = null;
     }
