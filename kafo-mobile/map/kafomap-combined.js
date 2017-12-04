@@ -71,21 +71,26 @@ if(this.props.bs){
     }
 }
       
+
+
+var comp=null;
+var coffeeResp = null;
 var busStop = null;
-if(this.props.busStopCoords){
-    busStop = (
-        <MapView.Marker 
-                coordinate={{
-                     latitude:this.props.busStopCoords.lat,
+
+if (this.props.modalState >= 1){
+   
+
+        if(this.props.busStopCoords){
+            busStop = (
+                <MapView.Marker 
+                    coordinate={{
+                    latitude:this.props.busStopCoords.lat,
                     longitude: this.props.busStopCoords.lng}}
                     image={require('../img/chosen-bus.png')}
                     />  
     )
 }
-
-var comp=null;
-var coffeeResp = null;
- if (this.props.modalState >= 1){
+     
           if (this.props.shopWithStatus){
             coffeeResp = this.props.shopWithStatus.map((currentValue, index, array)=>{
                 //console.log(currentValue);
@@ -115,18 +120,34 @@ var coffeeResp = null;
                 });
           }
       }
+      
+      
 if(this.props.modalState === 3){
+     var statusimg = null;
+          if (this.props.shopWithStatus){
+            coffeeResp = this.props.shopWithStatus.map((currentValue, index, array)=>{
+                //console.log(currentValue);
+               
+                    if(currentValue.status === "statusGreen"){
+                        statusimg=require('../img/shop-green.png')
+                    } 
+                    else if(currentValue.status === "statusOrange"){
+                        statusimg=require('../img/shop-orange.png')
+                    }
+                    else if(currentValue.status === "statusRed"){
+                        statusimg=require('../img/shop-red.png')
+                    }})}
+    
     console.log(this.props.shopIndex);
     var shop=this.props.shopIndex;
     coffeeResp = null;
-
     coffeeResp=(
         <MapView.Marker 
             coordinate={{
             latitude: shop.coords.lat,
             longitude: shop.coords.lng}} 
             title={shop.name}
-            image={require('../img/shop-green.png')}
+            image={statusimg}
                     />  
         )            
         
