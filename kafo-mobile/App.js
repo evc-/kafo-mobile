@@ -96,12 +96,12 @@ componentWillUpdate(nextProps, nextState){
        this.getAllShopDirections(nextState.busArrivalChoice);
     }
 }
-    
-selectedShop(data){
-    this.setState({
-        shopIndex:data
-    })
-}
+ 
+//selectedShop(data){
+//    this.setState({
+//        shopIndex:data
+//    })
+//}
 
 componentWillUnmount() {
     this.keyboardWillShowSub.remove();
@@ -193,14 +193,16 @@ selectedShop(data){
     
     //console.log("data", this.state.shopWithStatus[data], this.state.busStopCoords);
     var shop = this.state.shopWithStatus[data];
-
+    
     fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&destination="+this.state.busStopCoords.lat+","+this.state.busStopCoords.lng+"&waypoints="+shop.coords.lat+","+shop.coords.lng+"&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI").then((resp)=>{
                 return resp.json();
             }).then((json)=>{
                 //console.log("OVER HERE!", json);
                 this.setState({coords: json.routes[0].overview_polyline.points})
             })
-   
+   this.setState({
+       shopIndex:shop
+   });
 }    
     
     
@@ -389,7 +391,7 @@ getCoffeeShops(){
     }
     else {
 
-        fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=1000").then((CSresp)=>{
+        fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500").then((CSresp)=>{
             console.log("getting coffee shops..")
             return CSresp.json();
         }, (reason)=>{
@@ -542,14 +544,14 @@ getAllShopDirections(busChoice){
         <View>
             <View style={{flexDirection: 'column'}}>
                 <View style={{flexDirection: 'column', alignItems: 'center'}}> 
-                        <View style={{height: Dimensions.get('window').height * .1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor:'rgba(255, 255, 255, 0.7)', width: '100%', paddingTop: 30, paddingBottom: 5, paddingLeft: 10, paddingRight: 10}}>
+                        <View style={{height: Dimensions.get('window').height * .08, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor:'rgba(255, 255, 255, 0.7)', width: '100%', paddingTop: 10, paddingBottom: 0, paddingLeft: 10, paddingRight: 10}}>
                             <TouchableOpacity onPress={() => {this.setModalVisible(true)}}>
                                 <Image 
                                     source={require('./img/top-icons-01.png')} 
                                     style={{width: 15, height: 15}}
                                 />
                             </TouchableOpacity>
-                            <Text style={{textAlign:'center', color: '#42565E', fontWeight: 'bold', fontSize: 15}}> kafo </Text>
+                            <Text style={{textAlign:'center', color: '#42565E', fontWeight: 'bold', fontSize: 20, left: -10}}> kafo </Text>
                             <Text></Text>
                         </View>
                     <Modal
@@ -585,6 +587,7 @@ getAllShopDirections(busChoice){
                     userLng = {this.state.userLocation.lng}
                     busStopCoords = {this.state.busStopCoords} 
                     coords = {this.state.coords}
+                    shopIndex={this.state.shopIndex}
                     shopWithStatus = {this.state.shopWithStatus}
                     bs = {this.state.bs}
                     tsAllStops = {this.tsAllStops}
@@ -602,7 +605,7 @@ getAllShopDirections(busChoice){
                     <View style={{flex:7}}>
                         {modal} 
                     </View>
-                    <View style={{backgroundColor:'#42565E', flex:1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                    <View style={{backgroundColor:'#42565E', flex:1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', top:15}}>
                         <Text style={this.state.modalState == 0 ? styles.dotStyleBig : 0 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
                         <Text style={this.state.modalState == 1 ? styles.dotStyleBig : 1 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
                         <Text style={this.state.modalState == 2 ? styles.dotStyleBig : 2 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
@@ -629,20 +632,18 @@ const styles = StyleSheet.create({
     
     dotStyleBig: {
         color: 'white',
-        fontSize: 31,
-
-        fontSize: 50,
+        fontSize: 29.5,
+        paddingBottom:1.5
     },
     
      dotStyleSmall: {
         color: 'white',
         fontSize: 20,
-        fontSize: 30,
     },
     
     dotStyleGrey:{
         color: 'grey',
-        fontSize: 30
+        fontSize: 20
     },
     
     rateStyle:{

@@ -30,7 +30,7 @@ export default class CoffeeResultsModal extends React.Component {
     
     compareTimesToSort(shop1, shop2){
         return(
-            shop1.journeyTime - shop2.journeyTime
+            shop1.journeyTime, shop2.journeyTime
         )
     }
     
@@ -42,7 +42,7 @@ render() {
         if (this.props.shopWithStatus.length > 1){
             this.props.shopWithStatus.sort(this.compareTimesToSort(this.props.shopWithStatus, this.props.shopWithStatus));
         }
-            var shopInfo = this.props.shopWithStatus.map(function callback(currentValue, i) {
+            var shopInfo = this.props.shopWithStatus.map((currentValue, i, array)=> {
                 return( 
     <View key={i}>
       <TouchableOpacity onPress={this.startTimer.bind(this, i)} style={i%2==1 ? styles.touchableStyle1 : styles.touchableStyle2}> 
@@ -75,7 +75,7 @@ render() {
         </TouchableOpacity>
     </View>
     );
-}, this)
+})
 };
 
 var arrivalChoices; 

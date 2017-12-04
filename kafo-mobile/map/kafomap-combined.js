@@ -40,16 +40,8 @@ componentDidMount(){
 
 
   render(){
-var walkingLine = null;
-      if(this.props.coords){ 
-          walkingLine = (
-            <MapView.Polyline 
-            coordinates={this.decode(this.props.coords)}
-            strokeWidth={5}
-            strokeColor="#6fa7a8"
-            />
-          )
-      }
+      
+
 var allStops = null;    
 
 if(this.props.modalState === 0 ){
@@ -123,10 +115,36 @@ var coffeeResp = null;
                     )                                      
                 });
           }
-      
-
-
       }
+if(this.props.modalState === 3){
+    console.log(this.props.shopIndex);
+    var shop=this.props.shopIndex;
+    coffeeResp = null;
+
+    coffeeResp=(
+        <MapView.Marker 
+            coordinate={{
+            latitude: shop.coords.lat,
+            longitude: shop.coords.lng}} 
+            title={shop.name}
+            image={require('../img/shop-green.png')}
+                    />  
+        )            
+        
+    var walkingLine = null;
+      if(this.props.coords){ 
+          walkingLine = (
+            <MapView.Polyline 
+            coordinates={this.decode(this.props.coords)}
+            strokeWidth={5}
+            strokeColor="#6fa7a8"
+            />
+          )
+      }
+           
+}
+        
+    
     return (
 
         <View>
