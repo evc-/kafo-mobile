@@ -11,9 +11,14 @@ class KafoMapCombined extends Component {
             error: null,
             coords: [],
             busStopCoords: null,
-            allBusStops:[]
+            allBusStops:[],
+            region:{latitude: this.props.userLat,
+                longitude: this.props.userLng,
+                latitudeDelta: 0.008,
+                longitudeDelta: 0.0008}
         }
     this.getStopId = this.getStopId.bind(this);
+    this.onRegionChange=this.onRegionChange.bind(this);
     }
 
     
@@ -37,6 +42,12 @@ componentDidMount(){
 
 // transforms something like this geocFltrhVvDsEtA}ApSsVrDaEvAcBSYOS_@... to an array of coordinates
     decode(t,e){for(var n,o,u=0,l=0,r=0,d= [],h=0,i=0,a=null,c=Math.pow(10,e||5);u<t.length;){a=null,h=0,i=0;do a=t.charCodeAt(u++)-63,i|=(31&a)<<h,h+=5;while(a>=32);n=1&i?~(i>>1):i>>1,h=i=0;do a=t.charCodeAt(u++)-63,i|=(31&a)<<h,h+=5;while(a>=32);o=1&i?~(i>>1):i>>1,l+=n,r+=o,d.push([l/c,r/c])}return d=d.map(function(t){return{latitude:t[0],longitude:t[1]}})}
+
+onRegionChange(region){
+    this.setState({
+        region:region
+    })
+}
 
 
   render(){
@@ -73,14 +84,12 @@ if(this.props.bs){
       
 
 
-var comp=null;
 var coffeeResp = null;
 var busStop = null;
 
 if (this.props.modalState >= 1){
-   
-
-        if(this.props.busStopCoords){
+    coffeeResp = null;
+    if(this.props.busStopCoords){
             busStop = (
                 <MapView.Marker 
                     coordinate={{
@@ -90,6 +99,12 @@ if (this.props.modalState >= 1){
                     />  
     )
 }
+}
+
+if (this.props.modalState >= 2){
+   
+
+        
      
           if (this.props.shopWithStatus){
             coffeeResp = this.props.shopWithStatus.map((currentValue, index, array)=>{
@@ -163,7 +178,7 @@ if(this.props.modalState  >= 3){
       }
            
 }
-        
+
     
     return (
 
@@ -172,12 +187,8 @@ if(this.props.modalState  >= 3){
          <MapView 
             style={styles.map}
             provider = { PROVIDER_GOOGLE }
-            region={{
-                latitude: this.props.userLat,
-                longitude: this.props.userLng,
-                latitudeDelta: 0.008,
-                longitudeDelta: 0.0008
-            }}
+            onRegionChange={this.onRegionChange}
+            region={this.state.region} 
         >
         <MapView.Marker
             coordinate={{
