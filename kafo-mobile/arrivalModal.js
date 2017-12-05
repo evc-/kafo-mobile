@@ -41,7 +41,6 @@ countDown(){
             secondsRemaining: lessSeconds,
             interval: interval
        })
-        console.log("???????")
         console.log(Math.round(this.state.secondsRemaining/(this.props.minsTillDepart *60)*100));
         console.log(this.state.secondsRemaining);
     }, 1000);
@@ -74,14 +73,15 @@ render() {
         
              <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                 <Text style={{flex: 1, width: '85%', fontSize: 20, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Until Bus Arrives</Text>
+                <Text style={styles.paragraph3Style}>{this.props.minsTillDepart}</Text>
                 <AnimatedCircularProgress
-                  size={175}
-                  width={10}
+                    style={{top:-10}}
+                  size={155}
+                  width={15}
                   fill={Math.round((this.props.minsTillDepart *60 - this.state.secondsRemaining)/(this.props.minsTillDepart *60)*100)}
                   tintColor='#6fa7a8'
                   backgroundColor="EEEEEE">
                  </AnimatedCircularProgress>
-                <Text style={styles.paragraph3Style}>{this.props.minsTillDepart}</Text>
             </View>
         </View>
       </View>
@@ -99,10 +99,10 @@ const styles = StyleSheet.create({
       },
     paragraph3Style:{
         flex: 1,
-        fontSize: 55,
+        fontSize: 50,
         fontWeight: 'bold',
         top: '44%',
-        left: '44%',
+        left: '35%',
         position: 'absolute',
         color: '#6fa7a8'
     }
