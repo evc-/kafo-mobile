@@ -79,6 +79,15 @@ render() {
 var arrivalChoices; 
 
 if (this.props.selectedBusState){
+    var mtime0 = this.props.selectedBusState.Schedules[0].ExpectedLeaveTime.split(" ");
+    var datestr0 = mtime0[0];
+ 
+    var mtime1 = this.props.selectedBusState.Schedules[1].ExpectedLeaveTime.split(" ");
+    var datestr1 = mtime1[0];
+ 
+    var mtime2 = this.props.selectedBusState.Schedules[2].ExpectedLeaveTime.split(" ");
+    var datestr2 = mtime2[0];
+ 
     
     arrivalChoices = 
          <View style={{backgroundColor:'#42565E', flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -88,21 +97,21 @@ if (this.props.selectedBusState){
                             <View style={{flex: 4}}>
                                 <TouchableOpacity onPress={() => this.changeBusTime(0)} style={{backgroundColor:(this.state.selectedTrip === 0)?'#6fa7a8':'#42565E'}}> 
                                     <Text style={{color: 'white', textAlign: 'center'}}>
-                                        {this.props.selectedBusState.Schedules[0].ExpectedLeaveTime}
+                                        {datestr0}
                                     </Text> 
                                 </TouchableOpacity>
                             </View>
                             <View style={{flex: 4}}>
                                 <TouchableOpacity onPress={() => this.changeBusTime(1)} style={{backgroundColor:(this.state.selectedTrip === 1)?'#6fa7a8':'#42565E'}}> 
                                     <Text style={{color: 'white', textAlign: 'center'}}>
-                                        {this.props.selectedBusState.Schedules[1].ExpectedLeaveTime}
+                                        {datestr1}
                                     </Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={{flex: 4}}>
                                 <TouchableOpacity onPress={() => this.changeBusTime(2)} style={{backgroundColor:(this.state.selectedTrip === 2)?'#6fa7a8':'#42565E'}}>
                                     <Text style={{color: 'white', textAlign: 'center'}}>
-                                        {this.props.selectedBusState.Schedules[2].ExpectedLeaveTime}
+                                        {datestr2}
                                     </Text>
                                 </TouchableOpacity>
                             </View>
