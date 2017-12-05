@@ -7,6 +7,8 @@ import KafoModal from './kafo-modal';
 import CoffeeResultsModal from './coffeeResultsModal';
 import Loading from './loading';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import InfoAnim from './infoAnim';
+//import Animation from 'lottie-react-native';
 
 
 export default class App extends React.Component {
@@ -557,38 +559,34 @@ getAllShopDirections(busChoice){
    var infoModalText = null;
     if(this.state.infoModalTab === 1){
         infoModalText = (
-            <View style={{marginLeft:10, marginRight: 10, justifyContent: 'center', alignItems: 'center',  backgroundColor:'#F7F7F7', borderRadius: 15, overflow: 'hidden', elevation: 4, shadowRadius: 4, shadowOpacity: 0.5, shadowOffset: {width: 4, height: 4}, shadowColor: '#42565E'}}>
-            <View style={{width: '90%', alignItems:'center'}}>
-                <Image 
-                    source={require('./img/modal-static-01.png')}
-                    style={{width: 200, height: 200}}
-                                        />
-                                    </View>
-            <Text style={{textAlign: 'center', paddingLeft: 10, paddingRight: 10, fontWeight: 'bold'}}>HOW TO USE KAFO{"\n"}</Text>
-                <Text style={styles.infoText}>
-                    1. Type your bus stop ID, or choose one on the map and tap the bubble above it.{"\n"}{"\n"}
-                    2. Pick your bus route.{"\n"}{"\n"}
-                    3. Coffee shops that are green = good to go!
-                       </Text>
-                <Text style={{textAlign: 'center', paddingLeft: 10, paddingRight: 10}}>Enjoy your coffee and catch your bus!</Text>
-                    <Text style={{color: 'grey', fontStyle: 'italic'}}>{"\n"}Swipe up for more</Text>
-                                        <Image 
-                     source={require('./img/arrow-03.png')}
-                     style={{width: 40, height:40}}
-                     />
+            <View style={{marginLeft:10, marginRight: 10, width:300, height:300, justifyContent: 'center', alignItems: 'center',  backgroundColor:'#F7F7F7', borderRadius: 15, elevation: 4}}>
+                    
+            <InfoAnim />
+            <Text style={styles.infoText}>
+                <Text>1. Type your bus stop ID, or choose one on the map and tap the bubble above it</Text>{"\n"}
+                <Text>2. Pick your bus route</Text>{"\n"}
+                <Text>3. Coffee shops that are green = good to go!</Text>
+            </Text>
+            <Text style={{color: 'grey', fontStyle: 'italic', top:80}}>{"\n"}Swipe up for more</Text>
+             <Image 
+                source={require('./img/arrow-03.png')}
+                style={{width: 40, height:40, top:80}}
+            />
+            
       </View>
         )
     } else if (this.state.infoModalTab === 2){
         infoModalText = (
             <View style={{marginLeft:10, marginRight: 10, justifyContent: 'center', alignItems: 'center',  backgroundColor:'#F7F7F7', borderRadius: 15, overflow: 'hidden', elevation: 4, shadowRadius: 4, shadowOpacity: 0.5, shadowOffset: {width: 4, height: 4}, shadowColor: '#42565E'}}>
             <View style={{width: '90%', alignItems:'center'}}>
+                                    </View>
                 <Image 
                     source={require('./img/modal-static-01.png')}
                     style={{width: 200, height: 200}}
-                                        />
-                                    </View>
+                />
                 <Text style={{textAlign: 'center', paddingLeft: 10, paddingRight: 10, fontWeight: 'bold'}}>HOW TO PICK A SHOP{"\n"}</Text>
-                <Text style={styles.infoText}>
+                <Text style={styles.infoText2}>
+            
                     <Text style={{color: '#199E5C'}}>GREEN</Text>: you have time to get a coffee.{"\n"}{"\n"}
                     <Text style={{color:'#FCD259'}}>YELLOW</Text>: it's risky.{"\n"}{"\n"}
                     <Text style={{color:'#C55256'}}>RED</Text>: don't go to the shop or you'll miss your bus!
@@ -609,7 +607,7 @@ getAllShopDirections(busChoice){
                             <TouchableOpacity onPress={() => {this.setModalVisible(true)}}>
                                 <Image 
                                     source={require('./img/top-icons-01.png')} 
-                                    style={{width: 15, height: 15}}
+                                    style={{width: 25, height: 25}}
                                 />
                             </TouchableOpacity>
                             <Text style={{textAlign:'center', color: '#42565E', fontWeight: 'bold', fontSize: 20, left: -10}}> kafo </Text>
@@ -711,7 +709,10 @@ const styles = StyleSheet.create({
         backgroundColor:'#6fa7a8',
     }, 
     infoText:{
-        padding:10
+        top:80
     },
+    infoText2:{
+        padding: 30
+    }
     
 });
