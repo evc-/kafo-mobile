@@ -21,7 +21,8 @@ export default class InfoAnim extends Component {
               width: 300,
               height: 200,
                 position:"absolute",
-                top:8
+                top:8,
+        left:20
             }}
             source={require('./img/infoAnimation.json')}
           />

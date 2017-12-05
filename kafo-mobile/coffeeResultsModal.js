@@ -90,7 +90,7 @@ render() {
     }
 
     var arrivalChoices; 
-    if (this.props.selectedBusState && this.props.getCoffeeShops.length > 0){
+    if (this.props.selectedBusState && this.props.getCoffeeShops.length >= 0){
         var mtime0 = this.props.selectedBusState.Schedules[0].ExpectedLeaveTime.split(" ");
         var datestr0 = mtime0[0];
 
