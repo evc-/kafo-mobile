@@ -9,6 +9,7 @@ export default class ArrivalModal extends React.Component {
         super(props);
         
         this.state = {
+            interval:0,
             secondsRemaining: 0
         }
         
@@ -40,6 +41,7 @@ countDown(){
             secondsRemaining: lessSeconds,
             interval: interval
        })
+        console.log("???????")
         console.log(Math.round(this.state.secondsRemaining/(this.props.minsTillDepart *60)*100));
         console.log(this.state.secondsRemaining);
     }, 1000);
