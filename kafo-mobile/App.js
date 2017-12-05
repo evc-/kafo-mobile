@@ -610,7 +610,7 @@ getAllShopDirections(busChoice){
                                     style={{width: 25, height: 25}}
                                 />
                             </TouchableOpacity>
-                            <Text style={{textAlign:'center', color: '#42565E', fontWeight: 'bold', fontSize: 20, left: -10}}> kafo </Text>
+                            <Text style={{textAlign:'center', color: '#42565E', fontWeight: 'bold', fontSize: 20, left: -15}}> kafo </Text>
                             <Text></Text>
                         </View>
                     <GestureRecognizer
