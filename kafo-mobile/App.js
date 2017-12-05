@@ -408,7 +408,7 @@ getCoffeeShops(){
     }
     else {
 
-        fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&opennow&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=1000").then((CSresp)=>{
+        fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&opennow&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500").then((CSresp)=>{
             console.log("getting coffee shops..")
             return CSresp.json();
         }, (reason)=>{

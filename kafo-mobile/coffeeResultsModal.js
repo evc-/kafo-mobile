@@ -37,13 +37,24 @@ export default class CoffeeResultsModal extends React.Component {
 
 render() {
     var selectedColor;
+    var noShops=null;
+    
+    if(this.props.getCoffeeShops.length == 0){
+        noShops = (
+            <View>
+            <Text>Opps! There's no coffee shops around you or there's none open right now!</Text>
+            </View>
+                  )
+    }
     
     if(this.props.shopWithStatus){
         if (this.props.shopWithStatus.length > 1){
             this.props.shopWithStatus.sort(this.compareTimesToSort(this.props.shopWithStatus, this.props.shopWithStatus));
         }
             var shopInfo = this.props.shopWithStatus.map((currentValue, i, array)=> {
+               
                 return( 
+                 
     <View key={i}>
       <TouchableOpacity onPress={this.startTimer.bind(this, i)} style={i%2==1 ? styles.touchableStyle1 : styles.touchableStyle2}> 
             <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
@@ -73,8 +84,10 @@ render() {
         </TouchableOpacity>
     </View>
     );
-})
-};
+
+
+
+})}
 
 var arrivalChoices; 
 
@@ -131,6 +144,7 @@ if (this.props.selectedBusState){
             </View>
             <ScrollView style={{flex:1}}>
                 {shopInfo}
+                {noShops}
             </ScrollView>
         
         </View>
