@@ -22,9 +22,9 @@ export default class CoffeeResultsModal extends React.Component {
     
     changeBusTime(choice){
         this.props.changeBusArrival(choice);
-        this.setState({
-            selectedTrip: choice
-        })
+//        this.setState({
+//            selectedTrip: choice
+//        })
         
     }
     
@@ -95,21 +95,21 @@ if (this.props.selectedBusState){
                                 <Text style={{color: 'white', fontWeight: 'bold', paddingLeft: 5}}>Bus {this.props.selectedBusState.RouteNo}</Text>
                             </View>
                             <View style={{flex: 4}}>
-                                <TouchableOpacity onPress={() => this.changeBusTime(0)} style={{backgroundColor:(this.state.selectedTrip === 0)?'#6fa7a8':'#42565E'}}> 
+                                <TouchableOpacity onPress={() => this.changeBusTime(0)} style={{backgroundColor:(this.props.busArrivalChoice === 0)?'#6fa7a8':'#42565E'}}> 
                                     <Text style={{color: 'white', textAlign: 'center'}}>
                                         {datestr0}
                                     </Text> 
                                 </TouchableOpacity>
                             </View>
                             <View style={{flex: 4}}>
-                                <TouchableOpacity onPress={() => this.changeBusTime(1)} style={{backgroundColor:(this.state.selectedTrip === 1)?'#6fa7a8':'#42565E'}}> 
+                                <TouchableOpacity onPress={() => this.changeBusTime(1)} style={{backgroundColor:(this.props.busArrivalChoice === 1)?'#6fa7a8':'#42565E'}}> 
                                     <Text style={{color: 'white', textAlign: 'center'}}>
                                         {datestr1}
                                     </Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={{flex: 4}}>
-                                <TouchableOpacity onPress={() => this.changeBusTime(2)} style={{backgroundColor:(this.state.selectedTrip === 2)?'#6fa7a8':'#42565E'}}>
+                                <TouchableOpacity onPress={() => this.changeBusTime(2)} style={{backgroundColor:(this.props.busArrivalChoice === 2)?'#6fa7a8':'#42565E'}}>
                                     <Text style={{color: 'white', textAlign: 'center'}}>
                                         {datestr2}
                                     </Text>
