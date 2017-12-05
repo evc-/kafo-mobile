@@ -66,22 +66,22 @@ render() {
         </View>
         <View style={{flexDirection:'row', flex: 1, justifyContent:'center'}}>
             <View style={{flex: 1, backgroundColor: '#EEEEEE'}}>
-                <Text style={{width: '85%', fontSize: 20, color: '#303C45', textAlign: 'center', fontWeight: 'bold'}}>Trip Breakdown</Text>
+                <Text style={{flex: 1, width: '85%', fontSize: 20, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Trip Breakdown</Text>
                 <Text style={styles.paragraph2Style}>Walk to Shop: {this.props.selectedShop.toShop} minutes</Text>
                 <Text style={styles.paragraph2Style}>Time for Coffee: {this.props.selectedShop.orderTime} minutes</Text>
                 <Text style={styles.paragraph2Style}>Walk to Stop: {this.props.selectedShop.toStop} minutes</Text>
             </View>
         
              <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <Text style={{width: '85%', fontSize: 20, color: '#303C45', textAlign: 'center', fontWeight: 'bold'}}>Until Bus Arrives</Text>
+                <Text style={{flex: 1, width: '85%', fontSize: 20, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Until Bus Arrives</Text>
                 <AnimatedCircularProgress
-                  size={100}
-                  width={15}
+                  size={175}
+                  width={10}
                   fill={Math.round((this.props.minsTillDepart *60 - this.state.secondsRemaining)/(this.props.minsTillDepart *60)*100)}
-                  tintColor='#42565E'
+                  tintColor='#6fa7a8'
                   backgroundColor="EEEEEE">
                  </AnimatedCircularProgress>
-                <Text style={styles.paragraph2Style}>Bus arrives in {this.props.minsTillDepart} minutes</Text>
+                <Text style={styles.paragraph3Style}>{this.props.minsTillDepart}</Text>
             </View>
         </View>
       </View>
@@ -91,24 +91,21 @@ render() {
 
 const styles = StyleSheet.create({
     
-    paragraph1Style:{
-        textAlign: 'left',
-        paddingLeft:25,
-        fontSize: 16,
-        color: '#303C45'
-    },
-    
     paragraph2Style:{
-        fontSize: 12,
-        paddingLeft: 10,
-        color: '#303C45',
+        flex: 1,
+        fontSize: 16,
+        color: '#6fa7a8',
+        paddingLeft: 15
       },
-    
-     rateStyle:{
-        padding:10,
-        margin: 15,
-        borderRadius: 8,
-        backgroundColor:'#6fa7a8',
+    paragraph3Style:{
+        flex: 1,
+        fontSize: 55,
+        fontWeight: 'bold',
+        top: '44%',
+        left: '44%',
+        position: 'absolute',
+        color: '#6fa7a8'
     }
+    
     
 });

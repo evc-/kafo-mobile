@@ -76,7 +76,7 @@ if(this.props.bs){
                         </MapView.Callout>
                 </MapView.Marker>
             )
-        }, this)
+        },this)
       } else if (this.props.modalState > 0) {
         allStops = null;
     }
