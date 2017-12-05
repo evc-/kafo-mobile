@@ -636,7 +636,7 @@ getAllShopDirections(busChoice){
 //                                    {infoModalText}
                                 }
                                 <View style={{width: '90%', alignItems:'center'}}>
-                                    
+                                    <Text style={{width: '85%', fontSize: 18, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 20}}>How Kafo Works</Text>
                                     <Image 
                                         source={require('./img/modal-static-01.png')}
                                         style={{width: 200, height: 200}}
@@ -648,10 +648,10 @@ getAllShopDirections(busChoice){
                                 </View>
                                 <Text style={{textAlign: 'left', paddingLeft: 25, paddingRight: 25, color: '#42565E'}}>
                                     <Text>1. Type your bus stop ID, or choose one on the map and tap the bubble above it</Text>{"\n"}
-                                    <Text>2. Pick your bus route</Text>{"\n"}
-                                    <Text>3. Coffee shops that are green = good to go!</Text>{"\n"}{"\n"}
+                                    <Text>2. Choose your bus route</Text>{"\n"}
+                                    <Text>3. Coffee shops marked green are good to go!</Text>{"\n"}{"\n"}
                                 </Text>
-                                    <Text style={{textAlign: 'center', paddingLeft: 25, paddingRight: 25, color: '#42565E'}}> We calculate the walking time, add ordering time, and track your bus in order to connect you to your caffeine!</Text>
+                                    <Text style={{textAlign: 'center', paddingLeft: 25, paddingRight: 25, color: '#42565E'}}> We calculate the walking time, add time for ordering, and track your bus in order to connect you to your caffeine!</Text>
                                 
                                 <TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={styles.rateStyle}>
                                     <Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 20, fontWeight: 'bold'}}>Got it </Text>
