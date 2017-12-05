@@ -121,6 +121,7 @@ class KafoModal extends Component {
                     getCoffeeShops = {this.props.getCoffeeShops}
                     changeBusArrival = {this.props.changeBusArrival}
                     increaseMaxState = {this.props.increaseMaxState}
+                    busArrivalChoice = {this.busArrivalChoice}
                     
                 />
               
