@@ -42,14 +42,18 @@ render() {
             headerMsg ="Oh no!";
             shopInfo = (
                 <View style={{alignItems:'center'}}>
-                <Text style={styles.question2Style}>There are no open coffee shops around you right now. 
-                {"\n"}
+                <Text style={styles.question2Style}>
+                There are no open coffee shops around you right now. 
+                </Text>
+                
                 <Image 
                     source={require('./img/heart-01.png')}
-                    style={{width: 100, height: 100}}
+                    style={{width: 70, height: 70}}
                  />
-                {"\n"}
-                Don't panic - Try again in a different place, or tomorrow morning. If there's coffee around, you'll be the first to know.</Text>
+                
+                <Text style={styles.question2Style}>
+                    Don't panic - Try again in a different place, or tomorrow morning. If there's coffee around, you'll be the first to know.
+                    </Text>
                 </View>
             )
         } else {
