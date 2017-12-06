@@ -123,7 +123,6 @@ render() {
                     backgroundColor="EEEEEE">
                  </AnimatedCircularProgress>
 
-
             </View>
         </View>
       </View>

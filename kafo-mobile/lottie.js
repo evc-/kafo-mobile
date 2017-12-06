@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
-import {DangerZone} from 'expo';
 import Animation from 'lottie-react-native';
 
 export default class Lottieloader extends Component {
