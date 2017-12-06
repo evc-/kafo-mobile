@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import Animation from 'lottie-react-native';
-import anim from './img/kafo2.json';
+import anim from './assets/kafo2.json';
 import Lottieloader from './lottie';
 
 export default class Loading extends React.Component {

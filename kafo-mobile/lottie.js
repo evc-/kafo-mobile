@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
+import {DangerZone} from 'expo';
 import Animation from 'lottie-react-native';
-
-import anim from './img/kafo2.json';
 
 export default class Lottieloader extends Component {
   componentDidMount() {
@@ -22,7 +21,7 @@ export default class Lottieloader extends Component {
               height: 400
             }}
             loop={true}
-            source={anim}
+            source={require('./assets/kafo2.json')}
           />
         </View>
 
