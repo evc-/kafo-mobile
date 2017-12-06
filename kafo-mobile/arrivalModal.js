@@ -88,7 +88,8 @@ endCountdown(){
 }
 
 componentWillUnmount(){
-     clearInterval(this.state.interval);
+    var intervalState = this.state.interval;
+     clearInterval(intervalState);
 }
     
     
