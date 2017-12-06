@@ -28,13 +28,17 @@ export default class ArrivalModal extends React.Component {
 componentDidMount() {
     this.startTimer();
     this.props.increaseMaxState(4);
-    const minsTillDepartProp = this.props.minsTillDepart;
+    var minsTillDepartProp = this.props.minsTillDepart;
+    var secondsRemaining = (this.props.minsTillDepart * 60);
     this.setState({
-        minsTillDepart:minsTillDepartProp
+        minsTillDepart:minsTillDepartProp,
+        secondsRemaining:secondsRemaining
     });
     this.chosenBus = this.props.busIndex;
     console.log("min to depart:"+this.props.minsTillDepart);
     console.log("index number using busIndex: "+this.props.busIndex);
+    this.intervalSeconds = setInterval( ()=> this.countDown(), 1000);
+    this.intervalMinutes = setInterval( ()=> this.tsPing(), 60000);
   }
     
 startTimer() {
@@ -42,10 +46,7 @@ startTimer() {
         var initalSeconds= this.props.minsTillDepart *60
         this.setState({secondsRemaining: initalSeconds})
        // console.log("bus stop number" +this.props.selectedBusState.RouteNo);
-        console.log("arrival modal selected bus stop"+ this.props.busStopNum);
-        this.countDown();
-        this.liveTrack();
-//        this.tsPing();
+       // console.log("arrival modal selected bus stop"+ this.props.busStopNum);
     }
   }
     
@@ -87,34 +88,32 @@ tsPing(){
     });
 }
 
-liveTrack(){
-    var interval = setInterval(()=>{
-        console.log("one minute");
-        this.tsPing();
-    }, 60000);
+setSeconds(){
+    if (this.state.secondsRemaining == 0) {
+        var initalSeconds= this.props.minsTillDepart *60
+        this.setState({secondsRemaining: initalSeconds});
+    }
+        this.countDown();
 }
     
 countDown(){
-    var interval = setInterval(()=>{ 
-        var lessSeconds = this.state.secondsRemaining -1;
+    var lessSeconds = this.state.secondsRemaining -1;
         this.setState({
             secondsRemaining: lessSeconds,
-            interval: interval
+            interval: this.intervalSeconds
        })
         //console.log(Math.round(this.state.secondsRemaining/(this.props.minsTillDepart *60)*100));
-        //console.log(this.state.secondsRemaining);
-    }, 1000);
-
+        console.log(this.state.secondsRemaining);
 }
      
 endCountdown(){
-    clearInterval(this.timer);
     this.props.changeModal(4);
 }
 
 componentWillUnmount(){
-     clearInterval(this.state.interval);
-    clearInterval(this.timer);
+    clearInterval(this.intervalMinutes);
+    clearInterval(this.intervalSeconds);
+    console.log("component unmounted!");
 }
     
     

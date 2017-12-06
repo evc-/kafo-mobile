@@ -415,14 +415,17 @@ getCoffeeShops(){
 }
 
 //send directions request to google maps for 'from user location to bus stop with coffee shop on the way' 
-apiWaypoints(coffeeShop, busStop){    
+apiWaypoints(coffeeShop, busStop){
+        console.log("animation playing!");
+            this.setState({
+                animating:true
+            });
     return fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&destination="+busStop.lat+","+busStop.lng+"&waypoints="+coffeeShop.lat+","+coffeeShop.lng+"&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI")
             .then((directionsResp)=>{
                 return directionsResp.json();
           }).then((directionsRespJson)=>{
               return directionsRespJson;
           });
-        
 }
 
 /*COMPLEX FUNCTIONS*/
@@ -498,6 +501,10 @@ getAllShopDirections(busChoice){
              this.setState({
                  shopWithStatus: Statuses
              });
+            console.log("animation stop!");
+            this.setState({
+                animating:false
+            });
             
         });
     }
