@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, View } from 'react-native';
+import { AppRegistry, StyleSheet, Text, View, Dimensions } from 'react-native';
 import Animation from 'lottie-react-native';
 //import anim from './assets/data.json';
 
@@ -19,7 +19,7 @@ export default class endLottie extends Component {
             style={{
                 alignItems: 'center', 
                 justifyContent: 'center',
-                width: 300,
+                width: Dimensions.get('window').width,
                 height: 200
             }}
             loop={true}
