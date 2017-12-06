@@ -514,9 +514,11 @@ getAllShopDirections(busChoice){
        var display = null;
      if(this.state.toggle === false){
         display = (
-             <Loading 
-            animateEnd = {this.animateEnd}
-            />
+                <View style={{width: 700, height: 400}}>
+                     <Loading 
+                    animateEnd = {this.animateEnd}
+                    />
+            </View>
          )
         
         return display;

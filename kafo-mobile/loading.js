@@ -5,12 +5,13 @@ import anim from './assets/kafo2.json';
 import Lottieloader from './lottie';
 
 export default class Loading extends React.Component {
-    
-    state = {
-        animating: true,
-        isLoading: true
+    constructor(props){
+        super(props);
+        this.state = {
+            animating: true,
+            isLoading: true
+        }
     }
-    
     closeActivityIndicator = () => setTimeout(() => {
         this.setState({
             animating: false,
@@ -18,15 +19,12 @@ export default class Loading extends React.Component {
         })
         
         var toggle = true;
-        
+    
         this.props.animateEnd(toggle);
     }, 4000)
     
     componentDidMount = () =>
     this.closeActivityIndicator()
-    
-    
-    
     
     //import this file into kafo
     //set kafo app.js to false
@@ -57,8 +55,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        height: 600,
-        width: 500,
+        height: 700,
+        width: 400,
         overflow: 'hidden',
     }
 });

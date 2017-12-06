@@ -11,20 +11,21 @@ export default class endLottie extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Animation
             ref={animation => {
               this.animation = animation;
             }}
             style={{
-              width: 300,
-              height: 200
+                alignItems: 'center', 
+                justifyContent: 'center',
+                width: 300,
+                height: 200
             }}
             loop={true}
-            source={require('./assets/data.json')}
+            source={require('./assets/goodbyeAnimation.json')}
           />
         </View>
-
       </View>
     );
   }
@@ -35,12 +36,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    color: '#ffffff'
   }
 });

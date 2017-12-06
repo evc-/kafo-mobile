@@ -30,9 +30,9 @@ export default class KafoTextInput extends Component {
                 text: (nextProps.idFromMap).toString()
             })
         }
-        console.log("id from map: "+this.props.idFromMap);
-        console.log(this.state.text);
-        console.log("component will update in text input");
+        //console.log("id from map: "+this.props.idFromMap);
+        //console.log(this.state.text);
+        //console.log("component will update in text input");
     }
     
   render() {
