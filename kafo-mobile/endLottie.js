@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, View } from 'react-native';
+import { AppRegistry, StyleSheet, Text, View, Dimensions } from 'react-native';
 import Animation from 'lottie-react-native';
 //import anim from './assets/data.json';
 
@@ -11,20 +11,21 @@ export default class endLottie extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Animation
             ref={animation => {
               this.animation = animation;
             }}
             style={{
-              width: 300,
-              height: 200
+                alignItems: 'center', 
+                justifyContent: 'center',
+                width: Dimensions.get('window').width,
+                height: 200
             }}
             loop={true}
-            source={require('./assets/data.json')}
+            source={require('./assets/goodbyeAnimation.json')}
           />
         </View>
-
       </View>
     );
   }
@@ -35,12 +36,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    color: '#ffffff'
   }
 });

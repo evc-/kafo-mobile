@@ -415,14 +415,17 @@ getCoffeeShops(){
 }
 
 //send directions request to google maps for 'from user location to bus stop with coffee shop on the way' 
-apiWaypoints(coffeeShop, busStop){    
+apiWaypoints(coffeeShop, busStop){
+        console.log("animation playing!");
+            this.setState({
+                animating:true
+            });
     return fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&destination="+busStop.lat+","+busStop.lng+"&waypoints="+coffeeShop.lat+","+coffeeShop.lng+"&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI")
             .then((directionsResp)=>{
                 return directionsResp.json();
           }).then((directionsRespJson)=>{
               return directionsRespJson;
           });
-        
 }
 
 /*COMPLEX FUNCTIONS*/
@@ -481,6 +484,7 @@ getAllShopDirections(busChoice){
                         name:this.state.coffeeShopData[index].name,
                         status:shopStatus,
                         nextBus: this.state.selectedBus.Schedules[busChoice].ExpectedCountdown,
+                        expectedLeaveTime: this.state.selectedBus.Schedules[busChoice].ExpectedLeaveTime,
                         busIndex: busChoice,
                         journeyTime:Number((walkingtimeValue/60).toFixed()),
                         coords: this.state.coffeeShopData[index].geometry.location,
@@ -497,6 +501,10 @@ getAllShopDirections(busChoice){
              this.setState({
                  shopWithStatus: Statuses
              });
+            console.log("animation stop!");
+            this.setState({
+                animating:false
+            });
             
         });
     }
@@ -513,9 +521,11 @@ getAllShopDirections(busChoice){
        var display = null;
      if(this.state.toggle === false){
         display = (
-             <Loading 
-            animateEnd = {this.animateEnd}
-            />
+                <View style={{width: 700, height: 400}}>
+                     <Loading 
+                    animateEnd = {this.animateEnd}
+                    />
+            </View>
          )
         
         return display;

@@ -19,18 +19,26 @@ export default class ArrivalModal extends React.Component {
     this.endCountdown = this.endCountdown.bind(this);
     this.tsPing = this.tsPing.bind(this);
         
+    this.chosenBus = null;
+    this.lastLeaveTime = null;
+        
     }
     
 
 componentDidMount() {
     this.startTimer();
     this.props.increaseMaxState(4);
-    const minsTillDepartProp = this.props.minsTillDepart;
+    var minsTillDepartProp = this.props.minsTillDepart;
+    var secondsRemaining = (this.props.minsTillDepart * 60);
     this.setState({
-        minsTillDepart:minsTillDepartProp
+        minsTillDepart:minsTillDepartProp,
+        secondsRemaining:secondsRemaining
     });
+    this.chosenBus = this.props.busIndex;
     console.log("min to depart:"+this.props.minsTillDepart);
     console.log("index number using busIndex: "+this.props.busIndex);
+    this.intervalSeconds = setInterval( ()=> this.countDown(), 1000);
+    this.intervalMinutes = setInterval( ()=> this.tsPing(), 60000);
   }
     
 startTimer() {
@@ -38,10 +46,7 @@ startTimer() {
         var initalSeconds= this.props.minsTillDepart *60
         this.setState({secondsRemaining: initalSeconds})
        // console.log("bus stop number" +this.props.selectedBusState.RouteNo);
-        console.log("arrival modal selected bus stop"+ this.props.busStopNum);
-        this.countDown();
-        this.liveTrack();
-        this.tsPing();
+       // console.log("arrival modal selected bus stop"+ this.props.busStopNum);
     }
   }
     
@@ -55,50 +60,67 @@ tsPing(){
             this.setState({
                 pingResp:resp
             });
-                //TO DO: connect this with the minsTillDepart
-            console.log("expected countdown using busIndex is: "+resp[0].Schedules[this.props.busIndex].ExpectedCountdown);
-            
-            this.setState({
-                minsTillDepart:resp[0].Schedules[this.props.busIndex].ExpectedCountdown
-            });
+            if(resp[0].RouteNo == 130){
+                console.log("130 reroute");
+                var mins = this.state.minsTillDepart;
+                mins--;
+                this.setState({
+                    minsTillDepart:mins
+                });
+            } else {
+                if(this.lastLeaveTime !== null && this.lastLeaveTime != resp[0].Schedules[this.chosenBus].ExpectedLeaveTime){
+                    this.chosenBus--;
+                    console.log("index decreased");
+                }
+
+                this.lastLeaveTime = resp[0].Schedules[this.chosenBus].ExpectedLeaveTime;
+                this.setState({
+                    minsTillDepart:resp[0].Schedules[this.chosenBus].ExpectedCountdown
+                });
+
+                if(this.state.minsTillDepart === 0){
+                    this.endCountDown();
+                }
+        }
     })
     .catch((error) => {
        // console.log(error);
     });
 }
 
-liveTrack(){
-    var interval = setInterval(()=>{
-        console.log("one minute");
-        this.tsPing();
-    }, 60000);
+setSeconds(){
+    if (this.state.secondsRemaining == 0) {
+        var initalSeconds= this.props.minsTillDepart *60
+        this.setState({secondsRemaining: initalSeconds});
+    }
+        this.countDown();
 }
     
 countDown(){
-    var interval = setInterval(()=>{ 
-        var lessSeconds = this.state.secondsRemaining -1;
+    var lessSeconds = this.state.secondsRemaining -1;
         this.setState({
             secondsRemaining: lessSeconds,
-            interval: interval
+            interval: this.intervalSeconds
        })
         //console.log(Math.round(this.state.secondsRemaining/(this.props.minsTillDepart *60)*100));
-        //console.log(this.state.secondsRemaining);
-    }, 1000);
-
+        console.log(this.state.secondsRemaining);
 }
      
 endCountdown(){
-    clearInterval(this.timer);
     this.props.changeModal(4);
 }
 
 componentWillUnmount(){
     var intervalState = this.state.interval;
      clearInterval(intervalState);
+    clearInterval(this.intervalMinutes);
+    clearInterval(this.intervalSeconds);
+    console.log("component unmounted!");
 }
     
     
 render() {
+
     return (
     <View style={{flex:1, flexDirection: 'column'}}>
         <View>
@@ -112,16 +134,15 @@ render() {
                 <Text style={styles.paragraph2Style}>Walk to Stop: {this.props.selectedShop.toStop} minutes</Text>
             </View>
         
-             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <Text style={{flex: 1, width: '85%', fontSize: 20, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Until Bus Arrives</Text>
-                <Text style={styles.paragraph3Style}>{this.state.minsTillDepart}</Text>
+              <View style={{flex: 1, alignItems: 'center', justifyContent: 'space-between'}}>
+                 <Text style={{flex: 1, width: '85%', fontSize: 18, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Bus arrives in {this.state.minsTillDepart} minutes</Text>
                 <AnimatedCircularProgress
-                    style={{top:-10}}
-                  size={155}
-                  width={15}
-                  fill={Math.round((this.props.minsTillDepart *60 - this.state.secondsRemaining)/(this.props.minsTillDepart *60)*100)}
-                  tintColor='#6fa7a8'
-                  backgroundColor="EEEEEE">
+                      style={{marginBottom: 10}}
+                     size={100}
+                     width={15}
+                     fill= {Math.round((this.props.minsTillDepart *60 - this.state.secondsRemaining)/(this.props.minsTillDepart *60)*100)}
+                     tintColor='#6fa7a8'
+                     backgroundColor="EEEEEE">
                  </AnimatedCircularProgress>
             </View>
         </View>

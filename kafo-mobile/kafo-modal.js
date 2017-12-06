@@ -141,16 +141,20 @@ class KafoModal extends Component {
  //                     var minsTillDepart = currentValue.Schedules[this.props.busArrivalChoice].ExpectedCountdown;
                         var minsTillDepart = currentValue.nextBus;  
                         var busIndex = currentValue.busIndex;
+                        var expectedLeaveTime = currentValue.expectedLeaveTime;
                       return (
                           modal = (
                           <ArrivalModal 
                             changeModal={this.changeModal}
                             minsTillDepart={minsTillDepart}
+                            expectedLeaveTime = {expectedLeaveTime}
                             busIndex = {busIndex}
                             selectedShop = {this.state.selectedShop}
                             increaseMaxState = {this.props.increaseMaxState}
                             selectedBusState = {this.props.selectedBusState}
                             busStopNum = {this.state.busStopNum}
+                            tdata = {this.props.tdata}
+                            modalState = {this.props.modalState}
                             
                           />
                               )
