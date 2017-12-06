@@ -17,6 +17,7 @@ export default class KafoTextInput extends Component {
         if (text.length === 5){
             this.props.tsRouteCall(text);
             this.props.tsStopCall(text);
+            this.props.setBusStopNum(text);
         }
     }
     
@@ -29,7 +30,7 @@ export default class KafoTextInput extends Component {
                 text: (nextProps.idFromMap).toString()
             })
         }
-        console.log(this.props.idFromMap);
+        console.log("id from map: "+this.props.idFromMap);
         console.log(this.state.text);
         console.log("component will update in text input");
     }

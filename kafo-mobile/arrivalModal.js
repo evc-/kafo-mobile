@@ -10,12 +10,14 @@ export default class ArrivalModal extends React.Component {
         
         this.state = {
             interval:0,
-            secondsRemaining: 0
+            secondsRemaining: 0,
+            pingResp:[]
         }
         
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
     this.endCountdown = this.endCountdown.bind(this);
+    this.tsPing = this.tsPing.bind(this);
         
     }
     
@@ -23,16 +25,49 @@ export default class ArrivalModal extends React.Component {
 componentDidMount() {
     this.startTimer();
     this.props.increaseMaxState(4);
+    this.setState({
+        minsTillDepart:this.props.minsTillDepart
+    });
+    console.log("min to depart:"+this.props.minsTillDepart);
+    console.log("index number: "+this.props.routeArrIndex);
   }
     
 startTimer() {
     if (this.state.secondsRemaining == 0) {
         var initalSeconds= this.props.minsTillDepart *60
         this.setState({secondsRemaining: initalSeconds})
-        //console.log(this.state.secondsRemaining);
+       // console.log("bus stop number" +this.props.selectedBusState.RouteNo);
+        console.log("arrival modal selected bus stop"+ this.props.busStopNum);
         this.countDown();
+        this.liveTrack();
+        this.tsPing();
     }
   }
+    
+tsPing(){
+            fetch("https://kafo-call.herokuapp.com/translink/livetracker/"+this.props.busStopNum+"/" + this.props.selectedBusState.RouteNo, {method:'GET', headers:{
+          "Content-Type": "application/json"
+          }})
+    .then(response => response.json())
+    .then((resp) => {
+            console.log(resp);
+            this.setState({
+                pingResp:resp
+            });
+                //TO DO: connect this with the minsTillDepart
+            console.log("expected countdown is: "+resp[0].Schedules[this.props.routeArrIndex].ExpectedCountdown);
+    })
+    .catch((error) => {
+       // console.log(error);
+    });
+}
+
+liveTrack(){
+    var interval = setInterval(()=>{
+        console.log("one minute");
+        this.tsPing();
+    }, 60000);
+}
     
 countDown(){
     var interval = setInterval(()=>{ 
@@ -42,7 +77,7 @@ countDown(){
             interval: interval
        })
         //console.log(Math.round(this.state.secondsRemaining/(this.props.minsTillDepart *60)*100));
-        console.log(this.state.secondsRemaining);
+        //console.log(this.state.secondsRemaining);
     }, 1000);
 
 }
@@ -73,7 +108,7 @@ render() {
         
              <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                 <Text style={{flex: 1, width: '85%', fontSize: 20, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Until Bus Arrives</Text>
-                <Text style={styles.paragraph3Style}>{this.props.minsTillDepart}</Text>
+                <Text style={styles.paragraph3Style}>{this.state.minsTillDepart}</Text>
                 <AnimatedCircularProgress
                     style={{top:-10}}
                   size={155}

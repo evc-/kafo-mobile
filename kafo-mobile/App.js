@@ -30,7 +30,6 @@ export default class App extends React.Component {
             errorMsg: "What bus are you going to?",
             modalState: 0,
             busStopCoords: '',
-            busStopNum: "",
             toggle: false,
             bs:[],
             busArrivalChoice: 0,
@@ -173,19 +172,6 @@ navForward(){
       this.navBack();
   }
 
-//onSwipeUp(gestureState) {
-//    console.log("swipe Up");
-//    this.setState({
-//        infoModalTab:2
-//    });
-//}
-//onSwipeDown(gestureState){
-//    console.log("swipe dowwwn");
-//    this.setState({
-//        infoModalTab:1
-//    });
-//}
-
 loadStopid(id){
     this.setState({
         idFromMap: id
@@ -244,7 +230,7 @@ tsRouteCall(stopNum) {
           }})
     .then(response => response.json())
     .then((responseJson) => {
-        console.log(responseJson);
+        //console.log(responseJson);
         if (responseJson.Code){
             switch (responseJson.Code) {
                 case "3001":
@@ -275,6 +261,7 @@ tsRouteCall(stopNum) {
                       }
             }
             this.setState({translinkData:responseJson}); 
+            console.log(responseJson);
             this.setState({modalState: 1});
             () => {this.increaseMaxState(1)};
         }
@@ -539,6 +526,7 @@ getAllShopDirections(busChoice){
                         tsStopCall = {this.tsStopCall}
                         tsRouteCall ={this.tsRouteCall}
                         setBusStopNum ={this.setBusStopNum}
+                        selectedBusStop = {this.state.selectedBusStop}
                         changeModalState = {this.changeModalState}
                         modalState = {this.state.modalState}
                         selectedBus = {this.selectedBus}

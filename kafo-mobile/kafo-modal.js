@@ -18,6 +18,7 @@ class KafoModal extends Component {
         
             this.changeModal = this.changeModal.bind(this);
             this.selectShop = this.selectShop.bind(this);
+            this.pushBusStopNum = this.pushBusStopNum.bind(this);
             
     }
     
@@ -38,7 +39,12 @@ class KafoModal extends Component {
             selectedShop:this.props.shopWithStatus[i]
         })
     }
-    
+    pushBusStopNum(text){
+    this.setState({
+        busStopNum:text
+    });
+    console.log("chosen bus number: "+text);
+}
 
   render() {
       var modal = null; 
@@ -53,7 +59,7 @@ class KafoModal extends Component {
                             tsRouteCall={this.props.tsRouteCall} 
                             tsStopCall={this.props.tsStopCall} 
                             changeModal={this.changeModal}
-                            setBusStopNum={this.props.setBusStopNum}
+                            setBusStopNum = {this.pushBusStopNum}
                             idFromMap = {this.props.idFromMap}
                         />
                     
@@ -134,14 +140,18 @@ class KafoModal extends Component {
                   estimateResponse = this.props.tdata.map(function callback(currentValue, index, array){
 
                       var minsTillDepart = currentValue.Schedules[this.props.busArrivalChoice].ExpectedCountdown;
+                      var routeArrIndex = index;
                       
                       return (
                           modal = (
                           <ArrivalModal 
                             changeModal={this.changeModal}
                             minsTillDepart={minsTillDepart}
+                            routeArrIndex = {routeArrIndex}
                             selectedShop = {this.state.selectedShop}
                             increaseMaxState = {this.props.increaseMaxState}
+                            selectedBusState = {this.props.selectedBusState}
+                            busStopNum = {this.state.busStopNum}
                           />
                               )
                       );
