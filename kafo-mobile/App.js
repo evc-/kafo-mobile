@@ -563,20 +563,25 @@ getAllShopDirections(busChoice){
                         transparent={true}
                         visible={this.state.modalVisible}
                         onRequestClose={() => {this.setModalVisible(false)}}
-                        style={{marginTop: 50, marginLeft:50, marginRight: 50, marginBottom: 50, justifyContent: 'center', alignItems: 'center', height: '80%', borderRadius: 15, overflow: 'hidden'}}
                         backdropOpacity = {0.5}
-                    >
+
+                        style={{marginTop: 50, marginLeft:50, marginRight: 50, marginBottom: 50, justifyContent: 'center', alignItems: 'center', borderRadius: 15}}
+                        
+                        >
                         <View style={{backgroundColor: 'rgba(200,200,200,0.5)', height: Dimensions.get('window').height, width: Dimensions.get('window').width}}>
-                            <View style={{marginLeft:10, marginRight: 10, justifyContent: 'center',width:400, height:400, alignItems: 'center',  backgroundColor:'#F7F7F7', borderRadius: 15, overflow: 'hidden',left:-2, top:50, elevation: 4, shadowRadius: 4, shadowOpacity: 0.5, shadowOffset: {width: 4, height: 4}, shadowColor: '#42565E'}}>
-                                <InfoAnim />
-                                <Text style={{top: 80, fontWeight: 'bold'}}>How Kafo Works</Text>
-                                <Text style={{textAlign: 'left', paddingLeft: 25, paddingRight: 25, color: '#42565E', top:150}}>
+                            <View style={{marginLeft:10, marginRight: 10, marginTop: 50, justifyContent: 'space-between', alignItems: 'center', backgroundColor:'#F7F7F7', borderRadius: 15, elevation: 4, shadowRadius: 4, shadowOpacity: 0.5, shadowOffset: {width: 4, height: 4}, shadowColor: '#42565E'}}>
+                                <View style={{alignItems: 'center', width: 400, height: 200}}>
+                                <InfoAnim 
+                                       
+                                />
+                                </View>
+                                <Text style={{fontWeight: 'bold'}}>How Kafo Works</Text>
+                                <Text style={{textAlign: 'left', paddingLeft: 25, paddingRight: 25, color: '#42565E'}}>
                                     <Text>1. Type your bus stop ID, or choose one on the map and tap the bubble above it</Text>{"\n"}
                                     <Text>2. Pick your bus route</Text>{"\n"}
                                     <Text>3. Coffee shops that are green = good to go!</Text>{"\n"}{"\n"}
                                 </Text>
                                 <Text style={{textAlign: 'center', paddingLeft: 25, paddingRight: 25, color: '#42565E'}}> We calculate the walking time, add ordering time, and track your bus in order to connect you to your caffeine!</Text>
-                                
                                 <TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={styles.rateStyle}>
                                     <Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 20, fontWeight: 'bold'}}>Got it </Text>
                                 </TouchableOpacity> 
@@ -672,7 +677,6 @@ const styles = StyleSheet.create({
         margin: 15,
         borderRadius: 8,
         backgroundColor:'#6fa7a8',
-        top: 80
     }, 
     infoText:{
         top:80

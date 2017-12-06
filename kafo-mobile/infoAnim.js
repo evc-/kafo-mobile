@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, View } from 'react-native';
+import { AppRegistry, StyleSheet, Text, View, Dimensions } from 'react-native';
 import Animation from 'lottie-react-native';
 
 //import anim from './img/infoAnimation.json';
 
 export default class InfoAnim extends Component {
+    
   componentDidMount() {
     setTimeout(()=>{
         this.animation.play()
-    }, 1000);
+    }, 500);
   }
 
   render() {
@@ -18,13 +19,13 @@ export default class InfoAnim extends Component {
               this.animation = animation;
             }}
             style={{
-              width: 300,
-              height: 200,
-                position:"absolute",
-                top:8,
-        left:20
+            flex: 1,
+            width: 400,
+            height: 200,
+            alignItems: 'center',
+            position:"absolute",
             }}
-            source={require('./img/infoAnimation.json')}
+            source={require('./assets/infoAnimation.json')}
           />
     );
   }

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 import Animation from 'lottie-react-native';
-
-
-import anim from './img/data.json';
+//import anim from './assets/data.json';
 
 export default class endLottie extends Component {
   componentDidMount() {
@@ -23,7 +21,7 @@ export default class endLottie extends Component {
               height: 200
             }}
             loop={true}
-            source={anim}
+            source={require('./assets/data.json')}
           />
         </View>
 
