@@ -19,7 +19,6 @@ class KafoModal extends Component {
             this.changeModal = this.changeModal.bind(this);
             this.selectShop = this.selectShop.bind(this);
             this.pushBusStopNum = this.pushBusStopNum.bind(this);
-            
     }
     
     changeModal(page){
@@ -77,7 +76,7 @@ class KafoModal extends Component {
                             key={index} 
                             routeName={currentValue.RouteName} 
                             routeNumber={currentValue.RouteNo} 
-                            minsTillDepart={minsTillDepart} 
+                            minsTillDepart={currentValue.Schedules[index].ExpectedCountdown} 
                             buttonColor ={(index % 2 == 1)} 
                             busIndex={index}
                             selectedBus={this.props.selectedBus}
@@ -127,7 +126,7 @@ class KafoModal extends Component {
                     getCoffeeShops = {this.props.getCoffeeShops}
                     changeBusArrival = {this.props.changeBusArrival}
                     increaseMaxState = {this.props.increaseMaxState}
-                    busArrivalChoice = {this.busArrivalChoice}
+                    busArrivalChoice = {this.props.busArrivalChoice}
                     
                 />
               
@@ -137,21 +136,22 @@ class KafoModal extends Component {
           var estimateResponse = null;
           
           if(this.props.tdata){
-                  estimateResponse = this.props.tdata.map(function callback(currentValue, index, array){
+                  estimateResponse = this.props.shopWithStatus.map(function callback(currentValue, index, array){
 
-                      var minsTillDepart = currentValue.Schedules[this.props.busArrivalChoice].ExpectedCountdown;
-                      var routeArrIndex = index;
-                      
+ //                     var minsTillDepart = currentValue.Schedules[this.props.busArrivalChoice].ExpectedCountdown;
+                        var minsTillDepart = currentValue.nextBus;  
+                        var busIndex = currentValue.busIndex;
                       return (
                           modal = (
                           <ArrivalModal 
                             changeModal={this.changeModal}
                             minsTillDepart={minsTillDepart}
-                            routeArrIndex = {routeArrIndex}
+                            busIndex = {busIndex}
                             selectedShop = {this.state.selectedShop}
                             increaseMaxState = {this.props.increaseMaxState}
                             selectedBusState = {this.props.selectedBusState}
                             busStopNum = {this.state.busStopNum}
+                            
                           />
                               )
                       );

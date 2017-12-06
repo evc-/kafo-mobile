@@ -135,6 +135,7 @@ changeBusArrival(choice){
     this.setState({
         busArrivalChoice: choice
     });
+    console.log("app.js says the bus arrival choice is: "+choice);
 }
 
 increaseMaxState(maxState){
@@ -475,11 +476,12 @@ getAllShopDirections(busChoice){
                  var shopStatus = this.checkShopStatus(walkingtimeValue/60, this.state.selectedBus.Schedules[busChoice].ExpectedCountdown);
                  
                  var polyline= currentValue.routes[0].legs[0].steps[0].polyline.points;       
-                 
+                 console.log("app.js line 479: expected countdown is "+ this.state.selectedBus.Schedules[busChoice].ExpectedCountdown);
                  var shopWithStatus = {
                         name:this.state.coffeeShopData[index].name,
                         status:shopStatus,
                         nextBus: this.state.selectedBus.Schedules[busChoice].ExpectedCountdown,
+                        busIndex: busChoice,
                         journeyTime:Number((walkingtimeValue/60).toFixed()),
                         coords: this.state.coffeeShopData[index].geometry.location,
                         polyline: polyline,
