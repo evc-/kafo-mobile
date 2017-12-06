@@ -57,7 +57,7 @@ var allStops = null;
 
 if(this.props.modalState === 0 ){
 if(this.props.bs){
-    console.log("loading markers");
+    //console.log("loading markers");
     allStops = this.props.bs.map((stop, index) => {
             return (
                 <MapView.Marker
@@ -153,7 +153,7 @@ if(this.props.modalState  >= 3){
                         statusimg=require('../img/shop-red.png')
                     }})}
     
-    console.log(this.props.shopIndex);
+    //console.log(this.props.shopIndex);
     var shop=this.props.shopIndex;
     coffeeResp = null;
     coffeeResp=(

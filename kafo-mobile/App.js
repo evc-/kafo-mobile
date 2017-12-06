@@ -39,13 +39,12 @@ export default class App extends React.Component {
             modalVisible: false,
             gestureName: 'none',
             idFromMap: null,
-            //infoModalTab: 1
+            animating: false
         };
     
         this.tsRouteCall = this.tsRouteCall.bind(this);
         this.tsStopCall = this.tsStopCall.bind(this);
         this.tsAllStops = this.tsAllStops.bind(this);
-        //this.modalState = this.modalState.bind(this);
         this.changeModalState = this.changeModalState.bind(this);
         this.getCoffeeShops = this.getCoffeeShops.bind(this);
         this.apiWaypoints = this.apiWaypoints.bind(this);
@@ -60,8 +59,6 @@ export default class App extends React.Component {
         this.setModalVisible = this.setModalVisible.bind(this);
         this.onSwipeLeft = this.onSwipeLeft.bind(this);
         this.onSwipeRight = this.onSwipeRight.bind(this);
-        //this.onSwipeDown = this.onSwipeDown.bind(this);
-        //this.onSwipeUp = this.onSwipeUp.bind(this);
         this.loadStopid = this.loadStopid.bind(this);
      }
 
@@ -101,13 +98,6 @@ componentWillUpdate(nextProps, nextState){
        this.getAllShopDirections(nextState.busArrivalChoice);
     }
 }
- 
-//selectedShop(data){
-//    this.setState({
-//        shopIndex:data
-//    })
-//}
-
 componentWillUnmount() {
     this.keyboardWillShowSub.remove();
     this.keyboardWillHideSub.remove();
@@ -245,6 +235,10 @@ tsAllStops(userLocation){
 
 //get transit information 
 tsRouteCall(stopNum) {
+    console.log("animation playing!");
+    this.setState({
+        animating:true
+    });
     fetch('https://kafo-call.herokuapp.com/translink/' + stopNum , {method:'GET', headers:{
           "Content-Type": "application/json"
           }})
@@ -267,6 +261,10 @@ tsRouteCall(stopNum) {
                 break;
             }
         } else {
+            console.log("animation stop!");
+            this.setState({
+                animating:false
+            });
             for (var i=0; i < responseJson.length ; i++){ //splice out negative bus arrival times 
                 var currentRoute = responseJson[i].Schedules;
                 for(var j = 0; j < currentRoute.length; j++){
@@ -283,7 +281,7 @@ tsRouteCall(stopNum) {
     },
         (reason) => { //this happens if we can't communicate to translink 
         //console.log(reason);
-    })
+    });
     
     
 }
@@ -410,14 +408,14 @@ getCoffeeShops(){
     else {
 
         fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&opennow&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500").then((CSresp)=>{
-            console.log("getting coffee shops..")
+            //console.log("getting coffee shops..")
             return CSresp.json();
         }, (reason)=>{
-            console.log("Get coffee shops fetch failed");
+            //console.log("Get coffee shops fetch failed");
            // console.log(reason);
         }
         ).then((CSjson)=>{
-            console.log("got the shops");
+            //console.log("got the shops");
             //console.log(CSjson.results);
             this.setState({
                 coffeeShopData:CSjson.results
@@ -557,50 +555,6 @@ getAllShopDirections(busChoice){
                         >
                         </KafoModal>
                 );
-         {
-//   var infoModalText = null;
-//    if(this.state.infoModalTab === 1){
-//        infoModalText = (
-//            <View style={{marginLeft:10, marginRight: 10, width:300, height:300, justifyContent: 'center', alignItems: 'center',  backgroundColor:'#F7F7F7', borderRadius: 15, elevation: 4}}>
-//                    
-//            <InfoAnim />
-//            <Text style={styles.infoText}>
-//                <Text>1. Type your bus stop ID, or choose one on the map and tap the bubble above it</Text>{"\n"}
-//                <Text>2. Pick your bus route</Text>{"\n"}
-//                <Text>3. Coffee shops that are green = good to go!</Text>
-//            </Text>
-//            <Text style={{color: 'grey', fontStyle: 'italic', top:80}}>{"\n"}Swipe up for more</Text>
-//             <Image 
-//                source={require('./img/arrow-03.png')}
-//                style={{width: 40, height:40, top:80}}
-//            />
-//            
-//      </View>
-//        )
-//    } else if (this.state.infoModalTab === 2){
-//        infoModalText = (
-//            <View style={{marginLeft:10, marginRight: 10, justifyContent: 'center', alignItems: 'center',  backgroundColor:'#F7F7F7', borderRadius: 15, overflow: 'hidden', elevation: 4, shadowRadius: 4, shadowOpacity: 0.5, shadowOffset: {width: 4, height: 4}, shadowColor: '#42565E'}}>
-//            <View style={{width: '90%', alignItems:'center'}}>
-//                                    </View>
-//                <Image 
-//                    source={require('./img/modal-static-01.png')}
-//                    style={{width: 200, height: 200}}
-//                />
-//                <Text style={{textAlign: 'center', paddingLeft: 10, paddingRight: 10, fontWeight: 'bold'}}>HOW TO PICK A SHOP{"\n"}</Text>
-//                <Text style={styles.infoText2}>
-//            
-//                    <Text style={{color: '#199E5C'}}>GREEN</Text>: you have time to get a coffee.{"\n"}{"\n"}
-//                    <Text style={{color:'#FCD259'}}>YELLOW</Text>: it's risky.{"\n"}{"\n"}
-//                    <Text style={{color:'#C55256'}}>RED</Text>: don't go to the shop or you'll miss your bus!
-//                       </Text>
-//                <Text style={{textAlign: 'center', paddingLeft: 10, paddingRight: 10}}> We calculate the walking time, add ordering time, and track your bus in order to connect you to your caffeine!</Text>
-//                <TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={styles.rateStyle}>
-//                <Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 20, fontWeight: 'bold'}}>Got it </Text>
-//                </TouchableOpacity> 
-//            </View>
-//        )
-//    }
-         }
 
     return (
         <View>
@@ -616,12 +570,6 @@ getAllShopDirections(busChoice){
                             <Text style={{textAlign:'center', color: '#42565E', fontWeight: 'bold', fontSize: 20, left: -15}}> kafo </Text>
                             <Text></Text>
                         </View>
-                    <GestureRecognizer
-                        onSwipeUp={(state) => this.onSwipeUp(state)}
-                        onSwipeDown={(state) => this.onSwipeDown(state)}
-                        config={config}
-                        style={{flex: 1}}
-                            >
                     <Modal
                         animationType="fade"
                         transparent={true}
@@ -641,17 +589,12 @@ getAllShopDirections(busChoice){
                                 </Text>
                                 <Text style={{textAlign: 'center', paddingLeft: 25, paddingRight: 25, color: '#42565E'}}> We calculate the walking time, add ordering time, and track your bus in order to connect you to your caffeine!</Text>
                                 
-
-
-                               
-                                
                                 <TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={styles.rateStyle}>
                                     <Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 20, fontWeight: 'bold'}}>Got it </Text>
                                 </TouchableOpacity> 
                              </View>
                         </View>
                     </Modal>
-                </GestureRecognizer>
                 <KafoMapCombined
                     changeModalState = {this.changeModalState}
                     modalState = {this.state.modalState}
@@ -669,6 +612,7 @@ getAllShopDirections(busChoice){
                     loadStopid = {this.loadStopid}
                     />
             </View>
+
             <GestureRecognizer
                 onSwipeLeft={(state) => this.onSwipeLeft(state)}
                 onSwipeRight={(state) => this.onSwipeRight(state)}
@@ -677,8 +621,23 @@ getAllShopDirections(busChoice){
             >
                 <View style={[styles.modalStyle, {bottom: Dimensions.get('window').height * .4 + this.state.positionBump}]}>
                     <View style={{flex:7}}>
+                        <View style={{alignItems:'center', justifyContent:'center'}}>
+                            <ActivityIndicator
+                               animating = {this.state.animating}
+                               color = '#c65156'
+                               size = "large"
+                               style = {{flex: 1,
+                                position:'absolute',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                height: 80,
+                                top: 50,
+                                zIndex: 9999
+                                }}/>
+                        </View>
                         {modal} 
                     </View>
+
                     <View style={{backgroundColor:'#42565E', flex:1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                         <Text style={this.state.modalState == 0 ? styles.dotStyleBig : 0 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>
                         <Text style={this.state.modalState == 1 ? styles.dotStyleBig : 1 <= this.state.maxState ? styles.dotStyleSmall : styles.dotStyleGrey}>&bull;</Text>

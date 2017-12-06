@@ -29,7 +29,7 @@ startTimer() {
     if (this.state.secondsRemaining == 0) {
         var initalSeconds= this.props.minsTillDepart *60
         this.setState({secondsRemaining: initalSeconds})
-        console.log(this.state.secondsRemaining);
+        //console.log(this.state.secondsRemaining);
         this.countDown();
     }
   }
@@ -41,7 +41,7 @@ countDown(){
             secondsRemaining: lessSeconds,
             interval: interval
        })
-        console.log(Math.round(this.state.secondsRemaining/(this.props.minsTillDepart *60)*100));
+        //console.log(Math.round(this.state.secondsRemaining/(this.props.minsTillDepart *60)*100));
         console.log(this.state.secondsRemaining);
     }, 1000);
 
