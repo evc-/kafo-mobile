@@ -154,6 +154,7 @@ class KafoModal extends Component {
                             selectedBusState = {this.props.selectedBusState}
                             busStopNum = {this.state.busStopNum}
                             tdata = {this.props.tdata}
+                            modalState = {this.props.modalState}
                             
                           />
                               )
