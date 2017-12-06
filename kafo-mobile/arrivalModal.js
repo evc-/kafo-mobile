@@ -105,23 +105,25 @@ render() {
         </View>
         <View style={{flexDirection:'row', flex: 1, justifyContent:'center'}}>
             <View style={{flex: 1, backgroundColor: '#EEEEEE'}}>
-                <Text style={{flex: 1, width: '85%', fontSize: 20, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Trip Breakdown</Text>
+                <Text style={{flex: 1, width: '85%', fontSize: 18, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Trip Breakdown</Text>
                 <Text style={styles.paragraph2Style}>Walk to Shop: {this.props.selectedShop.toShop} minutes</Text>
                 <Text style={styles.paragraph2Style}>Time for Coffee: {this.props.selectedShop.orderTime} minutes</Text>
                 <Text style={styles.paragraph2Style}>Walk to Stop: {this.props.selectedShop.toStop} minutes</Text>
             </View>
         
-             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <Text style={{flex: 1, width: '85%', fontSize: 20, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Until Bus Arrives</Text>
-                <Text style={styles.paragraph3Style}>{this.state.minsTillDepart}</Text>
+             <View style={{flex: 1, alignItems: 'center', justifyContent: 'space-between'}}>
+                <Text style={{flex: 1, width: '85%', fontSize: 18, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Bus arrives in {this.state.minsTillDepart} minutes</Text>
+
                 <AnimatedCircularProgress
-                    style={{top:-10}}
-                  size={155}
-                  width={15}
-                  fill={Math.round((this.props.minsTillDepart *60 - this.state.secondsRemaining)/(this.props.minsTillDepart *60)*100)}
-                  tintColor='#6fa7a8'
-                  backgroundColor="EEEEEE">
+                    style={{marginBottom: 10}}
+                    size={100}
+                    width={15}
+                    fill= {Math.round((this.props.minsTillDepart *60 - this.state.secondsRemaining)/(this.props.minsTillDepart *60)*100)}
+                    tintColor='#6fa7a8'
+                    backgroundColor="EEEEEE">
                  </AnimatedCircularProgress>
+
+
             </View>
         </View>
       </View>
@@ -133,17 +135,14 @@ const styles = StyleSheet.create({
     
     paragraph2Style:{
         flex: 1,
-        fontSize: 16,
+        fontSize: 14,
         color: '#6fa7a8',
         paddingLeft: 15
       },
     paragraph3Style:{
-        flex: 1,
-        fontSize: 50,
+        textAlign: 'center',
+        fontSize: 30,
         fontWeight: 'bold',
-        top: '44%',
-        left: '35%',
-        position: 'absolute',
         color: '#6fa7a8'
     }
     

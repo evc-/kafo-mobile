@@ -21,10 +21,9 @@ export default class endLottie extends Component {
               height: 200
             }}
             loop={true}
-            source={require('./assets/data.json')}
+            source={require('./assets/goodbyeAnimation.json')}
           />
         </View>
-
       </View>
     );
   }
