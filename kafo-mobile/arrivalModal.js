@@ -19,6 +19,9 @@ export default class ArrivalModal extends React.Component {
     this.endCountdown = this.endCountdown.bind(this);
     this.tsPing = this.tsPing.bind(this);
         
+    this.chosenBus = null;
+    this.lastLeaveTime = null;
+        
     }
     
 
@@ -29,6 +32,7 @@ componentDidMount() {
     this.setState({
         minsTillDepart:minsTillDepartProp
     });
+    this.chosenBus = this.props.busIndex;
     console.log("min to depart:"+this.props.minsTillDepart);
     console.log("index number using busIndex: "+this.props.busIndex);
   }
@@ -41,7 +45,10 @@ startTimer() {
         console.log("arrival modal selected bus stop"+ this.props.busStopNum);
         this.countDown();
         this.liveTrack();
-        this.tsPing();
+//        this.tsPing();
+        console.log("tdata 1: "+this.props.tdata[0].Schedules[0].ExpectedCountdown);
+        console.log("tdata 2: "+this.props.tdata[0].Schedules[1].ExpectedCountdown);
+        console.log("tdata 3: "+this.props.tdata[0].Schedules[2].ExpectedCountdown);
     }
   }
     
@@ -55,12 +62,28 @@ tsPing(){
             this.setState({
                 pingResp:resp
             });
-                //TO DO: connect this with the minsTillDepart
-            console.log("expected countdown using busIndex is: "+resp[0].Schedules[this.props.busIndex].ExpectedCountdown);
-            
-            this.setState({
-                minsTillDepart:resp[0].Schedules[this.props.busIndex].ExpectedCountdown
-            });
+            if(resp[0].RouteNo == 130){
+                console.log("130 reroute");
+                var mins = this.state.minsTillDepart;
+                mins--;
+                this.setState({
+                    minsTillDepart:mins
+                });
+            } else {
+                if(this.lastLeaveTime !== null && this.lastLeaveTime != resp[0].Schedules[this.chosenBus].ExpectedLeaveTime){
+                    this.chosenBus--;
+                    console.log("index decreased");
+                }
+
+                this.lastLeaveTime = resp[0].Schedules[this.chosenBus].ExpectedLeaveTime;
+                this.setState({
+                    minsTillDepart:resp[0].Schedules[this.chosenBus].ExpectedCountdown
+                });
+
+                if(this.state.minsTillDepart === 0){
+                    this.endCountDown();
+                }
+        }
     })
     .catch((error) => {
        // console.log(error);
@@ -94,6 +117,7 @@ endCountdown(){
 
 componentWillUnmount(){
      clearInterval(this.state.interval);
+    clearInterval(this.timer);
 }
     
     

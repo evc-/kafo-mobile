@@ -481,6 +481,7 @@ getAllShopDirections(busChoice){
                         name:this.state.coffeeShopData[index].name,
                         status:shopStatus,
                         nextBus: this.state.selectedBus.Schedules[busChoice].ExpectedCountdown,
+                        expectedLeaveTime: this.state.selectedBus.Schedules[busChoice].ExpectedLeaveTime,
                         busIndex: busChoice,
                         journeyTime:Number((walkingtimeValue/60).toFixed()),
                         coords: this.state.coffeeShopData[index].geometry.location,
