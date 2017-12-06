@@ -25,11 +25,12 @@ export default class ArrivalModal extends React.Component {
 componentDidMount() {
     this.startTimer();
     this.props.increaseMaxState(4);
+    const minsTillDepartProp = this.props.minsTillDepart;
     this.setState({
-        minsTillDepart:this.props.minsTillDepart
+        minsTillDepart:minsTillDepartProp
     });
     console.log("min to depart:"+this.props.minsTillDepart);
-    console.log("index number: "+this.props.routeArrIndex);
+    console.log("index number using busIndex: "+this.props.busIndex);
   }
     
 startTimer() {
@@ -55,7 +56,11 @@ tsPing(){
                 pingResp:resp
             });
                 //TO DO: connect this with the minsTillDepart
-            console.log("expected countdown is: "+resp[0].Schedules[this.props.routeArrIndex].ExpectedCountdown);
+            console.log("expected countdown using busIndex is: "+resp[0].Schedules[this.props.busIndex].ExpectedCountdown);
+            
+            this.setState({
+                minsTillDepart:resp[0].Schedules[this.props.busIndex].ExpectedCountdown
+            });
     })
     .catch((error) => {
        // console.log(error);
