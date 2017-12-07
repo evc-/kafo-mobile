@@ -119,7 +119,7 @@ render() {
         </View>
         <View style={{flexDirection:'row', flex: 1, justifyContent:'center'}}>
             <View style={{flex: 1, backgroundColor: '#EEEEEE'}}>
-                <Text style={{flex: 1, width: '85%', fontSize: 20, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Trip Breakdown</Text>
+                <Text style={{flex: 1, width: '85%', fontSize: 16, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Trip Breakdown</Text>
                 <Text style={styles.paragraph2Style}>Walk to Shop: {this.props.selectedShop.toShop} minutes</Text>
                 <Text style={styles.paragraph2Style}>Time for Coffee: {this.props.selectedShop.orderTime} minutes</Text>
                 <Text style={styles.paragraph2Style}>Walk to Stop: {this.props.selectedShop.toStop} minutes</Text>

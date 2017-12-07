@@ -444,18 +444,21 @@ shopDirections(shopCoords, busStopCoords){
 }
 
 checkShopStatus(walkingTimeValue, nextBusTimeValue){
+        var bufferBig = 7;
+        var bufferSm = 4;
         var timeRequired = walkingTimeValue; //TODO: add time buffer 
-        
-        if (timeRequired > nextBusTimeValue){
+        var timeLeft = nextBusTimeValue - timeRequired;
+    
+        if (timeLeft < bufferSm){
             return "statusRed";
         }
         
-        else if (timeRequired == nextBusTimeValue){
-            return "statusOrange";
+        else if (timeLeft > bufferBig){
+            return "statusGreen";
         }
         
-       else if (timeRequired < nextBusTimeValue){
-            return "statusGreen";
+       else{
+            return "statusOrange";
         }
 }
     
