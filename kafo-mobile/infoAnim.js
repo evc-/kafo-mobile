@@ -21,7 +21,7 @@ export default class InfoAnim extends Component {
             style={{
             flex: 1,
             width: 400,
-            height: 200,
+            height: 250,
             alignItems: 'center',
             position:"absolute",
             }}

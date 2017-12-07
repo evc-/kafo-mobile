@@ -135,9 +135,9 @@ render() {
             </View>
         
               <View style={{flex: 1, alignItems: 'center', justifyContent: 'space-between'}}>
-                 <Text style={{flex: 1, width: '85%', fontSize: 18, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Bus arrives in {this.state.minsTillDepart} minutes</Text>
+                 <Text style={{flex: 1, width: '85%', fontSize: 18, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Bus arrives in {"\n"} {this.state.minsTillDepart} minutes</Text>
                 <AnimatedCircularProgress
-                      style={{marginBottom: 10}}
+                      style={{marginBottom: 30}}
                      size={100}
                      width={15}
                      fill= {Math.round((this.props.minsTillDepart *60 - this.state.secondsRemaining)/(this.props.minsTillDepart *60)*100)}

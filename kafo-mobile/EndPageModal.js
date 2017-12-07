@@ -10,11 +10,11 @@ export default class EndPageModal extends React.Component {
             <View style={{flex: 1}}>
                 <KafoHeader innerText="Thanks for using Kafo!"/>
                 <View style={{flex: 1, alignItems: 'center', justifyContent: 'space-between'}}>
-                    <View style={{width: Dimensions.get('window').width, height: 250, marginBottom: 5}}>
+                    <View style={{width: Dimensions.get('window').width, height: 320}}>
                         <EndLottie />
                     </View>
                 </View>
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start'}}>
+                <View style={{paddingTop:50, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start'}}>
                       <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://alexissrussell.github.io/kafo/')}} style={styles.rateStyle}><Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 20, fontWeight: 'bold',}}>Rate Us </Text>
                       </TouchableOpacity>           
                       <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://alexissrussell.github.io/kafo/')}} style={styles.learnStyle}><Text style={{textAlign: 'center', color: '#f4efe3',fontSize: 20, fontWeight: 'bold', }}>Learn More </Text>

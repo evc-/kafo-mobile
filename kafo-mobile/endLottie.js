@@ -19,7 +19,7 @@ export default class endLottie extends Component {
             style={{
                 alignItems: 'center', 
                 justifyContent: 'center',
-                width: Dimensions.get('window').width,
+                width: 320,
                 height: 200
             }}
             loop={true}
