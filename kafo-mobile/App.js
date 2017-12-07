@@ -244,16 +244,16 @@ tsRouteCall(stopNum) {
         if (responseJson.Code){
             switch (responseJson.Code) {
                 case "3001":
-                    this.setState({errorMsg: "Invalid Stop ID. Check the sign beside the stop!"})
+                    this.setState({errorMsg: "Invalid Stop ID. Check the sign beside the stop!",animating:false})
                 break;
                 case "3002":
-                    this.setState({errorMsg: "Stop ID Not Found. Double check the sign beside the stop."})
+                    this.setState({errorMsg: "Stop ID Not Found. Double check the sign beside the stop.",animating:false})
                 break;
                 case "3003":
-                    this.setState({errorMsg: "We had a problem getting the estimates for this stop. Try re-entering the ID."})
+                    this.setState({errorMsg: "We had a problem getting the estimates for this stop. Try re-entering the ID.",animating:false})
                 break;
                 case "3005":
-                    this.setState({errorMsg: "Sorry, there are no busses serving this stop right now."})
+                    this.setState({errorMsg: "Sorry, there are no busses serving this stop right now.",animating:false})
                 break;
             }
         } else {
@@ -306,8 +306,8 @@ getCoffeeShops(){
       {
          "geometry" : {
             "location" : {
-               "lat" : 49.2356307,
-               "lng" : -123.1855271
+               "lat" : 49.2656,
+               "lng" : -122.993
             },
             "viewport" : {
                "northeast" : {
@@ -324,7 +324,7 @@ getCoffeeShops(){
          "id" : "dbfed865a8c8ad4d2240699b894df42129e6b244",
          "name" : "The Q Coffee",
          "opening_hours" : {
-            "open_now" : false,
+            "open_now" : true,
             "weekday_text" : []
          },
          "photos" : [

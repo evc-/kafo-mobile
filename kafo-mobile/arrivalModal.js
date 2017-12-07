@@ -21,6 +21,7 @@ export default class ArrivalModal extends React.Component {
     this.tsPing = this.tsPing.bind(this);
     this.chosenBus = null;
     this.lastLeaveTime = null; 
+    
     }
     
 componentDidMount() {
@@ -30,13 +31,14 @@ componentDidMount() {
     var secondsRemaining = (this.props.minsTillDepart * 60);
     this.setState({
         minsTillDepart:minsTillDepartProp,
-        secondsRemaining:secondsRemaining
+        secondsRemaining:secondsRemaining,
+        initialTime:minsTillDepartProp
     });
     this.chosenBus = this.props.busIndex;
     console.log("min to depart:"+this.props.minsTillDepart);
     console.log("index number using busIndex: "+this.props.busIndex);
     this.intervalSeconds = setInterval( ()=> this.countDown(), 1000);
-    this.intervalMinutes = setInterval( ()=> this.tsPing(), 10000);
+    this.intervalMinutes = setInterval( ()=> this.tsPing(), 60000);
   }
     
 startTimer() {
@@ -44,8 +46,7 @@ startTimer() {
         var initalSeconds= this.props.minsTillDepart *60
         this.setState({secondsRemaining: initalSeconds})
     }
-  }
-    
+  } 
 
 tsPing(){
         fetch("https://kafo-call.herokuapp.com/translink/livetracker/"+this.props.busStopNum+"/" + this.props.selectedBusState.RouteNo, {method:'GET', headers:{
@@ -95,8 +96,8 @@ countDown(){
         this.setState({
             secondsRemaining: lessSeconds,
             interval: this.intervalSeconds
-       })
-        //console.log(Math.round(this.state.secondsRemaining/(this.props.minsTillDepart *60)*100));
+       });
+
         //console.log(this.state.secondsRemaining);
 }
      
@@ -111,7 +112,7 @@ componentWillUnmount(){
     clearInterval(this.intervalSeconds);
     console.log("component unmounted!");
 }
-    
+  
     
 render() {
     
@@ -138,7 +139,7 @@ render() {
             </View>
         
               <View style={{flex: 1, alignItems: 'center', justifyContent: 'space-between'}}>
-                 <Text style={{flex: 1, width: '85%', fontSize: 14, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>The {this.props.selectedBusState.RouteNo} arrives in {this.state.minsTillDepart > 0 ? this.state.minsTillDepart : this.endCountdown} minutes</Text>
+                 <Text style={{flex: 1, width: '85%', fontSize: 14, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>The {this.props.selectedBusState.RouteNo} arrives in {this.state.minsTillDepart > 0 ? this.state.minsTillDepart : ""} minutes</Text>
                 {lastUpdate}
                 <AnimatedCircularProgress
                       style={{marginBottom: 10}}
