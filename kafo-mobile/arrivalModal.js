@@ -121,6 +121,8 @@ render() {
     } else {
         lastUpdate = <Text style={{fontSize: 10, color: "#303C45", marginBottom: 2}}>Next Update in 1 minute</Text>
     }
+    
+    var fillPercent = Math.round((this.props.minsTillDepart *60 - this.state.secondsRemaining)/(this.props.minsTillDepart *60)*100);
 
     return (
     <View style={{flex:1, flexDirection: 'column'}}>
@@ -136,13 +138,13 @@ render() {
             </View>
         
               <View style={{flex: 1, alignItems: 'center', justifyContent: 'space-between'}}>
-                 <Text style={{flex: 1, width: '85%', fontSize: 14, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Bus arrives in {this.state.minsTillDepart} minutes</Text>
+                 <Text style={{flex: 1, width: '85%', fontSize: 14, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>The {this.props.selectedBusState.RouteNo} arrives in {this.state.minsTillDepart > 0 ? this.state.minsTillDepart : this.endCountdown} minutes</Text>
                 {lastUpdate}
                 <AnimatedCircularProgress
                       style={{marginBottom: 10}}
                      size={100}
                      width={15}
-                     fill= {Math.round((this.props.minsTillDepart *60 - this.state.secondsRemaining)/(this.props.minsTillDepart *60)*100)}
+                     fill= {fillPercent > 0 ? fillPercent : 0} 
                      tintColor='#6fa7a8'
                      backgroundColor="EEEEEE">
                  </AnimatedCircularProgress>
