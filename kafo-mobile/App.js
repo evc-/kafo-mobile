@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, TouchableHighlight, AppRegistry, Image, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView,  TouchableOpacity, Text, View, ScrollView, Button, ActivityIndicator } from 'react-native';
+import { Modal, TouchableHighlight, AppRegistry, Image, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView,  TouchableOpacity, Text, View, ScrollView, Button, ActivityIndicator, BackHandler } from 'react-native';
 import KafoTextInput from './kafo-textinput';
 import KafoMapCombined from './map/kafomap-combined';
 import ArrivalModal from './arrivalModal';    
@@ -59,6 +59,7 @@ export default class App extends React.Component {
         this.onSwipeLeft = this.onSwipeLeft.bind(this);
         this.onSwipeRight = this.onSwipeRight.bind(this);
         this.loadStopid = this.loadStopid.bind(this);
+        this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
      }
 
 /*SIMPLE FUNCTIONS*/
@@ -89,6 +90,7 @@ componentWillMount() {
             }
     this.keyboardWillShowSub = Keyboard.addListener('keyboardDidShow', this.keyboardWillShow);
     this.keyboardWillHideSub = Keyboard.addListener('keyboardDidHide', this.keyboardWillHide);
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
 
     
@@ -101,6 +103,7 @@ componentWillUnmount() {
     this.keyboardWillShowSub.remove();
     this.keyboardWillHideSub.remove();
     navigator.geolocation.clearWatch(this.watchId);
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
          
 keyboardWillShow = (event) => {
@@ -135,7 +138,6 @@ changeBusArrival(choice){
     this.setState({
         busArrivalChoice: choice
     });
-    console.log("app.js says the bus arrival choice is: "+choice);
 }
 
 increaseMaxState(maxState){
@@ -165,18 +167,13 @@ navForward(){
 
  setModalVisible(visible) {
     this.setState({modalVisible: visible});
-     //console.log("click modal");
   }
 
  onSwipeLeft(gestureState) {
-    //this.setState({myText: 'You swiped left!'});
-    //console.log("swipe forward");
     this.navForward();
   }
 
   onSwipeRight(gestureState) {
-    //this.setState({myText: 'You swiped right!'});
-      //console.log("swipe back");
       this.navBack();
   }
 
@@ -184,9 +181,15 @@ loadStopid(id){
     this.setState({
         idFromMap: id
     })
-    //console.log("save state in app");
-    //console.log(this.state.idFromMap);
 }
+
+handleBackButtonClick() {
+    if (this.state.modalState != 0){
+        this.navBack();
+        return true;
+    }
+}
+
 
 /*API CALLS*/
 
