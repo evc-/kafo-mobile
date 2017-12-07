@@ -15,7 +15,7 @@ render() {
  
     return (
         <View>
-            <Text style={styles.headerStyle}>{this.props.innerText}</Text>
+            <Text style={styles.headerStyle} numberOfLines={1} ellipsizeMode={'tail'}>{this.props.innerText}</Text>
             
         </View>
     );
