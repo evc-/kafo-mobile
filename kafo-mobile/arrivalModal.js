@@ -110,6 +110,8 @@ endCountdown(){
 }
 
 componentWillUnmount(){
+    var intervalState = this.state.interval;
+    clearInterval(intervalState);
     clearInterval(this.intervalMinutes);
     clearInterval(this.intervalSeconds);
     console.log("component unmounted!");

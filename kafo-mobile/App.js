@@ -521,7 +521,7 @@ getAllShopDirections(busChoice){
        var display = null;
      if(this.state.toggle === false){
         display = (
-                <View style={{width: 700, height: 400}}>
+                <View style={{width: 400, height: 700}}>
                      <Loading 
                     animateEnd = {this.animateEnd}
                     />
@@ -583,9 +583,7 @@ getAllShopDirections(busChoice){
                         <View style={{backgroundColor: 'rgba(200,200,200,0.5)', height: Dimensions.get('window').height, width: Dimensions.get('window').width}}>
                             <View style={{marginLeft:10, marginRight: 10, marginTop: 50, justifyContent: 'space-between', alignItems: 'center', backgroundColor:'#F7F7F7', borderRadius: 15, elevation: 4, shadowRadius: 4, shadowOpacity: 0.5, shadowOffset: {width: 4, height: 4}, shadowColor: '#42565E'}}>
                                 <View style={{alignItems: 'center', width: 400, height: 200}}>
-                                <InfoAnim 
-                                       
-                                />
+                                <InfoAnim  />
                                 </View>
                                 <Text style={{fontWeight: 'bold'}}>How Kafo Works</Text>
                                 <Text style={{textAlign: 'left', paddingLeft: 25, paddingRight: 25, color: '#42565E'}}>
