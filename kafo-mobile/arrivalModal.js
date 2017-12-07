@@ -18,7 +18,6 @@ export default class ArrivalModal extends React.Component {
     this.countDown = this.countDown.bind(this);
     this.endCountdown = this.endCountdown.bind(this);
     this.tsPing = this.tsPing.bind(this);
-    //this.sortByExpectedCountdown = this.sortByExpectedCountdown.bind(this);
     this.chosenBus = null;
     this.lastLeaveTime = null; 
     }
@@ -43,15 +42,8 @@ startTimer() {
     if (this.state.secondsRemaining == 0) {
         var initalSeconds= this.props.minsTillDepart *60
         this.setState({secondsRemaining: initalSeconds})
-       // console.log("bus stop number" +this.props.selectedBusState.RouteNo);
-       // console.log("arrival modal selected bus stop"+ this.props.busStopNum);
     }
   }
-    
-//sortByExpectedCountdown(bus1, bus2){
-//    return bus1.ExpectedCountdown - bus2.ExpectedCountdown;
-//    console.log("whhhh");
-//}
     
 
 tsPing(){

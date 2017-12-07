@@ -416,7 +416,7 @@ getCoffeeShops(){
 
 //send directions request to google maps for 'from user location to bus stop with coffee shop on the way' 
 apiWaypoints(coffeeShop, busStop){
-        console.log("animation playing!");
+//        console.log("animation playing!");
             this.setState({
                 animating:true
             });
@@ -473,7 +473,7 @@ getAllShopDirections(busChoice){
         var promisedDirection = Promise.all(promisedDirectionsArr);
         promisedDirection.then((Directions)=>{ 
              var Statuses = Directions.map(function getStatuses(currentValue, index, array){
-                 
+                 console.log(currentValue);
                  var walkingtimeValue = currentValue.routes[0].legs[0].duration.value + currentValue.routes[0].legs[1].duration.value;
             
                  var shopStatus = this.checkShopStatus(walkingtimeValue/60, this.state.selectedBus.Schedules[busChoice].ExpectedCountdown);
