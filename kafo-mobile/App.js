@@ -139,7 +139,14 @@ changeBusArrival(choice){
 }
 
 increaseMaxState(maxState){
-    this.state.maxState = maxState;
+    if (maxState == 2){
+        this.setState({
+            busArrivalChoice: 0
+        })
+    }
+    this.setState({
+        maxState: maxState
+    })
 }
 
 navBack(){
@@ -192,7 +199,6 @@ selectedShop(data){
     fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&destination="+this.state.busStopCoords.lat+","+this.state.busStopCoords.lng+"&waypoints="+shop.coords.lat+","+shop.coords.lng+"&mode=walking&key=AIzaSyBQJAEqwggQqi82YFR4eSZXF4EkC2gsHEc").then((resp)=>{
                 return resp.json();
             }).then((json)=>{
-                //console.log("OVER HERE!", json);
                 this.setState({coords: json.routes[0].overview_polyline.points})
             })
    this.setState({
@@ -255,7 +261,7 @@ tsRouteCall(stopNum) {
             for (var i=0; i < responseJson.length ; i++){ //splice out negative bus arrival times 
                 var currentRoute = responseJson[i].Schedules;
                 for(var j = 0; j < currentRoute.length; j++){
-                          if(currentRoute[j].ExpectedCountdown < 0){
+                          if(currentRoute[j].ExpectedCountdown < 1){
                               currentRoute.splice(j, 1);
                               j--;
                           }
@@ -481,8 +487,10 @@ getAllShopDirections(busChoice){
             
                  var shopStatus = this.checkShopStatus(walkingtimeValue/60, this.state.selectedBus.Schedules[busChoice].ExpectedCountdown);
                  
-                 var polyline= currentValue.routes[0].legs[0].steps[0].polyline.points;       
+                 var polyline= currentValue.routes[0].legs[0].steps[0].polyline.points;    
+                 
                  console.log("app.js line 479: expected countdown is "+ this.state.selectedBus.Schedules[busChoice].ExpectedCountdown);
+                 
                  var shopWithStatus = {
                         name:this.state.coffeeShopData[index].name,
                         status:shopStatus,
