@@ -76,7 +76,7 @@ class KafoModal extends Component {
                             key={index} 
                             routeName={currentValue.RouteName} 
                             routeNumber={currentValue.RouteNo} 
-                            minsTillDepart={currentValue.Schedules[index].ExpectedCountdown} 
+                            minsTillDepart={currentValue.Schedules[0].ExpectedCountdown} 
                             buttonColor ={(index % 2 == 1)} 
                             busIndex={index}
                             selectedBus={this.props.selectedBus}
