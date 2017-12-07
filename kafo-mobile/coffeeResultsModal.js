@@ -25,17 +25,14 @@ export default class CoffeeResultsModal extends React.Component {
     }
     
     compareTimesToSort(shop1, shop2){
-        return(
-            shop1.journeyTime, shop2.journeyTime
-        )
+        return shop1.journeyTime - shop2.journeyTime;
     }
-    
 
 render() {
     var headerMsg;
     if(this.props.shopWithStatus){
         if (this.props.shopWithStatus.length > 1){
-            this.props.shopWithStatus.sort(this.compareTimesToSort(this.props.shopWithStatus, this.props.shopWithStatus));
+            this.props.shopWithStatus.sort(this.compareTimesToSort);
         } 
         
         if (this.props.shopWithStatus.length == 0){

@@ -18,13 +18,11 @@ export default class ArrivalModal extends React.Component {
     this.countDown = this.countDown.bind(this);
     this.endCountdown = this.endCountdown.bind(this);
     this.tsPing = this.tsPing.bind(this);
-        
+    //this.sortByExpectedCountdown = this.sortByExpectedCountdown.bind(this);
     this.chosenBus = null;
-    this.lastLeaveTime = null;
-        
+    this.lastLeaveTime = null; 
     }
     
-
 componentDidMount() {
     this.startTimer();
     this.props.increaseMaxState(4);
@@ -38,7 +36,7 @@ componentDidMount() {
     console.log("min to depart:"+this.props.minsTillDepart);
     console.log("index number using busIndex: "+this.props.busIndex);
     this.intervalSeconds = setInterval( ()=> this.countDown(), 1000);
-    this.intervalMinutes = setInterval( ()=> this.tsPing(), 60000);
+    this.intervalMinutes = setInterval( ()=> this.tsPing(), 10000);
   }
     
 startTimer() {
@@ -50,24 +48,25 @@ startTimer() {
     }
   }
     
+//sortByExpectedCountdown(bus1, bus2){
+//    return bus1.ExpectedCountdown - bus2.ExpectedCountdown;
+//    console.log("whhhh");
+//}
+    
+
 tsPing(){
-            fetch("https://kafo-call.herokuapp.com/translink/livetracker/"+this.props.busStopNum+"/" + this.props.selectedBusState.RouteNo, {method:'GET', headers:{
+        fetch("https://kafo-call.herokuapp.com/translink/livetracker/"+this.props.busStopNum+"/" + this.props.selectedBusState.RouteNo, {method:'GET', headers:{
           "Content-Type": "application/json"
           }})
     .then(response => response.json())
     .then((resp) => {
             console.log(resp);
+            console.log("sort");
+            resp[0].Schedules.sort((bus1, bus2)=> {return (bus1.ExpectedCountdown - bus2.ExpectedCountdown)});
+            //console.log(resp);
             this.setState({
                 pingResp:resp
             });
-            if(resp[0].RouteNo == 130){
-                console.log("130 reroute");
-                var mins = this.state.minsTillDepart;
-                mins--;
-                this.setState({
-                    minsTillDepart:mins
-                });
-            } else {
                 if(this.lastLeaveTime !== null && this.lastLeaveTime != resp[0].Schedules[this.chosenBus].ExpectedLeaveTime){
                     this.chosenBus--;
                     console.log("index decreased");
@@ -82,9 +81,9 @@ tsPing(){
                     this.endCountDown();
                 }
         }
-    })
+    )
     .catch((error) => {
-       // console.log(error);
+        console.log(error);
     });
 }
 
@@ -103,7 +102,7 @@ countDown(){
             interval: this.intervalSeconds
        })
         //console.log(Math.round(this.state.secondsRemaining/(this.props.minsTillDepart *60)*100));
-        console.log(this.state.secondsRemaining);
+        //console.log(this.state.secondsRemaining);
 }
      
 endCountdown(){
@@ -112,7 +111,7 @@ endCountdown(){
 
 componentWillUnmount(){
     var intervalState = this.state.interval;
-     clearInterval(intervalState);
+    clearInterval(intervalState);
     clearInterval(this.intervalMinutes);
     clearInterval(this.intervalSeconds);
     console.log("component unmounted!");
@@ -135,9 +134,9 @@ render() {
             </View>
         
               <View style={{flex: 1, alignItems: 'center', justifyContent: 'space-between'}}>
-                 <Text style={{flex: 1, width: '85%', fontSize: 18, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Bus arrives in {"\n"} {this.state.minsTillDepart} minutes</Text>
+                 <Text style={{flex: 1, width: '85%', fontSize: 16, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Bus arrives in {this.state.minsTillDepart} minutes</Text>
                 <AnimatedCircularProgress
-                      style={{marginBottom: 30}}
+                      style={{marginBottom: 10}}
                      size={100}
                      width={15}
                      fill= {Math.round((this.props.minsTillDepart *60 - this.state.secondsRemaining)/(this.props.minsTillDepart *60)*100)}
