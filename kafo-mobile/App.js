@@ -244,7 +244,7 @@ tsRouteCall(stopNum) {
                     this.setState({errorMsg: "We had a problem getting the estimates for this stop. Try re-entering the ID."})
                 break;
                 case "3005":
-                    this.setState({errorMsg: "Sorry, there are no routes serving this stop right now."})
+                    this.setState({errorMsg: "Sorry, there are no busses serving this stop right now."})
                 break;
             }
         } else {

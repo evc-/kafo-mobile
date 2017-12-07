@@ -11,7 +11,8 @@ export default class ArrivalModal extends React.Component {
         this.state = {
             interval:0,
             secondsRemaining: 0,
-            pingResp:[]
+            pingResp:[],
+            lastUpdateTime: null
         }
         
     this.startTimer = this.startTimer.bind(this);
@@ -56,8 +57,10 @@ tsPing(){
             console.log("sort");
             resp[0].Schedules.sort((bus1, bus2)=> {return (bus1.ExpectedCountdown - bus2.ExpectedCountdown)});
             //console.log(resp);
+            var time = new Date();
             this.setState({
-                pingResp:resp
+                pingResp:resp,
+                lastUpdateTime: {hours: time.getHours(),mins: time.getMinutes()}
             });
                 if(this.lastLeaveTime !== null && this.lastLeaveTime != resp[0].Schedules[this.chosenBus].ExpectedLeaveTime){
                     this.chosenBus--;
@@ -111,6 +114,13 @@ componentWillUnmount(){
     
     
 render() {
+    
+    var lastUpdate;
+    if (this.state.lastUpdateTime){
+        lastUpdate = <Text style={{fontSize: 10, color: "#303C45", marginBottom: 2}}>Last Updated: {this.state.lastUpdateTime.hours}:{this.state.lastUpdateTime.mins}</Text>
+    } else {
+        lastUpdate = <Text style={{fontSize: 10, color: "#303C45", marginBottom: 2}}>Next Update in 1 minute</Text>
+    }
 
     return (
     <View style={{flex:1, flexDirection: 'column'}}>
@@ -119,14 +129,15 @@ render() {
         </View>
         <View style={{flexDirection:'row', flex: 1, justifyContent:'center'}}>
             <View style={{flex: 1, backgroundColor: '#EEEEEE'}}>
-                <Text style={{flex: 1, width: '85%', fontSize: 16, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Trip Breakdown</Text>
+                <Text style={{flex: 1, width: '85%', fontSize: 14, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Trip Breakdown</Text>
                 <Text style={styles.paragraph2Style}>Walk to Shop: {this.props.selectedShop.toShop} minutes</Text>
                 <Text style={styles.paragraph2Style}>Time for Coffee: {this.props.selectedShop.orderTime} minutes</Text>
                 <Text style={styles.paragraph2Style}>Walk to Stop: {this.props.selectedShop.toStop} minutes</Text>
             </View>
         
               <View style={{flex: 1, alignItems: 'center', justifyContent: 'space-between'}}>
-                 <Text style={{flex: 1, width: '85%', fontSize: 16, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Bus arrives in {this.state.minsTillDepart} minutes</Text>
+                 <Text style={{flex: 1, width: '85%', fontSize: 14, color: '#303C45', textAlign: 'center', fontWeight: 'bold', paddingTop: 5}}>Bus arrives in {this.state.minsTillDepart} minutes</Text>
+                {lastUpdate}
                 <AnimatedCircularProgress
                       style={{marginBottom: 10}}
                      size={100}
@@ -146,8 +157,8 @@ const styles = StyleSheet.create({
     
     paragraph2Style:{
         flex: 1,
-        fontSize: 16,
-        color: '#6fa7a8',
+        fontSize: 12,
+        color: '#303c45',
         paddingLeft: 15
       },
     paragraph3Style:{
