@@ -21,6 +21,7 @@ export default class ArrivalModal extends React.Component {
     this.tsPing = this.tsPing.bind(this);
     this.chosenBus = null;
     this.lastLeaveTime = null; 
+    
     }
     
 componentDidMount() {
@@ -30,13 +31,14 @@ componentDidMount() {
     var secondsRemaining = (this.props.minsTillDepart * 60);
     this.setState({
         minsTillDepart:minsTillDepartProp,
-        secondsRemaining:secondsRemaining
+        secondsRemaining:secondsRemaining,
+        initialTime:minsTillDepartProp
     });
     this.chosenBus = this.props.busIndex;
     console.log("min to depart:"+this.props.minsTillDepart);
     console.log("index number using busIndex: "+this.props.busIndex);
     this.intervalSeconds = setInterval( ()=> this.countDown(), 1000);
-    this.intervalMinutes = setInterval( ()=> this.tsPing(), 10000);
+    this.intervalMinutes = setInterval( ()=> this.tsPing(), 60000);
   }
     
 startTimer() {
@@ -44,8 +46,7 @@ startTimer() {
         var initalSeconds= this.props.minsTillDepart *60
         this.setState({secondsRemaining: initalSeconds})
     }
-  }
-    
+  } 
 
 tsPing(){
         fetch("https://kafo-call.herokuapp.com/translink/livetracker/"+this.props.busStopNum+"/" + this.props.selectedBusState.RouteNo, {method:'GET', headers:{
@@ -95,8 +96,8 @@ countDown(){
         this.setState({
             secondsRemaining: lessSeconds,
             interval: this.intervalSeconds
-       })
-        //console.log(Math.round(this.state.secondsRemaining/(this.props.minsTillDepart *60)*100));
+       });
+
         //console.log(this.state.secondsRemaining);
 }
      
@@ -111,7 +112,7 @@ componentWillUnmount(){
     clearInterval(this.intervalSeconds);
     console.log("component unmounted!");
 }
-    
+  
     
 render() {
     
@@ -142,7 +143,7 @@ render() {
                       style={{marginBottom: 10}}
                      size={100}
                      width={15}
-                     fill= {Math.round((this.props.minsTillDepart *60 - this.state.secondsRemaining)/(this.props.minsTillDepart *60)*100)}
+                     fill= {Math.round((this.state.initialTime *60 - this.state.secondsRemaining)/(this.state.initialTime *60)*100)}
                      tintColor='#6fa7a8'
                      backgroundColor="EEEEEE">
                  </AnimatedCircularProgress>
