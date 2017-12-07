@@ -189,7 +189,7 @@ selectedShop(data){
     //console.log("data", this.state.shopWithStatus[data], this.state.busStopCoords);
     var shop = this.state.shopWithStatus[data];
     
-    fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&destination="+this.state.busStopCoords.lat+","+this.state.busStopCoords.lng+"&waypoints="+shop.coords.lat+","+shop.coords.lng+"&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI").then((resp)=>{
+    fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&destination="+this.state.busStopCoords.lat+","+this.state.busStopCoords.lng+"&waypoints="+shop.coords.lat+","+shop.coords.lng+"&mode=walking&key=AIzaSyBQJAEqwggQqi82YFR4eSZXF4EkC2gsHEc").then((resp)=>{
                 return resp.json();
             }).then((json)=>{
                 //console.log("OVER HERE!", json);
@@ -395,7 +395,7 @@ getCoffeeShops(){
     }
     else {
 
-        fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI&opennow&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500").then((CSresp)=>{
+        fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBQJAEqwggQqi82YFR4eSZXF4EkC2gsHEc&opennow&location="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&type=cafe&radius=500").then((CSresp)=>{
             //console.log("getting coffee shops..")
             return CSresp.json();
         }, (reason)=>{
@@ -420,7 +420,7 @@ apiWaypoints(coffeeShop, busStop){
             this.setState({
                 animating:true
             });
-    return fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&destination="+busStop.lat+","+busStop.lng+"&waypoints="+coffeeShop.lat+","+coffeeShop.lng+"&mode=walking&key=AIzaSyDHgRDyFKTu99g1EhxfiOTcT9LxRD11QxI")
+    return fetch("https://maps.googleapis.com/maps/api/directions/json?origin="+this.state.userLocation.lat+","+this.state.userLocation.lng+"&destination="+busStop.lat+","+busStop.lng+"&waypoints="+coffeeShop.lat+","+coffeeShop.lng+"&mode=walking&key=AIzaSyBQJAEqwggQqi82YFR4eSZXF4EkC2gsHEc")
             .then((directionsResp)=>{
                 return directionsResp.json();
           }).then((directionsRespJson)=>{
